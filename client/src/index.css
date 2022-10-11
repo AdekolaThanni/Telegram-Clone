@@ -1,13 +1,78 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background colors */
+    --bg-primary: rgb(255, 255, 255);
+    --bg-cta-icon: rgb(51, 144, 236);
+    --bg-message: rgb(238, 255, 222);
+    --bg-message-highlight: rgb(121 165 65, 40%);
+    /* Text colors */
+    --text-primary: rgb(0, 0, 0);
+    --text-secondary: rgb(112 117 121);
+    --text-secondary-light: hsla(207, 4%, 46%, 0.08);
+
+    --avatar-check: rgb(10 198 48);
+  }
+
+  html {
+    font-size: 62.5%;
+  }
+
+  body {
+    @apply text-[1.6rem] text-primary-text;
+  }
+
+  svg {
+    @apply w-[2.5rem] h-[2.5rem];
+  }
+
+  svg > path {
+    @apply stroke-secondary-text fill-secondary-text;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html.dark {
+  /* Background colors */
+  --bg-primary: rgb(24, 24, 24);
+  --bg-cta-icon: rgb(135 116 225);
+  --bg-message: rgb(135 116 225);
+  --bg-message-highlight: rgb(137 53 138, 40%);
+  /* Text colors */
+  --text-primary: rgb(255, 255, 255);
+  --text-secondary: rgb(170, 170, 170);
+  --text-secondary-light: rgba(171, 171, 171, 0.078);
+  --avatar-check: var(--bg-message);
+  /* color: #292830 */
+}
+
+@layer components {
+  .fallback-anim::before {
+    content: "";
+    animation-duration: 2s;
+    animation-name: fallbackAnimation;
+    animation-iteration-count: infinite;
+    animation-delay: 0.5s;
+
+    @apply block h-[6rem] w-[20rem] absolute bg-primary opacity-40;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-[.6rem];
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-[#ffffff33] rounded-full;
+  }
+}
+
+@keyframes fallbackAnimation {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: 30%;
+  }
 }
