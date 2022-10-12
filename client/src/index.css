@@ -15,6 +15,8 @@
     --text-secondary-light: hsla(207, 4%, 46%, 0.08);
 
     --avatar-check: rgb(10 198 48);
+    --scrollbar: rgba(0, 0, 0, 0.2);
+    --danger: rgb(223, 63, 64);
   }
 
   html {
@@ -45,7 +47,8 @@ html.dark {
   --text-secondary: rgb(170, 170, 170);
   --text-secondary-light: rgba(171, 171, 171, 0.078);
   --avatar-check: var(--bg-message);
-  /* color: #292830 */
+  --scrollbar: rgba(255, 255, 255, 0.2);
+  --danger: rgb(223, 63, 64);
 }
 
 @layer components {
@@ -63,7 +66,15 @@ html.dark {
     @apply w-[.6rem];
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-[#ffffff33] rounded-full;
+    @apply bg-scrollbar rounded-full;
+  }
+
+  .modal-child > svg {
+    @apply w-[2.5rem] h-[2.5rem];
+  }
+
+  .modal-child > svg > path {
+    @apply fill-primary-text stroke-primary-text;
   }
 }
 
