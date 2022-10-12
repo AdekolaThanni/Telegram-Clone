@@ -6,6 +6,8 @@
   :root {
     /* Background colors */
     --bg-primary: rgb(255, 255, 255);
+    --bg-secondary: rgb(196 201 204);
+
     --bg-cta-icon: rgb(51, 144, 236);
     --bg-message: rgb(238, 255, 222);
     --bg-message-highlight: rgb(121 165 65, 40%);
@@ -34,6 +36,11 @@
   svg > path {
     @apply stroke-secondary-text fill-secondary-text;
   }
+}
+*,
+*::before,
+*::after {
+  transition: background-color 0.2s;
 }
 
 html.dark {

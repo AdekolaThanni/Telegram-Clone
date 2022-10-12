@@ -1,17 +1,12 @@
 import React from "react";
-import useModalBestPosition from "../../../hooks/useModalBestPosition";
+import { useSelector } from "react-redux";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
 
-function ChatOptionsModal({ eventData, pinned, privateChat }) {
-  eventData.elemData = {
-    modalData: {
-      width: 140,
-      height: 80,
-    },
-    overlayData: document.getElementById("side-bar"),
-  };
-  const bestPositions = useModalBestPosition(eventData);
+function ChatOptionsModal() {
+  const { pinned, privateChat } = useSelector(
+    (state) => state.modalReducer.payload
+  );
   const pin = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +44,7 @@ function ChatOptionsModal({ eventData, pinned, privateChat }) {
     </svg>
   );
   return (
-    <Modal className="right-[5rem] bottom-[20rem] origin-bottom-right z-10">
+    <Modal className={`z-10`} typeValue="chatOptions">
       {/* Pin or unpin chat */}
       <ModalChild>
         {pinned ? unpin : pin}

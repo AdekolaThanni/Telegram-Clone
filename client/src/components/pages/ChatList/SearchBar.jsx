@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import IconWrapper from "../../globals/IconWrapper";
 
-function SearchBar({ className }) {
-  const [searchValue, setSearchValue] = useState("");
-  const handleChange = (event) => {
-    setSearchValue(event.target.value);
-  };
+function SearchBar({ className, handleSearchValue, searchValue }) {
   return (
     <div
       className={`flex items-center gap-[.5rem] group border border-secondary-text rounded-full pl-[1rem]  focus-within:border-cta-icon focus-within:border-2 ${className}`}
@@ -33,13 +29,13 @@ function SearchBar({ className }) {
         className="flex-grow focus-within:outline-none bg-transparent"
         placeholder="Search"
         value={searchValue}
-        onChange={handleChange}
+        onChange={handleSearchValue}
       />
 
       {/* Clear Icon */}
       <IconWrapper
         className={`${!searchValue && "opacity-0"}`}
-        onClick={() => setSearchValue("")}
+        onClick={() => handleSearchValue({ target: { value: "" } })}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

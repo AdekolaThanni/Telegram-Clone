@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 
 // Sets animation and styles for all sidebar pages
-
 function ActivePage({ activePageName, children, className }) {
   const activeSlidebarPage = useSelector(
     (state) => state.sidebarReducer.activePage

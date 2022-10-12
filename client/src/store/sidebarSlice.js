@@ -9,7 +9,7 @@ const sidebarSlice = createSlice({
   name: "sidebar",
   initialState,
   reducers: {
-    changeActivePage: (state, payload) => {
+    changeActivePage: (state, { payload }) => {
       state.activePage = payload.newActivePage;
     },
   },

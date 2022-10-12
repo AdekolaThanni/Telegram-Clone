@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "var(--bg-primary)",
+        secondary: "var(--bg-secondary)",
         "cta-icon": "var(--bg-cta-icon)",
         "message-highlight": "var(--bg-message-highlight)",
         message: "var(--bg-message)",

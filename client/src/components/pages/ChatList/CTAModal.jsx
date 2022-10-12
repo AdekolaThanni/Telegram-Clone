@@ -4,7 +4,7 @@ import ModalChild from "../../globals/ModalChild";
 
 function CTAModal() {
   return (
-    <Modal className="right-[2rem] bottom-[8rem] origin-bottom-right">
+    <Modal className="origin-bottom-right" typeValue="ctaModal">
       {/* Create Group chat */}
       <ModalChild>
         <svg

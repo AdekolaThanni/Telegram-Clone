@@ -7,39 +7,57 @@ import CTAModal from "../components/pages/ChatList/CTAModal";
 import ActivePage from "../components/pages/Sidebar/ActivePage";
 import useChatList from "../hooks/useChatList";
 import { AnimatePresence, motion } from "framer-motion";
+import ChatOptionsModal from "../components/pages/ChatList/ChatOptionsModal";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../store/modalSlice";
 
 function ChatList() {
   const { chatList } = useChatList();
   const [activeChat, setActiveChat] = useState(false);
-  const [ctaModalVisibility, setCtaModalVisibility] = useState(false);
+  const ctaModalVisible = useSelector(
+    (state) => state.modalReducer.type === "ctaModal"
+  );
+  const dispatch = useDispatch();
 
   const selectChat = (chatId) => {
     setActiveChat(chatId);
   };
 
   return (
-    <ActivePage activePageName="chatList" className="flex flex-col relative">
+    <ActivePage activePageName="chatList" className="flex flex-col">
       <ChatListHeader />
       {/* <ChatListSkeleton /> */}
       <div className="basis-full p-[.5rem] overflow-y-scroll custom-scrollbar">
-        {chatList.map((chatItem) => (
+        {chatList.map((chatItem, index) => (
           <ChatItem
-            key={chatItem.id}
+            key={index}
             chatData={chatItem}
             activeChat={activeChat === chatItem.id}
             onClick={selectChat}
           />
         ))}
+        <ChatOptionsModal />
       </div>
 
       {/* CTA to create new group chat or private chat */}
-      <AnimatePresence>{ctaModalVisibility && <CTAModal />}</AnimatePresence>
+      <CTAModal />
       <CTAIconWrapper
         className="absolute bottom-[2rem] right-[2rem] cursor-pointer"
-        onClick={() => setCtaModalVisibility((prevState) => !prevState)}
+        onClick={() => {
+          if (ctaModalVisible) {
+            dispatch(modalActions.closeModal());
+          } else {
+            dispatch(
+              modalActions.openModal({
+                positions: { right: 20, bottom: 80 },
+                type: "ctaModal",
+              })
+            );
+          }
+        }}
       >
         <AnimatePresence>
-          {!ctaModalVisibility && (
+          {!ctaModalVisible && (
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
@@ -60,7 +78,7 @@ function ChatList() {
         </AnimatePresence>
 
         <AnimatePresence>
-          {ctaModalVisibility && (
+          {ctaModalVisible && (
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
