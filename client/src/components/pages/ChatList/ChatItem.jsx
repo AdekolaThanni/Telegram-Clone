@@ -55,7 +55,7 @@ function ChatItem({ chatData, activeChat, onClick }) {
       onClick={() => onClick(chatData.id)}
       onContextMenu={showOptions}
       onMouseDown={timeoutToShowOptions}
-      className={`p-[1rem] rounded-[1.5rem] flex gap-[1rem] text-secondary-text group  cursor-default ${
+      className={`p-[1rem] rounded-[1.5rem] not-selectable flex gap-[1rem] text-secondary-text group  cursor-default ${
         activeChat ? "bg-cta-icon text-white" : "hover:bg-secondary-light-text"
       } ${chatOptionVisible && "bg-secondary-light-text"}`}
     >

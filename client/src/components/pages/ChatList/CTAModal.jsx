@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { modalActions } from "../../../store/modalSlice";
+import { sidebarActions } from "../../../store/sidebarSlice";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
 
 function CTAModal() {
+  const dispatch = useDispatch();
   return (
     <Modal className="origin-bottom-right" typeValue="ctaModal">
       {/* Create Group chat */}
@@ -24,7 +28,14 @@ function CTAModal() {
         New Group
       </ModalChild>
       {/* Create Private Chat */}
-      <ModalChild>
+      <ModalChild
+        onClick={() => {
+          dispatch(modalActions.closeModal());
+          dispatch(
+            sidebarActions.changeActivePage({ newActivePage: "contacts" })
+          );
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"

@@ -19,6 +19,8 @@
     --avatar-check: rgb(10 198 48);
     --scrollbar: rgba(0, 0, 0, 0.2);
     --danger: rgb(223, 63, 64);
+    --box-shadow: rgba(0, 0, 0, 0.149);
+    --bg-modal: rgba(var(--bg-primary), 0.75);
   }
 
   html {
@@ -37,11 +39,6 @@
     @apply stroke-secondary-text fill-secondary-text;
   }
 }
-*,
-*::before,
-*::after {
-  transition: background-color 0.2s;
-}
 
 html.dark {
   /* Background colors */
@@ -55,7 +52,9 @@ html.dark {
   --text-secondary-light: rgba(171, 171, 171, 0.078);
   --avatar-check: var(--bg-message);
   --scrollbar: rgba(255, 255, 255, 0.2);
-  --danger: rgb(223, 63, 64);
+  --danger: rgb(255, 89, 90);
+  --box-shadow: rgba(0, 0, 0, 0.4);
+  --bg-modal: rgba(var(--bg-primary), 0.75);
 }
 
 @layer components {
@@ -82,6 +81,16 @@ html.dark {
 
   .modal-child > svg > path {
     @apply fill-primary-text stroke-primary-text;
+  }
+
+  /* Unselectable texts */
+  .not-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }
 

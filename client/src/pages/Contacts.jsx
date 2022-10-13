@@ -16,7 +16,7 @@ function Contacts() {
   const { contacts, handleSearchValue, searchValue } = useContactList();
   return (
     <ActivePage activePageName="contacts" className="">
-      <Header className="flex items-center gap-[2rem] px-[2rem]">
+      <Header className="flex items-center gap-[2rem] px-[1.5rem]">
         <IconWrapper
           onClick={() =>
             dispatch(

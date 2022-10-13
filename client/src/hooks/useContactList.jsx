@@ -33,7 +33,9 @@ const useContactList = () => {
 
   useEffect(() => {
     setContacts(() =>
-      dummyContact.filter((contact) => contact.title.startsWith(searchValue))
+      dummyContact.filter((contact) =>
+        contact.title.toLowerCase().startsWith(searchValue.toLowerCase())
+      )
     );
   }, [searchValue]);
 

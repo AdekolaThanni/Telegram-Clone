@@ -15,6 +15,8 @@ module.exports = {
         "avatar-check": "var(--avatar-check)",
         scrollbar: "var(--scrollbar)",
         danger: "var(--danger)",
+        "box-shadow": "var(--box-shadow)",
+        modal: "var(--bg-modal)",
       },
     },
   },

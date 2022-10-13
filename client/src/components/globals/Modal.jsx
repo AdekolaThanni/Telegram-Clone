@@ -3,13 +3,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import Overlay from "./Overlay";
 
-function Modal({ className, children, typeValue }) {
+function Modal({ className, children, typeValue, canOverlayClose }) {
   const { type, positions } = useSelector((state) => state.modalReducer);
 
   return (
     <AnimatePresence>
       {type === typeValue && (
-        <Overlay>
+        <Overlay canOverlayClose={canOverlayClose === false ? false : true}>
           <motion.div
             initial={{
               scale: 0,
@@ -27,7 +27,7 @@ function Modal({ className, children, typeValue }) {
                 duration: 0.2,
               },
             }}
-            className={`bg-primary backdrop-blur-md py-[1rem] px-[.5rem] flex flex-col gap-[.5rem] w-fit rounded-md shadow-sm shadow-[#00000085] absolute ${className}`}
+            className={`bg-modal backdrop-blur-[80px] py-[1rem] px-[.5rem] flex flex-col gap-[.5rem] w-fit rounded-md shadow-md shadow-box-shadow absolute ${className}`}
             style={{
               ...positions,
             }}

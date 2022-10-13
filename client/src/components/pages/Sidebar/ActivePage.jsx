@@ -10,33 +10,31 @@ function ActivePage({ activePageName, children, className }) {
 
   let variant = {
     hidden: {
-      transformX: "-2rem",
+      x: activePageName === "chatList" ? 0 : "40rem",
     },
     visible: {
-      transformX: "0",
+      x: 0,
       transition: {
         duration: 0.2,
       },
     },
     exit: {
-      transformX: "-2rem",
+      x: activePageName === "chatList" ? "-40rem" : "40rem",
       transition: {
+        delay: activePageName === "chatList" ? 0.1 : 0,
         duration: 0.2,
       },
     },
   };
 
-  //   If activePageName is ChatList, animations should be omitted
-  variant = activePageName === "chatList" ? {} : variant;
-
   return (
     <AnimatePresence>
       {activeSlidebarPage === activePageName && (
         <motion.div
-          className={`w-full h-full bg-primary ${className}`}
+          className={`absolute w-full h-full bg-primary ${className}`}
           variants={variant}
           initial="hidden"
-          animation="visible"
+          animate="visible"
           exit="exit"
         >
           {children}

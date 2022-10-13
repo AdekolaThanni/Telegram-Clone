@@ -2,9 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../store/modalSlice";
 
-function Overlay({ children }) {
+function Overlay({ children, canOverlayClose }) {
   const dispatch = useDispatch();
   const closeModal = () => {
+    if (!canOverlayClose) return;
     dispatch(modalActions.closeModal());
   };
   return (

@@ -67,7 +67,14 @@ function Menu() {
           </svg>
           Contacts
         </ModalChild>
-        <ModalChild>
+        <ModalChild
+          onClick={() => {
+            dispatch(modalActions.closeModal());
+            dispatch(
+              sidebarActions.changeActivePage({ newActivePage: "settings" })
+            );
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
