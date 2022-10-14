@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import CTAIconWrapper from "../components/globals/CTAIconWrapper";
 import ChatItem from "../components/pages/ChatList/ChatItem";
-import ChatListHeader from "../components/pages/ChatList/ChatListHeader";
 import CTAModal from "../components/pages/ChatList/CTAModal";
+import Menu from "../components/pages/ChatList/Menu";
 // import ChatListSkeleton from "../components/pages/ChatList/ChatListSkeleton";
 import ActivePage from "../components/pages/Sidebar/ActivePage";
 import useChatList from "../hooks/useChatList";
@@ -10,9 +10,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import ChatOptionsModal from "../components/pages/ChatList/ChatOptionsModal";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../store/modalSlice";
+import Header from "../components/globals/Header";
+import SearchBar from "../components/pages/ChatList/SearchBar";
 
 function ChatList() {
-  const { chatList } = useChatList();
+  const { chatList, handleSearchValue, searchValue } = useChatList();
   const [activeChat, setActiveChat] = useState(false);
   const ctaModalVisible = useSelector(
     (state) => state.modalReducer.type === "ctaModal"
@@ -25,7 +27,14 @@ function ChatList() {
 
   return (
     <ActivePage activePageName="chatList" className="flex flex-col">
-      <ChatListHeader />
+      <Header className="flex px-[2rem] items-center gap-[1rem]">
+        <Menu />
+        <SearchBar
+          handleSearchValue={handleSearchValue}
+          searchValue={searchValue}
+          className="flex-grow"
+        />
+      </Header>
       {/* <ChatListSkeleton /> */}
       <div className="basis-full p-[.5rem] overflow-y-scroll custom-scrollbar">
         {chatList.map((chatItem, index) => (

@@ -1,6 +1,7 @@
 import React from "react";
 import ChatList from "../../pages/ChatList";
 import Contacts from "../../pages/Contacts";
+import SelectContacts from "../../pages/SelectContacts";
 import Settings from "../../pages/Settings";
 
 function Sidebar() {
@@ -12,6 +13,7 @@ function Sidebar() {
       <ChatList />
       <Contacts />
       <Settings />
+      <SelectContacts />
     </div>
   );
 }

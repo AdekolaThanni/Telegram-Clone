@@ -157,7 +157,7 @@ function Settings() {
               labelName="Phone Number"
             />
             <button
-              className={`bg-cta-icon text-center py-[1rem] mb-[2rem] uppercase font-semibold rounded-xl ${
+              className={`bg-cta-icon text-center py-[1rem] mb-[2rem] uppercase font-semibold rounded-xl text-white ${
                 !(
                   values.firstName !== user.firstName ||
                   values.lastName !== user.lastName ||

@@ -8,7 +8,7 @@ const dummyContact = [
     status: { online: true },
   },
   {
-    id: 4,
+    id: 2,
     avatar:
       "https://images.unsplash.com/photo-1664729723238-d42ae2f188e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
     title: "John",
@@ -20,6 +20,20 @@ const dummyContact = [
     status: { online: false, lastSeen: 1665613033917 },
     avatar:
       "https://images.unsplash.com/photo-1664819485266-2de9be49b054?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=564&q=80",
+  },
+  {
+    id: 4,
+    title: "Adebola",
+    status: { online: false, lastSeen: 1665754898719 },
+    avatar:
+      "https://images.unsplash.com/photo-1655061764514-e755a3ece19f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=290&q=80",
+  },
+  {
+    id: 5,
+    title: "Penelope",
+    status: { online: true },
+    avatar:
+      "https://images.unsplash.com/photo-1665708611240-c25abd36dacb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
   },
 ];
 

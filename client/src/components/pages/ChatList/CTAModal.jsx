@@ -10,7 +10,14 @@ function CTAModal() {
   return (
     <Modal className="origin-bottom-right" typeValue="ctaModal">
       {/* Create Group chat */}
-      <ModalChild>
+      <ModalChild
+        onClick={() => {
+          dispatch(modalActions.closeModal());
+          dispatch(
+            sidebarActions.changeActivePage({ newActivePage: "selectContacts" })
+          );
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"

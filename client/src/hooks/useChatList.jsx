@@ -58,9 +58,16 @@ const dummyList = [
 
 const useChatList = () => {
   const [chatList] = useState(dummyList);
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchValue = (event) => {
+    setSearchValue(event.target.value);
+  };
 
   return {
     chatList,
+    searchValue,
+    handleSearchValue,
   };
 };
 

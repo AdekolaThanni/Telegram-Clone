@@ -18,7 +18,7 @@ function NewContactForm() {
   return (
     <Modal
       typeValue="newContactForm"
-      className="max-w-[45rem] mx-[1rem]"
+      className="max-w-[45rem] mx-[1rem] !bg-primary backdrop-blur-0"
       canOverlayClose={false}
     >
       <Formik
