@@ -21,6 +21,7 @@
     --danger: rgb(223, 63, 64);
     --box-shadow: rgba(0, 0, 0, 0.149);
     --bg-modal: rgba(var(--bg-primary), 0.75);
+    --bg-send: rgba(0, 0, 0, 0.2);
   }
 
   html {
@@ -28,7 +29,7 @@
   }
 
   body {
-    @apply text-[1.6rem] text-primary-text;
+    @apply text-[1.6rem] text-primary-text caret-cta-icon;
   }
 
   svg {
@@ -43,9 +44,9 @@
 html.dark {
   /* Background colors */
   --bg-primary: rgb(24, 24, 24);
-  --bg-cta-icon: rgb(135 116 225);
-  --bg-message: rgb(135 116 225);
-  --bg-message-highlight: rgb(137 53 138, 40%);
+  --bg-cta-icon: rgb(135, 116, 225);
+  --bg-message: rgb(135, 116, 225);
+  --bg-message-highlight: rgba(137, 53, 138, 0.4);
   /* Text colors */
   --text-primary: rgb(255, 255, 255);
   --text-secondary: rgb(170, 170, 170);
@@ -55,6 +56,7 @@ html.dark {
   --danger: rgb(255, 89, 90);
   --box-shadow: rgba(0, 0, 0, 0.4);
   --bg-modal: rgba(var(--bg-primary), 0.75);
+  --bg-send: rgba(0, 0, 0, 0.2);
 }
 
 @layer components {
@@ -92,6 +94,20 @@ html.dark {
     -ms-user-select: none;
     user-select: none;
   }
+
+  .animate-wave::before {
+    content: "";
+    animation-duration: 1.5s;
+    animation-name: wave;
+    animation-iteration-count: infinite;
+
+    @apply w-[10rem] h-[10rem] rounded-full bg-send block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2;
+  }
+
+  .chat-bg {
+    background-image: url("./assets/svg/bg-pattern.svg");
+    background-size: contain;
+  }
 }
 
 @keyframes fallbackAnimation {
@@ -101,5 +117,22 @@ html.dark {
 
   100% {
     left: 30%;
+  }
+}
+
+@keyframes wave {
+  0% {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  50% {
+    width: 16rem;
+    height: 16rem;
+  }
+
+  100% {
+    width: 8rem;
+    height: 8rem;
   }
 }

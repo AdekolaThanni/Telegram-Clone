@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import Overlay from "./Overlay";
 
-function Modal({ className, children, typeValue, canOverlayClose }) {
+function Modal({ className, children, typeValue, canOverlayClose, onClick }) {
   const { type, positions } = useSelector((state) => state.modalReducer);
 
   return (
@@ -31,6 +31,7 @@ function Modal({ className, children, typeValue, canOverlayClose }) {
             style={{
               ...positions,
             }}
+            onClick={onClick}
           >
             {children}
           </motion.div>

@@ -17,6 +17,7 @@ module.exports = {
         danger: "var(--danger)",
         "box-shadow": "var(--box-shadow)",
         modal: "var(--bg-modal)",
+        send: "var(--bg-send)",
       },
     },
   },

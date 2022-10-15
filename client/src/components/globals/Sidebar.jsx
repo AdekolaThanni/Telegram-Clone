@@ -8,7 +8,7 @@ function Sidebar() {
   return (
     <div
       id="side-bar"
-      className="max-w-[42rem] h-full relative overflow-x-hidden"
+      className="basis-[42rem] h-full relative overflow-x-hidden"
     >
       <ChatList />
       <Contacts />
