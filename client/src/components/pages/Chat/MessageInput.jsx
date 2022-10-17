@@ -1,32 +1,15 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { chatActions } from "../../../store/chatSlice";
 import { modalActions } from "../../../store/modalSlice";
 
-function MessageInput({ isRecording }) {
+function MessageInput({ isRecording, handleInput, messageEmpty }) {
   const dispatch = useDispatch();
-
-  // Manages message emptiness
-  const [messageEmpty, setMessageEmpty] = useState(true);
 
   // Ask for confirmation to terminate recording if user is currenly recording a message
   const terminateRecording = (event) => {
     if (isRecording) {
       event.currentTarget.blur();
       dispatch(modalActions.openModal({ type: "stopRecordModal" }));
-    }
-  };
-
-  const handleChange = (event) => {
-    dispatch(chatActions.setMode({ mode: "typing" }));
-    // If message is initially empty change to filled
-    if (messageEmpty) {
-      setMessageEmpty(false);
-    }
-    if (!event.currentTarget.innerText) {
-      dispatch(chatActions.resetMode());
-      setMessageEmpty(true);
     }
   };
 
@@ -53,10 +36,10 @@ function MessageInput({ isRecording }) {
       {/* Input */}
       <div
         id="messageInput"
-        className="outline-none flex-grow z-10 duration-200 max-h-[16rem] overflow-y-scroll custom-scrollbar overflow-x-hidden"
+        className="outline-none flex-grow z-10 duration-200 max-h-[16rem] overflow-y-scroll custom-scrollbar overflow-x-hidden flex items-center"
         ariaRole="input"
         contentEditable={true}
-        onInput={handleChange}
+        onInput={handleInput}
         onClick={terminateRecording}
       ></div>
     </div>

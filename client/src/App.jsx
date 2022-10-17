@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="w-screen h-screen flex overflow-hidden bg-primary">
       {/* Sidebar to show ChatList, Contacts, Settings Page */}
-      {/* <Sidebar /> */}
+      <Sidebar />
       <Chat />
     </div>
   );

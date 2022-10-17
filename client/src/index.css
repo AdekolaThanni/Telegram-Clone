@@ -136,3 +136,25 @@ html.dark {
     height: 8rem;
   }
 }
+
+/* Emoji Picker styles */
+/* Hide emoji search bar search bar */
+#emojiPicker .Flex.epr-header-overlay.FlexRow,
+.Flex.epr-preview.FlexRow {
+  display: none;
+}
+
+#emojiPicker .EmojiPickerReact .epr-body {
+  @apply custom-scrollbar;
+}
+
+html.dark #emojiPicker .EmojiPickerReact {
+  --epr-bg-color: var(--bg-primary);
+  --epr-category-label-bg-color: var(--bg-primary);
+  --epr-picker-border-color: transparent;
+  --epr-emoji-hover-color: var(--text-secondary-light);
+  --epr-hover-bg-color: var(--text-secondary-light);
+  --epr-focus-bg-color: var(--text-secondary-light);
+
+  @apply shadow-md shadow-box-shadow;
+}
