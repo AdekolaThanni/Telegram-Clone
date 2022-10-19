@@ -18,6 +18,7 @@ module.exports = {
         "box-shadow": "var(--box-shadow)",
         modal: "var(--bg-modal)",
         send: "var(--bg-send)",
+        "message-status": "var(--message-status)",
       },
     },
   },

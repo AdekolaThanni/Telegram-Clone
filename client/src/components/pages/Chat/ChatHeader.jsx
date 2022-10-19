@@ -9,7 +9,7 @@ import ActionsModal from "./ActionsModal";
 function ChatHeader({ chatProfile }) {
   const dispatch = useDispatch();
   return (
-    <Header className="flex items-center px-[2rem] bg-primary border-l border-black gap-[1.5rem]">
+    <Header className="flex items-center px-[2rem] bg-primary border-l border-black gap-[1.5rem] shrink-0">
       <IconWrapper
         className="hidden"
         onClick={() =>

@@ -22,6 +22,7 @@
     --box-shadow: rgba(0, 0, 0, 0.149);
     --bg-modal: rgba(var(--bg-primary), 0.75);
     --bg-send: rgba(0, 0, 0, 0.2);
+    --message-status: var(--avatar-check);
   }
 
   html {
@@ -51,12 +52,13 @@ html.dark {
   --text-primary: rgb(255, 255, 255);
   --text-secondary: rgb(170, 170, 170);
   --text-secondary-light: rgba(171, 171, 171, 0.078);
-  --avatar-check: var(--bg-message);
+  --avatar-check: var(--text-primary);
   --scrollbar: rgba(255, 255, 255, 0.2);
   --danger: rgb(255, 89, 90);
   --box-shadow: rgba(0, 0, 0, 0.4);
   --bg-modal: rgba(var(--bg-primary), 0.75);
   --bg-send: rgba(0, 0, 0, 0.2);
+  --message-status: rgba(255, 255, 255, 0.6);
 }
 
 @layer components {

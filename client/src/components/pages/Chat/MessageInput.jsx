@@ -36,8 +36,8 @@ function MessageInput({ isRecording, handleInput, messageEmpty }) {
       {/* Input */}
       <div
         id="messageInput"
-        className="outline-none flex-grow z-10 duration-200 max-h-[16rem] overflow-y-scroll custom-scrollbar overflow-x-hidden flex items-center"
-        ariaRole="input"
+        className="outline-none flex-grow z-10 max-h-[16rem] overflow-y-scroll custom-scrollbar overflow-x-hidden whitespace-pre-wrap"
+        ariaRole="textarea"
         contentEditable={true}
         onInput={handleInput}
         onClick={terminateRecording}
