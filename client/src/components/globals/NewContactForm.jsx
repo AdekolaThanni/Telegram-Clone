@@ -1,11 +1,11 @@
 import React from "react";
-import Modal from "../../globals/Modal";
+import Modal from "./Modal";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import IconWrapper from "../../globals/IconWrapper";
-import FormField from "../../globals/FormField";
+import IconWrapper from "./IconWrapper";
+import FormField from "./FormField";
 import { useDispatch } from "react-redux";
-import { modalActions } from "../../../store/modalSlice";
+import { modalActions } from "../../store/modalSlice";
 
 const formSchema = Yup.object().shape({
   firstName: Yup.string().required("Field is required"),
@@ -18,7 +18,7 @@ function NewContactForm() {
   return (
     <Modal
       typeValue="newContactForm"
-      className="max-w-[45rem] mx-[1rem] !bg-primary backdrop-blur-0"
+      className="!max-w-[45rem] mx-[1rem] !bg-primary backdrop-blur-0"
       canOverlayClose={false}
     >
       <Formik

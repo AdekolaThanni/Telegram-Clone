@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../store/modalSlice";
 import Header from "../components/globals/Header";
 import SearchBar from "../components/pages/ChatList/SearchBar";
+import { chatActions } from "../store/chatSlice";
 
 function ChatList() {
   const { chatList, handleSearchValue, searchValue } = useChatList();
@@ -22,6 +23,7 @@ function ChatList() {
   const dispatch = useDispatch();
 
   const selectChat = (chatId) => {
+    dispatch(chatActions.setChatActive());
     setActiveChat(chatId);
   };
 

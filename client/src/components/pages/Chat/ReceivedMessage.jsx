@@ -11,7 +11,10 @@ function ReceivedMessage({ message }) {
           fillColor="fill-primary stroke-primary"
         />
       </div>
-      <Message messageData={message} className="bg-primary rounded-bl-none" />
+      <Message
+        messageData={message}
+        className="bg-primary rounded-bl-none mr-[3rem]"
+      />
     </div>
   );
 }

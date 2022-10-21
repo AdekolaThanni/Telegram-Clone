@@ -28,6 +28,7 @@ function Modal({ className, children, typeValue, canOverlayClose, onClick }) {
               },
             }}
             className={`bg-modal backdrop-blur-[80px] py-[1rem] px-[.5rem] flex flex-col gap-[.5rem] w-fit rounded-md shadow-md shadow-box-shadow absolute ${className}`}
+            id="modal"
             style={{
               ...positions,
             }}

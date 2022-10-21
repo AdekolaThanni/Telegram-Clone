@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../store/modalSlice";
 
@@ -8,6 +8,7 @@ function Overlay({ children, canOverlayClose }) {
     if (!canOverlayClose) return;
     dispatch(modalActions.closeModal());
   };
+
   return (
     <div
       onClick={(event) => {

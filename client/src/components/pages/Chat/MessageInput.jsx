@@ -2,11 +2,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../../store/modalSlice";
 
-function MessageInput({ isRecording, handleInput, messageEmpty }) {
+function MessageInput({
+  isRecording,
+  handleInput,
+  messageEmpty,
+  getCaretIndex,
+}) {
   const dispatch = useDispatch();
 
   // Ask for confirmation to terminate recording if user is currenly recording a message
   const terminateRecording = (event) => {
+    getCaretIndex(event);
     if (isRecording) {
       event.currentTarget.blur();
       dispatch(modalActions.openModal({ type: "stopRecordModal" }));
@@ -41,6 +47,8 @@ function MessageInput({ isRecording, handleInput, messageEmpty }) {
         contentEditable={true}
         onInput={handleInput}
         onClick={terminateRecording}
+        onFocus={getCaretIndex}
+        onKeyDown={getCaretIndex}
       ></div>
     </div>
   );

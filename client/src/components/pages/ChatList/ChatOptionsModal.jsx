@@ -1,12 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../../../store/modalSlice";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
 
 function ChatOptionsModal() {
-  const { pinned, privateChat } = useSelector(
-    (state) => state.modalReducer.payload
-  );
+  const chatData = useSelector((state) => state.modalReducer.payload);
+
+  const dispatch = useDispatch();
+
   const pin = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -47,10 +49,27 @@ function ChatOptionsModal() {
     <Modal className={`z-10`} typeValue="chatOptions">
       {/* Pin or unpin chat */}
       <ModalChild>
-        {pinned ? unpin : pin}
-        {pinned ? "Unpin" : "Pin"}
+        {chatData.pinned ? unpin : pin}
+        {chatData.pinned ? "Unpin" : "Pin"}
       </ModalChild>
-      <ModalChild className="text-danger">
+      <ModalChild
+        onClick={() => {
+          dispatch(modalActions.closeModal());
+
+          setTimeout(() => {
+            dispatch(
+              modalActions.openModal({
+                type: chatData.privateChat
+                  ? "deleteChatModal"
+                  : "leaveGroupModal",
+                payload: { profile: chatData },
+                positions: {},
+              })
+            );
+          }, 210);
+        }}
+        className="text-danger"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
@@ -68,7 +87,7 @@ function ChatOptionsModal() {
             className="!fill-transparent !stroke-danger"
           />
         </svg>
-        {privateChat ? "Delete Chat" : "Leave Group"}
+        {chatData.privateChat ? "Delete Chat" : "Leave Group"}
       </ModalChild>
     </Modal>
   );

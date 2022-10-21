@@ -9,7 +9,6 @@ import ActivePage from "../components/pages/Sidebar/ActivePage";
 import useContactList from "../hooks/useContactList";
 import { sidebarActions } from "../store/sidebarSlice";
 import { modalActions } from "../store/modalSlice";
-import NewContactForm from "../components/pages/Contacts/NewContactForm";
 
 function Contacts() {
   const dispatch = useDispatch();
@@ -50,7 +49,6 @@ function Contacts() {
           <ContactItem key={contact.id} contact={contact} />
         ))}
       </div>
-      <NewContactForm />
       <CTAIconWrapper
         onClick={() =>
           dispatch(

@@ -23,7 +23,7 @@ function MessageList({ messageHistory }) {
           setScrolledUp(false);
         }
       }}
-      className="w-full overflow-y-scroll custom-scrollbar py-[1rem]"
+      className="w-full overflow-y-scroll no-scrollbar py-[1rem]"
     >
       {messageHistory.map((messagesData) => (
         <DayMessages

@@ -34,13 +34,15 @@ function Message({ messageData, className }) {
 
   return (
     <div
-      className={`${className} p-[1.5rem] rounded-3xl flex items-center max-w-[35rem]`}
+      className={`${className} p-[1.5rem] rounded-3xl flex items-center max-w-[35rem] sm:text-[1.4rem]`}
     >
       <div className="font-semibold">{messageData.message}</div>
       <MessageReadStatus
         readStatus={!messageData.received && messageData.readStatus}
         time={messageData.time}
-        className="self-end translate-y-[1rem]"
+        className={`self-end translate-y-[1rem] ${
+          messageData.received && "!text-secondary"
+        }`}
       />
     </div>
   );

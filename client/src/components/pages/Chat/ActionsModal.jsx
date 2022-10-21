@@ -1,11 +1,28 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { modalActions } from "../../../store/modalSlice";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
 
-function ActionsModal({ privateChat }) {
+function ActionsModal({ chatProfile }) {
+  const dispatch = useDispatch();
   return (
-    <Modal typeValue="actionsModal" className="origin-top-right">
-      <ModalChild>
+    <Modal typeValue="actionsModal" className="origin-top-right !w-[18rem]">
+      <ModalChild
+        onClick={() => {
+          dispatch(modalActions.closeModal());
+
+          setTimeout(() => {
+            dispatch(
+              modalActions.openModal({
+                type: "voiceCallModal",
+                payload: { profile: chatProfile },
+                positions: {},
+              })
+            );
+          }, 210);
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
@@ -37,7 +54,24 @@ function ActionsModal({ privateChat }) {
         </svg>
         Video Call
       </ModalChild>
-      <ModalChild className="text-danger">
+      <ModalChild
+        onClick={() => {
+          dispatch(modalActions.closeModal());
+
+          setTimeout(() => {
+            dispatch(
+              modalActions.openModal({
+                type: chatProfile.privateChat
+                  ? "deleteChatModal"
+                  : "leaveGroupModal",
+                payload: { profile: chatProfile },
+                positions: {},
+              })
+            );
+          }, 210);
+        }}
+        className="text-danger"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
@@ -55,7 +89,7 @@ function ActionsModal({ privateChat }) {
             className="!fill-transparent !stroke-danger"
           />
         </svg>
-        {privateChat ? "Delete Chat" : "Leave Group"}
+        {chatProfile.privateChat ? "Delete Chat" : "Leave Group"}
       </ModalChild>
     </Modal>
   );

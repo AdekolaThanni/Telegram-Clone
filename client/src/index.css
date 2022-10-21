@@ -7,13 +7,16 @@
     /* Background colors */
     --bg-primary: rgb(255, 255, 255);
     --bg-secondary: rgb(196 201 204);
+    --border: rgb(223, 225, 229);
+    --bg-search: rgb(250, 250, 250);
+    --border-search: rgb(223, 225, 229);
 
     --bg-cta-icon: rgb(51, 144, 236);
     --bg-message: rgb(238, 255, 222);
-    --bg-message-highlight: rgb(121 165 65, 40%);
+    --bg-message-highlight: rgb(121, 165, 65, 40%);
     /* Text colors */
     --text-primary: rgb(0, 0, 0);
-    --text-secondary: rgb(112 117 121);
+    --text-secondary: rgb(112, 117, 121);
     --text-secondary-light: hsla(207, 4%, 46%, 0.08);
 
     --avatar-check: rgb(10 198 48);
@@ -45,9 +48,12 @@
 html.dark {
   /* Background colors */
   --bg-primary: rgb(24, 24, 24);
+  --border: rgb(15, 15, 15);
   --bg-cta-icon: rgb(135, 116, 225);
   --bg-message: rgb(135, 116, 225);
   --bg-message-highlight: rgba(137, 53, 138, 0.4);
+  --bg-search: rgb(15, 15, 15);
+  --border-search: rgb(47, 47, 47);
   /* Text colors */
   --text-primary: rgb(255, 255, 255);
   --text-secondary: rgb(170, 170, 170);
@@ -79,6 +85,10 @@ html.dark {
     @apply bg-scrollbar rounded-full;
   }
 
+  .no-scrollbar::-webkit-scrollbar {
+    @apply hidden;
+  }
+
   .modal-child > svg {
     @apply w-[2.5rem] h-[2.5rem];
   }
@@ -104,11 +114,6 @@ html.dark {
     animation-iteration-count: infinite;
 
     @apply w-[10rem] h-[10rem] rounded-full bg-send block absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2;
-  }
-
-  .chat-bg {
-    background-image: url("./assets/svg/bg-pattern.svg");
-    background-size: contain;
   }
 }
 
@@ -138,6 +143,29 @@ html.dark {
     height: 8rem;
   }
 }
+/* Chat background */
+/* #fec496,#dd6cb9,#962fbf,#4f5bd5 */
+html.dark .chat-bg {
+  background-color: black;
+  background-image: linear-gradient(
+      to bottom right,
+      rgb(150, 47, 191, 0.1),
+      rgb(221, 108, 185, 0.1)
+    ),
+    url("./assets/chat-bg-dark.jpg");
+  background-size: contain;
+}
+
+.chat-bg {
+  background-color: rgb(136, 184, 132, 0.3);
+  background-image: linear-gradient(
+      to bottom right,
+      rgb(136, 184, 132, 0.3),
+      rgb(107, 165, 135, 0.3)
+    ),
+    url("./assets/chat-bg-light.jpg");
+  background-size: contain;
+}
 
 /* Emoji Picker styles */
 /* Hide emoji search bar search bar */
@@ -159,4 +187,8 @@ html.dark #emojiPicker .EmojiPickerReact {
   --epr-focus-bg-color: var(--text-secondary-light);
 
   @apply shadow-md shadow-box-shadow;
+}
+
+#messageInput img {
+  @apply inline-block w-[1.8rem] h-[1.8rem];
 }

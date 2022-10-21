@@ -6,7 +6,10 @@ function SentMessage({ message }) {
   return (
     <div className="self-end">
       <div className="flex items-end">
-        <Message messageData={message} className="bg-message rounded-br-none" />
+        <Message
+          messageData={message}
+          className="bg-message rounded-br-none ml-[3rem] "
+        />
         <BubbleTail
           className={message.messageType === "image" && "hidden"}
           fillColor="fill-message stroke-message"

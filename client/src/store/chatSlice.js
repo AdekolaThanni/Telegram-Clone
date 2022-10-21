@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: null,
+  active: false,
 };
 
 const chatSlice = createSlice({
@@ -13,6 +14,12 @@ const chatSlice = createSlice({
     },
     resetMode: (state) => {
       state.mode = null;
+    },
+    setChatActive: (state) => {
+      state.active = true;
+    },
+    setChatUnactive: (state) => {
+      state.active = false;
     },
   },
 });

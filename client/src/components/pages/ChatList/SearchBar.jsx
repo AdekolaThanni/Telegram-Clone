@@ -4,7 +4,7 @@ import IconWrapper from "../../globals/IconWrapper";
 function SearchBar({ className, handleSearchValue, searchValue }) {
   return (
     <div
-      className={`flex items-center gap-[.5rem] group border border-secondary-text rounded-full pl-[1rem]  focus-within:border-cta-icon focus-within:border-2 ${className}`}
+      className={`flex items-center gap-[.5rem] group border bg-search border-search-border rounded-full pl-[1rem]  focus-within:border-cta-icon focus-within:border-2 ${className}`}
     >
       {/* Search Icon */}
       <svg
