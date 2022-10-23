@@ -34,6 +34,7 @@ module.exports = {
         border: "var(--border)",
         search: "var(--bg-search)",
         "search-border": "var(--border-search)",
+        "recorder-icon": "var(--recorder-icon)",
       },
     },
   },

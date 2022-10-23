@@ -1,11 +1,14 @@
 import React from "react";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../../store/authSlice";
 
 function LogoutModal() {
+  const dispatch = useDispatch();
   return (
     <Modal typeValue="logoutModal" className="origin-top-right">
-      <ModalChild>
+      <ModalChild onClick={() => dispatch(authActions.logout())}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"

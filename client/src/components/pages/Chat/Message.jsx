@@ -1,6 +1,7 @@
 import React from "react";
 import CallMessage from "./CallMessage";
 import MessageReadStatus from "./MessageReadStatus";
+import VoiceMessage from "./VoiceMessage";
 
 function Message({ messageData, className }) {
   // Image messages
@@ -13,7 +14,7 @@ function Message({ messageData, className }) {
           alt=""
         />
         <MessageReadStatus
-          readStatus={!messageData.received && messageData.readStatus}
+          readStatus={messageData.received ? undefined : messageData.readStatus}
           time={messageData.time}
           className="absolute bottom-[1rem] right-[1rem] bg-secondary-light-text rounded-full !text-white"
         />
@@ -21,8 +22,18 @@ function Message({ messageData, className }) {
     );
   }
 
-  //   Calls
+  if (messageData.messageType === "voice")
+    return (
+      <VoiceMessage
+        received={messageData.received}
+        voiceDetails={messageData.voiceDetails}
+        readStatus={messageData.readStatus}
+        time={messageData.time}
+      />
+    );
+
   if (messageData.messageType === "call")
+    //   Calls
     return (
       <CallMessage
         callDetails={messageData.callDetails}
@@ -38,7 +49,7 @@ function Message({ messageData, className }) {
     >
       <div className="font-semibold">{messageData.message}</div>
       <MessageReadStatus
-        readStatus={!messageData.received && messageData.readStatus}
+        readStatus={!messageData.received ? messageData.readStatus : undefined}
         time={messageData.time}
         className={`self-end translate-y-[1rem] ${
           messageData.received && "!text-secondary"

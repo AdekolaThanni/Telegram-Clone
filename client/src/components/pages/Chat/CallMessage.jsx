@@ -4,8 +4,8 @@ import MessageReadStatus from "./MessageReadStatus";
 function CallMessage({ callDetails, received, readStatus, time }) {
   return (
     <div
-      className={`bg-message flex rounded-3xl ${
-        received ? "rounded-bl-none" : "rounded-br-none"
+      className={`flex rounded-3xl ${
+        received ? "rounded-bl-none" : "rounded-br-none bg-message"
       } p-[1.5rem] gap-[1rem]`}
     >
       <div className="flex items-center gap-[1rem]">
@@ -74,7 +74,7 @@ function CallMessage({ callDetails, received, readStatus, time }) {
         </div>
       </div>
       <MessageReadStatus
-        readStatus={!received && readStatus}
+        readStatus={received ? undefined : readStatus}
         time={time}
         className="self-end translate-y-[1rem]"
       />

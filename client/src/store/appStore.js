@@ -3,6 +3,7 @@ import sidebarReducer from "./sidebarSlice";
 import modalReducer from "./modalSlice";
 import chatReducer from "./chatSlice";
 import userProfileReducer from "./userProfileSlice";
+import authReducer from "./authSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     modalReducer,
     chatReducer,
     userProfileReducer,
+    authReducer,
   },
 });
 

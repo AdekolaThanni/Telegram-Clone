@@ -1,7 +1,15 @@
 import React from "react";
 import { Field } from "formik";
 
-function FormField({ labelName, name, value, error, required }) {
+function FormField({
+  labelName,
+  labelClassName,
+  name,
+  value,
+  error,
+  required,
+  fieldType,
+}) {
   return (
     <div className="relative group">
       <label
@@ -9,7 +17,7 @@ function FormField({ labelName, name, value, error, required }) {
           event.currentTarget.closest("div").querySelector("input").focus()
         }
         htmlFor={name}
-        className={`
+        className={`${labelClassName}
         absolute 
         ${
           value
@@ -30,7 +38,8 @@ function FormField({ labelName, name, value, error, required }) {
       <Field
         name={name}
         className="bg-transparent border border-secondary-text rounded-2xl py-[1rem] group-focus-within:outline-none px-[1.5rem] focus-within:border-2 focus-within:border-cta-icon w-full"
-      ></Field>
+        type={fieldType ? fieldType : "text"}
+      />
     </div>
   );
 }

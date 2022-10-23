@@ -103,7 +103,7 @@ function ChatItem({ chatData, activeChat, onClick }) {
           {/* When user has a message pinned and also has an unread message, the unread message indicator takes precedence */}
           <span className="">
             {chatData.unreadMessages ? (
-              <span className="flex items-center justify-center rounded-full text-white bg-[#0ac630] min-w-[2.5rem] min-h-[2.5rem] px-[.8rem]">
+              <span className="flex items-center justify-center rounded-full text-white bg-cta-icon min-w-[2.5rem] min-h-[2.5rem] px-[.8rem]">
                 {chatData.unreadMessages}
               </span>
             ) : (

@@ -48,7 +48,7 @@ function MessageInput({
         onInput={handleInput}
         onClick={terminateRecording}
         onFocus={getCaretIndex}
-        onKeyDown={getCaretIndex}
+        // onKeyDown={getCaretIndex}
       ></div>
     </div>
   );

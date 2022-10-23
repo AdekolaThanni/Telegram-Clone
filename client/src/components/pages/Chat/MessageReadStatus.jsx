@@ -7,7 +7,7 @@ function MessageReadStatus({ readStatus, time, className }) {
       className={`flex items-center px-[1rem] py-[.2rem] text-[1.3rem] text-message-status ${className}`}
     >
       <span className="">{time}</span>
-      {readStatus && (
+      {readStatus !== undefined && (
         <MessageCheck
           readStatus={readStatus}
           className="!fill-transparent !stroke-avatar-check"

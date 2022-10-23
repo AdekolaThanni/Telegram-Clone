@@ -29,19 +29,11 @@ const useMessageInput = () => {
     setMessageEmpty(false);
     const messageInput = document.querySelector("#messageInput");
     const innerHtml = messageInput.innerHTML;
-    const emojiString = `<img src="${getImageUrl()}" alt="${emoji}" />`;
+    const emojiString = `<img src="${getImageUrl()}" />`;
 
     if (!caretIndex) {
-      if (innerHtml.length) {
-        messageInput.innerHTML += emojiString;
-      } else {
-        messageInput.innerHTML = emojiString + messageInput.innerHTML;
-        return;
-      }
-    }
-
-    if (innerHtml.includes("<div>")) {
-      messageInput.innerHTML += emojiString;
+      messageInput.innerHTML = emojiString + messageInput.innerHTML;
+      return;
     }
 
     // Caret index === element index in textContent
@@ -51,7 +43,19 @@ const useMessageInput = () => {
 
     let countingNormalText = true;
     for (let char of innerHtml) {
-      if (innerHtml.slice(innerHtmlIndex).startsWith("<img src=")) {
+      const htmlRest = innerHtml.slice(innerHtmlIndex);
+      // If an image tag is next
+      if (htmlRest.startsWith("<img src=")) {
+        countingNormalText = false;
+      }
+
+      // If it sees a div
+      if (htmlRest.startsWith("<div>")) {
+        countingNormalText = false;
+      }
+
+      // If it meets ending of div
+      if (htmlRest.startsWith("</div>")) {
         countingNormalText = false;
       }
 
@@ -77,6 +81,7 @@ const useMessageInput = () => {
   // Handle input to box
   const handleInput = (event) => {
     dispatch(chatActions.setMode({ mode: "typing" }));
+    getCaretIndex(event);
     // If message is initially empty change to filled
     if (messageEmpty) {
       setMessageEmpty(false);

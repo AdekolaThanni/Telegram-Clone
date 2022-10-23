@@ -48,6 +48,9 @@ const useRecorder = () => {
     setCounter(0);
     clearInterval(timingInterval);
     dispatch(chatActions.resetMode());
+    // setTimeout(() => {
+    //   console.log(mediaBlobUrl);
+    // }, 10000);
   };
 
   const playRecording = () => {
