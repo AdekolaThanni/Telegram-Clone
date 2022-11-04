@@ -1,13 +1,14 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
+
+dotenv.config({ path: "./.env" });
 
 const app = express();
 
 // Connect database
 mongoose
-  .connect(
-    "mongodb+srv://AdekolaThanni:bP9B6aO4NlECmtRk@cluster0.rx6zlo5.mongodb.net/Telegram-Clone?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Database connected..."))
   .catch((error) => console.log("An error occured..."));
 

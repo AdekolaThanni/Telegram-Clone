@@ -4,9 +4,7 @@ const User = require("./models/User");
 
 // Connect database
 mongoose
-  .connect(
-    "mongodb+srv://AdekolaThanni:bP9B6aO4NlECmtRk@cluster0.rx6zlo5.mongodb.net/Telegram-Clone?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Database connected..."));
 
 const data = fs.readFileSync("./usersJson.json", "utf-8");
