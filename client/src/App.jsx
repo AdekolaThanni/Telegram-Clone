@@ -8,8 +8,11 @@ import Authentication from "./pages/Authentication";
 import Chat from "./pages/Chat";
 import UserProfile from "./pages/UserProfile";
 import { useSelector } from "react-redux";
+import useJoinSocket from "./hooks/socketHooks/useJoinSocket";
 
 function App() {
+  // Join socket
+  useJoinSocket();
   // Set app theme
   useEffect(() => {
     const initialMode = JSON.parse(localStorage.getItem("darkMode"));
