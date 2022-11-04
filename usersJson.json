@@ -4,7 +4,8 @@
     "phoneNumber": "+234906783548",
     "bio": "I love my world as much as i love everyting around me, so someone said he liked how I smile, dance and wiggle, hahahahahahahahaha",
     "title": "Sophia",
-    "avatar": "https://images.unsplash.com/photo-1663153275138-ec8463d46634?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
+    "avatar": "https://images.unsplash.com/photo-1663153275138-ec8463d46634?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+    "password": "$2y$12$FVyCAgoMY0jCEnk0PaaGReoyokeVrOVajGXaXOTGhu5JswDXUCxsK"
   },
   {
     "username": "Adekola",
@@ -12,6 +13,7 @@
     "bio": "Look",
     "title": "Adekola",
     "status": { "online": true },
-    "avatar": "https://images.unsplash.com/photo-1663153275138-ec8463d46634?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
+    "avatar": "https://images.unsplash.com/photo-1663153275138-ec8463d46634?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+    "password": "$2y$12$HMNCKGxx7qpY2qTlK/Ji1eVI1X8D5hElj7tyPYF8PW44SiepmE1/a"
   }
 ]

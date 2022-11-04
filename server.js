@@ -1,10 +1,9 @@
 const dotenv = require("dotenv");
-const express = require("express");
 const mongoose = require("mongoose");
 
-dotenv.config({ path: "./.env" });
+const app = require("./app");
 
-const app = express();
+dotenv.config({ path: "./.env" });
 
 // Connect database
 mongoose
