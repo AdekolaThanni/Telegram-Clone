@@ -9,7 +9,7 @@ const useJoinSocket = () => {
   }, []);
 
   socket?.on("connect", () => {
-    alert("We are connected over here!!");
+    // alert("We are connected over here!!");
   });
 };
 

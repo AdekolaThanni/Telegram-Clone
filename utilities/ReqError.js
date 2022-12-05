@@ -3,6 +3,7 @@ module.exports = class extends Error {
     super(message);
     this.statusCode = statusCode;
     this.status = this.statusCode >= 500 ? "fail" : "error";
-    return this;
+
+    Error.captureStackTrace(this, this.constructor);
   }
 };

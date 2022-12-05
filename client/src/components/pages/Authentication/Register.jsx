@@ -2,6 +2,10 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormField from "../../globals/FormField";
+import useFetch from "../../../hooks/useFetch";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../../store/authSlice";
+import Spinner from "../../globals/Spinner";
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -12,7 +16,6 @@ const schema = Yup.object().shape({
     .min(1, "Too short")
     .max(50, "Too long")
     .required("Field is required"),
-  phoneNumber: Yup.string().required("Field is required"),
   password: Yup.string().required("Field is required"),
   confirmPassword: Yup.string()
     .required("Field is required")
@@ -20,6 +23,14 @@ const schema = Yup.object().shape({
 });
 
 function Register({ setUserWantsToLogin }) {
+  const dispatch = useDispatch();
+  const { reqFn, reqState } = useFetch(
+    { url: "/user/register", method: "POST" },
+    () => {
+      dispatch(authActions.login());
+    }
+  );
+
   return (
     <div className="basis-[35rem]">
       <h1 className="text-cta-icon font-semibold text-[2rem] uppercase mb-[2rem]">
@@ -29,18 +40,18 @@ function Register({ setUserWantsToLogin }) {
         initialValues={{
           name: "",
           username: "",
-          phoneNumber: "",
           password: "",
           confirmPassword: "",
         }}
         validationSchema={schema}
+        onSubmit={reqFn}
       >
         {({ errors, values }) => (
           <Form className="flex flex-col gap-[1.5rem]" autoComplete="off">
             <FormField
               labelName="Name"
               labelClassName={`bg-transparent group-focus-within:hidden ${
-                values.firstName && "hidden"
+                values.name && "hidden"
               }`}
               name="name"
               required={true}
@@ -51,23 +62,12 @@ function Register({ setUserWantsToLogin }) {
             <FormField
               labelName="Username"
               labelClassName={`bg-transparent group-focus-within:hidden ${
-                values.firstName && "hidden"
+                values.username && "hidden"
               }`}
               name="username"
               required={true}
               value={values.username}
               error={errors.username}
-            />
-
-            <FormField
-              labelName="Telephone Number"
-              labelClassName={`bg-transparent group-focus-within:hidden ${
-                values.phoneNumber && "hidden"
-              }`}
-              name="phoneNumber"
-              required={true}
-              value={values.phoneNumber}
-              error={errors.phoneNumber}
             />
 
             <FormField
@@ -85,16 +85,16 @@ function Register({ setUserWantsToLogin }) {
             <FormField
               labelName="Confirm Password"
               labelClassName={`bg-transparent group-focus-within:hidden ${
-                values.password && "hidden"
+                values.confirmPassword && "hidden"
               }`}
               name="confirmPassword"
               required={true}
               value={values.confirmPassword}
               error={errors.confirmPassword}
-              fieldType="confirmPassword"
+              fieldType="password"
             />
             <button
-              className={`bg-cta-icon mt-[1rem] p-[1rem] rounded-xl uppercase text-white font-semibold opacity-80 ${
+              className={`bg-cta-icon mt-[1rem] p-[1rem] rounded-xl uppercase text-white font-semibold opacity-80 flex items-center justify-center ${
                 !errors.name &&
                 !errors.username &&
                 !errors.phoneNumber &&
@@ -104,7 +104,10 @@ function Register({ setUserWantsToLogin }) {
               }`}
               type="submit"
             >
-              Join
+              {reqState !== "loading" && "Join"}
+              {reqState === "loading" && (
+                <Spinner className="w-[2.5rem] h-[2.5rem]" />
+              )}
             </button>
           </Form>
         )}

@@ -9,6 +9,7 @@ import Chat from "./pages/Chat";
 import UserProfile from "./pages/UserProfile";
 import { useSelector } from "react-redux";
 import useJoinSocket from "./hooks/socketHooks/useJoinSocket";
+import Notification from "./components/globals/Notification";
 
 function App() {
   // Join socket
@@ -36,6 +37,9 @@ function App() {
       )}
 
       {!loggedIn && <Authentication />}
+
+      {/* Notification */}
+      <Notification />
 
       {/* Modals */}
       <DeleteChat />

@@ -3,12 +3,8 @@ const User = require("../models/User");
 const ReqError = require("../utilities/ReqError");
 
 exports.getAllContacts = catchAsyncError(async (req, res, next) => {
-  // Username is gotten from request, so as to get user contacts
-  const { username } = req.body;
-
-  if (!username) return next(new ReqError(400, "Username is required"));
-
-  const user = await User.findOne({ username }).populate({
+  // Id is gotten from cookies, so as to get user contacts
+  const user = await User.findById(req.cookies.userId).populate({
     path: "contacts",
     select: "id name username",
   });
@@ -24,12 +20,12 @@ exports.getAllContacts = catchAsyncError(async (req, res, next) => {
 });
 
 exports.addNewContact = catchAsyncError(async (req, res, next) => {
-  const { newUsername, username } = req.body;
+  const { newUsername } = req.body;
 
-  if (!newUsername || !username)
-    return next(new ReqError(400, "Details are incomplete"));
+  if (!newUsername)
+    return next(new ReqError(400, "Contact username is needed"));
 
-  const user = await User.findOne({ username });
+  const user = await User.findById(req.cookies.userId);
   const newContact = await User.findOne({ username: newUsername });
 
   if (!newContact) return next(new ReqError(400, "User does not exist"));
@@ -48,12 +44,12 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
 });
 
 exports.deleteContact = catchAsyncError(async (req, res, next) => {
-  const { aimedUsername, username } = req.body;
+  const { aimedUsername } = req.body;
 
-  if (!aimedUsername || !username)
-    return next(new ReqError(400, "Details are incomplete"));
+  if (!aimedUsername)
+    return next(new ReqError(400, "Contact username is missing"));
 
-  const user = await User.findOne({ username });
+  const user = await User.findById(req.cookies.userId);
   const aimedContact = await User.findOne({ username: aimedUsername });
 
   if (!aimedContact) return next(new ReqError(400, "User does not exist"));

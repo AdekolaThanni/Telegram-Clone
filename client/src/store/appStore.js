@@ -4,6 +4,7 @@ import modalReducer from "./modalSlice";
 import chatReducer from "./chatSlice";
 import userProfileReducer from "./userProfileSlice";
 import authReducer from "./authSlice";
+import notificationReducer from "./notificationSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     chatReducer,
     userProfileReducer,
     authReducer,
+    notificationReducer,
   },
 });
 
