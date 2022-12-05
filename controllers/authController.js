@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const ReqError = require("../utilities/ReqError");
 const jwt = require("jsonwebtoken");
+const catchAsyncError = require("../utilities/catchAsyncError");
 
 const signToken = (user) => {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
@@ -8,7 +9,32 @@ const signToken = (user) => {
   });
 };
 
-exports.login = async (req, res, next) => {
+const assignTokenToCookie = (user, res, statusCode) => {
+  const token = signToken(user);
+
+  const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(
+      Date.now() + parseInt(process.env.JWT_EXPIRES_IN) * 24 * 60 * 60 * 1000
+    ),
+  };
+
+  res.cookie("telegramToken", token, cookieOptions);
+  res.cookie("userId", user._id, cookieOptions);
+
+  user.password = undefined;
+
+  res.status(statusCode).json({
+    status: "success",
+    data: {
+      token,
+      user,
+    },
+  });
+};
+
+exports.login = catchAsyncError(async (req, res, next) => {
   // Takes in username and password
   const { username, password } = req.body;
 
@@ -30,11 +56,11 @@ exports.login = async (req, res, next) => {
   if (!passwordGivenCorrect)
     return next(new ReqError(400, "Username or Password incorrect"));
 
-  const token = signToken(foundUser);
+  assignTokenToCookie(foundUser, res, 200);
+});
 
-  res.status(200).json({
-    status: "success",
-    token,
-    message: "Logged in successfully",
-  });
-};
+exports.register = catchAsyncError(async (req, res, next) => {
+  const newUser = await User.create(req.body);
+
+  assignTokenToCookie(newUser, res, 201);
+});
