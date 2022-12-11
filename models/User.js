@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const contactSchema = new mongoose.Schema({
+  contactId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  name: String,
+});
+
 const Schema = new mongoose.Schema({
   // name
   name: {
@@ -19,16 +24,25 @@ const Schema = new mongoose.Schema({
     type: String,
     min: 1,
     max: 100,
+    default: "Hi there, I'm using Telegram",
   },
   //   User profile image (Avatar)
   avatar: String,
   //   User contacts
-  contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  contacts: [contactSchema],
+  // Status, whether user is online or not
+  status: {
+    online: { type: Boolean, default: true },
+    lastSeen: Date,
+  },
   //   User password
-  password: { type: String, required: true, min: [8, "Password too short"] },
-  confirmPassword: {
+  password: {
     type: String,
     required: true,
+    min: [8, "Password too short"],
+  },
+  confirmPassword: {
+    type: String,
     validate: {
       validator: function (givenPassword) {
         return givenPassword === this.password;
@@ -36,6 +50,10 @@ const Schema = new mongoose.Schema({
       message: "Passwords do not match",
     },
   },
+});
+
+Schema.pre("save", async function (next) {
+  if (!this.$isNew) this.$ignore("password");
 });
 
 Schema.pre("save", async function (next) {

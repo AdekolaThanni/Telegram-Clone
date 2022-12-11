@@ -5,8 +5,8 @@ const ReqError = require("../utilities/ReqError");
 exports.getAllContacts = catchAsyncError(async (req, res, next) => {
   // Id is gotten from cookies, so as to get user contacts
   const user = await User.findById(req.cookies.userId).populate({
-    path: "contacts",
-    select: "id name username",
+    path: "contacts.contactId",
+    select: "id username bio avatar status",
   });
 
   if (!user) return next(new ReqError(400, "Username does not exist"));
@@ -20,37 +20,44 @@ exports.getAllContacts = catchAsyncError(async (req, res, next) => {
 });
 
 exports.addNewContact = catchAsyncError(async (req, res, next) => {
-  const { newUsername } = req.body;
+  const { name, username } = req.body;
 
-  if (!newUsername)
-    return next(new ReqError(400, "Contact username is needed"));
+  if (!username) return next(new ReqError(400, "Contact username is needed"));
 
   const user = await User.findById(req.cookies.userId);
-  const newContact = await User.findOne({ username: newUsername });
+  const newContact = await User.findOne({ username: username });
 
   if (!newContact) return next(new ReqError(400, "User does not exist"));
   if (user._id === newContact.id)
     return next(new ReqError(400, "You can't add yourself as a contact"));
 
-  user.contacts.push(newContact._id);
+  user.contacts.push({ name, contactId: newContact._id });
   await user.save({ validateBeforeSave: false });
 
   res.status(201).json({
     status: "success",
     data: {
-      user,
+      contact: {
+        name,
+        contactId: {
+          username: newContact.username,
+          _id: newContact._id,
+          avatar: newContact.avatar,
+          bio: newContact.bio,
+          status: newContact.status,
+        },
+      },
     },
   });
 });
 
 exports.deleteContact = catchAsyncError(async (req, res, next) => {
-  const { aimedUsername } = req.body;
+  const { username } = req.body;
 
-  if (!aimedUsername)
-    return next(new ReqError(400, "Contact username is missing"));
+  if (!username) return next(new ReqError(400, "Contact username is missing"));
 
   const user = await User.findById(req.cookies.userId);
-  const aimedContact = await User.findOne({ username: aimedUsername });
+  const aimedContact = await User.findOne({ username: username });
 
   if (!aimedContact) return next(new ReqError(400, "User does not exist"));
 

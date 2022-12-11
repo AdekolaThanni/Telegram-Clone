@@ -1,54 +1,40 @@
 import { useState, useEffect } from "react";
-const dummyContact = [
-  {
-    id: 0,
-    avatar:
-      "https://images.unsplash.com/photo-1663153275138-ec8463d46634?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-    title: "Sophia",
-    status: { online: true },
-  },
-  {
-    id: 2,
-    avatar:
-      "https://images.unsplash.com/photo-1664729723238-d42ae2f188e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-    title: "John",
-    status: { online: false, lastSeen: 1665613250716 },
-  },
-  {
-    id: 3,
-    title: "Gianni",
-    status: { online: false, lastSeen: 1665613033917 },
-    avatar:
-      "https://images.unsplash.com/photo-1664819485266-2de9be49b054?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=564&q=80",
-  },
-  {
-    id: 4,
-    title: "Adebola",
-    status: { online: false, lastSeen: 1665754898719 },
-    avatar:
-      "https://images.unsplash.com/photo-1655061764514-e755a3ece19f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=290&q=80",
-  },
-  {
-    id: 5,
-    title: "Penelope",
-    status: { online: true },
-    avatar:
-      "https://images.unsplash.com/photo-1665708611240-c25abd36dacb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { contactsActions } from "../store/contactsSlice";
+import useFetch from "./useFetch";
+
+let allContacts = [];
 
 const useContactList = () => {
-  const [contacts, setContacts] = useState(dummyContact);
+  const contacts = useSelector((state) => state.contactsReducer);
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
+  const loggedIn = useSelector((state) => state.authReducer.loggedIn);
+
+  const { reqFn: fetchContacts } = useFetch(
+    { method: "GET", url: "/contacts" },
+    (data) => {
+      dispatch(contactsActions.setContacts(data.data.contacts));
+      allContacts = data.data.contacts;
+    }
+  );
 
   const handleSearchValue = (event) => {
     setSearchValue(event.target.value);
   };
 
   useEffect(() => {
-    setContacts(() =>
-      dummyContact.filter((contact) =>
-        contact.title.toLowerCase().startsWith(searchValue.toLowerCase())
+    if (loggedIn) {
+      fetchContacts();
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    dispatch(
+      contactsActions.setContacts(
+        allContacts.filter((contact) =>
+          contact.name.toLowerCase().startsWith(searchValue.toLowerCase())
+        )
       )
     );
   }, [searchValue]);

@@ -29,15 +29,19 @@ function Chat() {
           : "lg:basis-[100rem] sm:translate-x-[55rem]"
       }`}
     >
-      {/* Header */}
-      <ChatHeader chatProfile={chatProfile} />
-      {/* container */}
-      <div className="flex-grow px-[1rem] sm:px-[.5rem] overflow-hidden">
-        <div className="max-w-[75rem] h-full mx-auto flex flex-col justify-end pb-[2rem] relative overflow-hidden">
-          <MessageList messageHistory={messageHistory} />
-          <NewMessage mode={mode} />
-        </div>
-      </div>
+      {chatActive && (
+        <>
+          {/* Header */}
+          <ChatHeader chatProfile={chatProfile} />
+          {/* container */}
+          <div className="flex-grow px-[1rem] sm:px-[.5rem] overflow-hidden">
+            <div className="max-w-[75rem] h-full mx-auto flex flex-col justify-end pb-[2rem] relative overflow-hidden">
+              <MessageList messageHistory={messageHistory} />
+              <NewMessage mode={mode} />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -45,9 +45,28 @@ function Contacts() {
       </Header>
       {/* Contacts */}
       <div className="">
-        {contacts.map((contact) => (
-          <ContactItem key={contact.id} contact={contact} />
-        ))}
+        {!!contacts.length &&
+          contacts.map((contact) => (
+            <ContactItem key={contact.contactId._id} contact={contact} />
+          ))}
+        {!contacts.length && (
+          <div className="flex flex-col py-[2rem] items-center uppercase">
+            <button
+              onClick={() =>
+                dispatch(
+                  modalActions.openModal({
+                    type: "newContactForm",
+                    positions: {},
+                  })
+                )
+              }
+              className={`bg-cta-icon mt-[5rem] p-[1rem] rounded-xl uppercase text-white font-semibold opacity-80 flex items-center justify-center`}
+              type="submit"
+            >
+              Add Contacts Now
+            </button>
+          </div>
+        )}
       </div>
       <CTAIconWrapper
         onClick={() =>

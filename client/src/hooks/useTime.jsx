@@ -1,4 +1,5 @@
 function useTime(date) {
+  if (!date) return "";
   const currentDate = Date.now();
   const dateObj = new Date(+date);
   const timeDifference = currentDate - date;

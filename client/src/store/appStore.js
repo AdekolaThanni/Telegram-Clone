@@ -5,6 +5,7 @@ import chatReducer from "./chatSlice";
 import userProfileReducer from "./userProfileSlice";
 import authReducer from "./authSlice";
 import notificationReducer from "./notificationSlice";
+import contactsReducer from "./contactsSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     userProfileReducer,
     authReducer,
     notificationReducer,
+    contactsReducer,
   },
 });
 

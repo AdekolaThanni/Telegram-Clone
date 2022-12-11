@@ -6,32 +6,36 @@ import IconWrapper from "./IconWrapper";
 import FormField from "./FormField";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../store/modalSlice";
+import useFetch from "../../hooks/useFetch";
+import { contactsActions } from "../../store/contactsSlice";
 
 const formSchema = Yup.object().shape({
-  firstName: Yup.string().required("Field is required"),
-  lastName: Yup.string(),
-  phoneNumber: Yup.number().required("Field is required"),
+  name: Yup.string().required("Field is required"),
+  username: Yup.string().required("Field is required"),
 });
 
 function NewContactForm() {
   const dispatch = useDispatch();
+  const { reqFn } = useFetch({ method: "POST", url: "/contacts" }, (data) => {
+    dispatch(contactsActions.addContact(data.data.contact));
+  });
   return (
     <Modal
       typeValue="newContactForm"
-      className="!max-w-[45rem] mx-[1rem] !bg-primary backdrop-blur-0"
+      className="mx-[1rem] !bg-primary backdrop-blur-0"
       canOverlayClose={false}
     >
       <Formik
         validationSchema={formSchema}
         initialValues={{
-          firstName: "",
-          lastName: "",
-          phoneNumber: "",
+          name: "",
+          username: "",
         }}
+        onSubmit={reqFn}
       >
         {({ errors, touched, values }) => (
           <Form
-            className="px-[1rem] py-[1rem] flex flex-col gap-[2rem]"
+            className="px-[1rem] py-[1rem] flex flex-col gap-[2rem] w-[38rem]"
             autoComplete="off"
           >
             {/* Header */}
@@ -58,7 +62,7 @@ function NewContactForm() {
               <button
                 type="submit"
                 className={`text-white uppercase px-[2rem] py-[1rem] rounded-md bg-cta-icon ml-auto
-                ${(!values.firstName || !values.phoneNumber) && "opacity-60"}`}
+                ${(!values.name || !values.username) && "opacity-60"}`}
               >
                 Add
               </button>
@@ -67,38 +71,28 @@ function NewContactForm() {
             <div className="flex items-center mb-[.5rem] gap-[1.5rem]">
               {/* Avatar */}
               <div className="w-[10rem] h-[10rem] rounded-full bg-cta-icon flex items-center justify-center text-[2.5rem] text-white font-bold uppercase">
-                {values.firstName[0]}{" "}
-                {values.lastName[0] || values.firstName?.split(" ")?.[1]?.[0]}
+                {values.name[0]} {values.name?.split(" ")?.[1]?.[0]}
               </div>
               {/* Forms */}
-              <div className="flex flex-col gap-[2rem]">
-                {/* form group */}
+              <div className="flex-grow">
                 <FormField
-                  name="firstName"
-                  labelName="First Name"
+                  name="name"
+                  labelName="Name"
                   required={true}
-                  error={errors.firstName}
-                  touched={touched.firstName}
-                  value={values.firstName}
-                />
-                <FormField
-                  name="lastName"
-                  labelName="Last Name"
-                  required={false}
-                  error={errors.lastName}
-                  touched={touched.lastName}
-                  value={values.lastName}
+                  error={errors.name}
+                  touched={touched.name}
+                  value={values.name}
                 />
               </div>
             </div>
             {/* Bottom */}
             <FormField
-              name="phoneNumber"
-              labelName="Phone Number"
+              name="username"
+              labelName="Username"
               required={true}
-              error={errors.phoneNumber}
-              touched={touched.phoneNumber}
-              value={values.phoneNumber}
+              error={errors.username}
+              touched={touched.username}
+              value={values.username}
             />
           </Form>
         )}

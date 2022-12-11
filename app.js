@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const authRouter = require("./routers/authRouter");
 const contactsRouter = require("./routers/contactsRouter");
+const profileRouter = require("./routers/profileRouter");
 const ReqError = require("./utilities/ReqError");
 const errorController = require("./controllers/errorController");
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/contacts", contactsRouter);
+app.use("/api/profile", profileRouter);
 
 // Error handle middleware
 app.use(errorController);
