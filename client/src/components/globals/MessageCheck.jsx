@@ -13,9 +13,9 @@ function MessageCheck({ readStatus, className }) {
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="m4 12l6 6L20 6"
         className={className}
       />
@@ -34,9 +34,9 @@ function MessageCheck({ readStatus, className }) {
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="m4 17l5 5l12-12m-5 10l2 2l12-12"
         className={className}
       />

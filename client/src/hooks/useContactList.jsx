@@ -1,46 +1,29 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { contactsActions } from "../store/contactsSlice";
-import useFetch from "./useFetch";
-
-let allContacts = [];
+import { useSelector } from "react-redux";
 
 const useContactList = () => {
   const contacts = useSelector((state) => state.contactsReducer);
-  const dispatch = useDispatch();
+  const [searchedContacts, setSearchedContacts] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const loggedIn = useSelector((state) => state.authReducer.loggedIn);
-
-  const { reqFn: fetchContacts } = useFetch(
-    { method: "GET", url: "/contacts" },
-    (data) => {
-      dispatch(contactsActions.setContacts(data.data.contacts));
-      allContacts = data.data.contacts;
-    }
-  );
 
   const handleSearchValue = (event) => {
     setSearchValue(event.target.value);
   };
 
   useEffect(() => {
-    if (loggedIn) {
-      fetchContacts();
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    dispatch(
-      contactsActions.setContacts(
-        allContacts.filter((contact) =>
+    if (searchValue) {
+      setSearchedContacts(
+        contacts.filter((contact) =>
           contact.name.toLowerCase().startsWith(searchValue.toLowerCase())
         )
-      )
-    );
-  }, [searchValue]);
+      );
+    } else {
+      setSearchedContacts(contacts);
+    }
+  }, [searchValue, contacts]);
 
   return {
-    contacts,
+    contacts: searchedContacts,
     handleSearchValue,
     searchValue,
   };

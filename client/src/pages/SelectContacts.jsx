@@ -8,6 +8,7 @@ import ContactSelect from "../components/pages/SelectContacts/ContactSelect";
 import SelectedContacts from "../components/pages/SelectContacts/SelectedContacts";
 import CTAIconWrapper from "../components/globals/CTAIconWrapper";
 import { AnimatePresence, motion } from "framer-motion";
+import { modalActions } from "../store/modalSlice";
 
 function SelectContacts() {
   const { contacts, handleSearchValue, searchValue } = useContactList();
@@ -16,7 +17,7 @@ function SelectContacts() {
 
   const removeContact = (contactId) => {
     setSelectedContacts((prevState) =>
-      prevState.filter((contact) => contact.id !== contactId)
+      prevState.filter((contact) => contact._id !== contactId)
     );
   };
 
@@ -30,7 +31,7 @@ function SelectContacts() {
       className="relative overflow-y-hidden"
     >
       {/* Header */}
-      <div className="px-[1.5rem] flex flex-col gap-[1rem] mb-[1.5rem]">
+      <div className="px-[1.5rem] flex flex-col gap-[1rem] mb-[1.5rem] py-[.5rem]">
         <div className="flex items-center">
           <IconWrapper
             onClick={() =>
@@ -63,25 +64,46 @@ function SelectContacts() {
           removeContact={removeContact}
         />
         {/* Search Input */}
-        <input
-          type="text"
-          className="focus-within:outline-none placeholder:text-secondary-text bg-transparent w-full ml-[1rem]"
-          placeholder="Who would you like to add?"
-          onChange={handleSearchValue}
-          value={searchValue}
-        />
+        {!!contacts.length && (
+          <input
+            type="text"
+            className="focus-within:outline-none placeholder:text-secondary-text bg-transparent w-full ml-[1rem]"
+            placeholder="Who would you like to add?"
+            onChange={handleSearchValue}
+            value={searchValue}
+          />
+        )}
       </div>
 
       {/* Contacts */}
       {contacts.map((contact) => (
         <ContactSelect
           contact={contact}
-          key={contact.id}
-          selected={selectedContacts.some((con) => con.id === contact.id)}
+          key={contact._id}
+          selected={selectedContacts.some((con) => con._id === contact._id)}
           addContact={addContact}
           removeContact={removeContact}
         />
       ))}
+      {/* If no contacts exists */}
+      {!contacts.length && (
+        <div className="flex flex-col py-[2rem] items-center uppercase">
+          <button
+            onClick={() =>
+              dispatch(
+                modalActions.openModal({
+                  type: "newContactForm",
+                  positions: {},
+                })
+              )
+            }
+            className={`bg-cta-icon mt-[5rem] p-[1rem] rounded-xl uppercase text-white font-semibold opacity-80 flex items-center justify-center`}
+            type="submit"
+          >
+            Add Contacts Now
+          </button>
+        </div>
+      )}
 
       {/* ADD button */}
       <AnimatePresence>

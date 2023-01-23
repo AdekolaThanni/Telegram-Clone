@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import DeleteChat from "./components/globals/DeleteChat";
 import DeleteContact from "./components/globals/DeleteContact";
 import NewContactForm from "./components/globals/NewContactForm";
@@ -7,22 +6,12 @@ import VoiceCallModal from "./components/globals/VoiceCallModal";
 import Authentication from "./pages/Authentication";
 import Chat from "./pages/Chat";
 import UserProfile from "./pages/UserProfile";
-import { useSelector } from "react-redux";
-import useJoinSocket from "./hooks/socketHooks/useJoinSocket";
+import useInit from "./hooks/useInit";
 import Notification from "./components/globals/Notification";
 
 function App() {
-  // Join socket
-  useJoinSocket();
-  // Set app theme
-  useEffect(() => {
-    const initialMode = JSON.parse(localStorage.getItem("darkMode"));
-    document
-      .querySelector("html")
-      .setAttribute("class", initialMode ? "dark" : "null");
-  }, []);
-
-  const loggedIn = useSelector((state) => state.authReducer.loggedIn);
+  // Initialize application
+  const { loggedIn } = useInit();
 
   return (
     <div className="w-screen h-screen flex overflow-hidden bg-primary relative">

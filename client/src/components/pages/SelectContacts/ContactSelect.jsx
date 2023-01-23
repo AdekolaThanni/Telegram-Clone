@@ -11,9 +11,8 @@ function ContactSelect({ contact, selected, addContact, removeContact }) {
 
   return (
     <div
-      key={contact.id}
       onClick={() =>
-        selectState ? removeContact(contact.id) : addContact(contact)
+        selectState ? removeContact(contact._id) : addContact(contact)
       }
       className="flex items-center px-[1rem] mx-[1.5rem] rounded-3xl gap-[1.5rem] cursor-default active:bg-secondary-light-text"
     >
@@ -41,9 +40,9 @@ function ContactSelect({ contact, selected, addContact, removeContact }) {
                 exit={{ pathLength: 0 }}
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
                 d="m4 12l6 6L20 6"
                 className="fill-transparent stroke-white"
               />

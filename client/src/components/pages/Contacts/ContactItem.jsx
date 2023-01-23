@@ -1,9 +1,7 @@
 import React from "react";
 import useTime from "../../../hooks/useTime";
 
-function ContactItem({
-  contact: { name: contactName, contactId: contactDetails },
-}) {
+function ContactItem({ contact: { name: contactName, contactDetails } }) {
   const formattedTime = useTime(contactDetails.status.lastSeen);
   return (
     <div className="flex py-[1rem] px-[1.5rem] gap-[1rem]">

@@ -5,7 +5,7 @@ const ReqError = require("../utilities/ReqError");
 exports.getAllContacts = catchAsyncError(async (req, res, next) => {
   // Id is gotten from cookies, so as to get user contacts
   const user = await User.findById(req.cookies.userId).populate({
-    path: "contacts.contactId",
+    path: "contacts.contactDetails",
     select: "id username bio avatar status",
   });
 
@@ -31,7 +31,7 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
   if (user._id === newContact.id)
     return next(new ReqError(400, "You can't add yourself as a contact"));
 
-  user.contacts.push({ name, contactId: newContact._id });
+  user.contacts.push({ name, contactDetails: newContact._id });
   await user.save({ validateBeforeSave: false });
 
   res.status(201).json({
@@ -39,7 +39,7 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
     data: {
       contact: {
         name,
-        contactId: {
+        contactDetails: {
           username: newContact.username,
           _id: newContact._id,
           avatar: newContact.avatar,

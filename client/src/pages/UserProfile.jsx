@@ -58,9 +58,9 @@ function UserProfile() {
             <path
               fill="none"
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M9 7v0a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v0M9 7h6M9 7H6m9 0h3m2 0h-2M4 7h2m0 0v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"
               className="!fill-transparent !stroke-danger"
             />
@@ -116,9 +116,9 @@ function UserProfile() {
             <g
               fill="none"
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
               className="stroke-secondary-text"
             >
               <path d="M10.25 8c0 3.25 4 3.25 4 0A6.25 6.25 0 1 0 8 14.25c2.25 0 3.25-1 3.25-1" />
@@ -145,9 +145,9 @@ function UserProfile() {
               <g
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 className="stroke-secondary-text"
               >
                 <path d="M16 14v9m0-15v2" />

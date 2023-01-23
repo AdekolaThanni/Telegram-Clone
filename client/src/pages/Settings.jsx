@@ -80,7 +80,7 @@ function Settings() {
             <img
               src={user.avatar}
               alt={user.username}
-              className="w-full h-[30rem]"
+              className="w-full h-[30rem] object-cover"
             />
             <CTAIconWrapper
               onClick={(event) =>
@@ -99,9 +99,9 @@ function Settings() {
                 <g
                   fill="none"
                   stroke="white"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                 >
                   <circle cx="12" cy="13" r="3" />
                   <path d="M5 7h2a2 2 0 0 0 2-2a1 1 0 0 1 1-1h2m9 7v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2m10-1h6m-3-3v6" />

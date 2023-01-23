@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const contactSchema = new mongoose.Schema({
-  contactId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  contactDetails: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   name: String,
 });
 
@@ -27,7 +27,11 @@ const Schema = new mongoose.Schema({
     default: "Hi there, I'm using Telegram",
   },
   //   User profile image (Avatar)
-  avatar: String,
+  avatar: {
+    type: String,
+    default:
+      "https://i0.wp.com/blogs.cardiff.ac.uk/mental-health/wp-content/uploads/sites/502/2017/04/no-profile.jpg",
+  },
   //   User contacts
   contacts: [contactSchema],
   // Status, whether user is online or not

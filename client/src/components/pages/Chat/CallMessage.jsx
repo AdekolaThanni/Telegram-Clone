@@ -40,9 +40,9 @@ function CallMessage({ callDetails, received, readStatus, time }) {
                 <path
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M6 18L18 6M6 8v10h10"
                   className="fill-transparent stroke-avatar-check"
                 />
@@ -59,9 +59,9 @@ function CallMessage({ callDetails, received, readStatus, time }) {
                 <path
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M18 6L6 18M8 6h10v10"
                   className="fill-transparent stroke-avatar-check"
                 />

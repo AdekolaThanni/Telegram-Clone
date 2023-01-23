@@ -47,7 +47,7 @@ function Contacts() {
       <div className="">
         {!!contacts.length &&
           contacts.map((contact) => (
-            <ContactItem key={contact.contactId._id} contact={contact} />
+            <ContactItem key={contact.contactDetails._id} contact={contact} />
           ))}
         {!contacts.length && (
           <div className="flex flex-col py-[2rem] items-center uppercase">
@@ -89,8 +89,8 @@ function Contacts() {
           <path
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeWidth="2"
             d="M12 20v-8m0 0V4m0 8h8m-8 0H4"
             className=" stroke-white"
           />

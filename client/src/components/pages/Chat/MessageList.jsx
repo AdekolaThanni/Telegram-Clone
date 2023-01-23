@@ -53,9 +53,9 @@ function MessageList({ messageHistory }) {
             <path
               fill="none"
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M12 20V4m-7 9l7 7l7-7"
               className="fill-transparent"
             />
