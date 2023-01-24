@@ -8,6 +8,11 @@ const contactsSlice = createSlice({
     addContact: (state, { payload: contact }) => {
       state.push(contact);
     },
+    removeContact: (state, { payload }) => {
+      return state.filter(
+        (contact) => contact.contactDetails._id !== payload.id
+      );
+    },
   },
 });
 

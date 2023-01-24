@@ -7,10 +7,11 @@ const useFetch = ({ method, url }, successFn, errorFn) => {
   const dispatch = useDispatch();
 
   const requestFunction = async (values) => {
+    const methodUpper = method.toUpperCase();
     const fetchOptions =
-      method !== "GET"
+      methodUpper !== "GET"
         ? {
-            method,
+            method: methodUpper,
             headers: {
               "Content-Type": "application/json",
             },
@@ -21,7 +22,10 @@ const useFetch = ({ method, url }, successFn, errorFn) => {
     try {
       setRequestState("loading");
       const response = await fetch(url, fetchOptions);
-      const data = await response.json();
+      let data;
+      if (methodUpper !== "DELETE") {
+        data = await response.json();
+      }
       if (!response.ok) throw new Error(data.message);
       setRequestState("success");
       successFn && successFn(data);

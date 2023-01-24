@@ -29,6 +29,10 @@ const chatSlice = createSlice({
     addToChatRoomHistory: (state, { payload }) => {
       state.chatHistory[payload.chatRoomId] = payload.chatRoom;
     },
+    removeChatRoom: (state, { payload }) => {
+      state.currentChatRoom = { chatProfile: {}, messageHistory: {} };
+      delete state.chatHistory[payload.chatRoomId];
+    },
   },
 });
 

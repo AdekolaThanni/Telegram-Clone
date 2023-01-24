@@ -14,3 +14,20 @@ exports.getChatRoom = catchAsyncError(async (req, res, next) => {
     data: { chatRoom },
   });
 });
+
+exports.checkIfChatRoomExists = async (user, secondaryUser) => {
+  let chatRoomId;
+  // secondaryUser is the user not performing the action
+  // Chat room exists if secondaryUser already has user as a contact
+  secondaryUser.contacts.forEach((contact) => {
+    if (contact.contactDetails.toString() === user._id.toString()) {
+      chatRoomId = contact.chatRoomId;
+    }
+  });
+
+  return chatRoomId;
+};
+
+exports.deleteChatRoom = async (chatRoomId) => {
+  await ChatRoom.findByIdAndDelete(chatRoomId);
+};

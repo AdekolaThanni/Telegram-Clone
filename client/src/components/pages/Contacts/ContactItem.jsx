@@ -20,8 +20,8 @@ function ContactItem({
       />
       {/* Details */}
       <div className="">
-        <p className="font-semibold">{contactName}</p>
-        <p className="text-secondary-text text-[1.5rem]">
+        <p className="font-semibold cursor-default">{contactName}</p>
+        <p className="text-secondary-text text-[1.5rem] cursor-default">
           {contactDetails.status.online
             ? "online"
             : `last seen at ${formattedTime}`}
