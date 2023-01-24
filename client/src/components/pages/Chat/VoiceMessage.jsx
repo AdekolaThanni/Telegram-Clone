@@ -85,6 +85,7 @@ function VoiceMessage({ voiceDetails, received, readStatus, time }) {
           onTimeUpdate={handleTimeUpdate}
           onCanPlay={handleCanPlay}
           onEnded={handleEnding}
+          controlsList="nodownload"
         ></audio>
         {/* Play and pause Icon */}
         <CTAIconWrapper

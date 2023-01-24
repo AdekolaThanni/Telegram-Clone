@@ -16,7 +16,7 @@ function DeleteContact() {
     >
       <h2 className="font-semibold text-[2rem]">Delete Contact</h2>
       <p className="">
-        Are you sure you want to delete {contactData?.profile?.title} contact?
+        Are you sure you want to delete {contactData?.profile?.name} contact?
       </p>
       <div className="flex items-center justify-center gap-[2rem] mt-[1rem]">
         <button className="text-cta-icon rounded-md font-semibold uppercase p-[1rem] hover:bg-secondary-light-text">

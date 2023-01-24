@@ -25,12 +25,13 @@ function MessageList({ messageHistory }) {
       }}
       className="w-full overflow-y-scroll no-scrollbar py-[1rem]"
     >
-      {messageHistory.map((messagesData) => (
-        <DayMessages
-          key={messagesData.dateMilliseconds}
-          messagesData={messagesData}
-        />
-      ))}
+      {!!messageHistory.length &&
+        messageHistory.map((messagesData) => (
+          <DayMessages
+            key={messagesData.dateMilliseconds}
+            messagesData={messagesData}
+          />
+        ))}
       {/* Scroll down */}
       {scrolledUp && (
         <CTAIconWrapper

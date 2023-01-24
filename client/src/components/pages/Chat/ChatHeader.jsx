@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { chatActions } from "../../../store/chatSlice";
 import { modalActions } from "../../../store/modalSlice";
 import { userProfileActions } from "../../../store/userProfileSlice";
 import Header from "../../globals/Header";
@@ -16,11 +15,11 @@ function ChatHeader({ chatProfile }) {
       <div
         id="chatActiveToggler"
         onClick={() => {
-          if (chatActive) {
-            dispatch(chatActions.setChatUnactive());
-          } else {
-            dispatch(chatActions.setChatActive());
-          }
+          // if (chatActive) {
+          //   dispatch(chatActions.setChatUnactive());
+          // } else {
+          //   dispatch(chatActions.setChatActive());
+          // }
         }}
         className="flex items-center flex-grow"
       >
@@ -57,13 +56,13 @@ function ChatHeader({ chatProfile }) {
         >
           <img
             src={chatProfile.avatar}
-            alt={chatProfile.title}
+            alt={chatProfile.name}
             className="w-[4.2rem] h-[4.2rem] rounded-full"
           />
           <div className="flex flex-col">
-            <h2 className="font-semibold">{chatProfile.title}</h2>
+            <h2 className="font-semibold">{chatProfile.name}</h2>
             <span className="text-secondary text-[1.4rem]">
-              {chatProfile.status.online && "online"}
+              {chatProfile.status?.online && "online"}
             </span>
           </div>
         </div>

@@ -9,15 +9,15 @@ import { userProfileActions } from "../store/userProfileSlice";
 
 function Chat() {
   const {
+    mode,
     chat: { chatProfile, messageHistory },
   } = useChat();
 
-  const mode = useSelector((state) => state.chatReducer.mode);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userProfileActions.setProfile(chatProfile));
-  }, []);
+  }, [chatProfile]);
 
   const chatActive = useSelector((state) => state.chatReducer.active);
 

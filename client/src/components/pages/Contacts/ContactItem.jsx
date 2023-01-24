@@ -1,10 +1,17 @@
 import React from "react";
+import useChat from "../../../hooks/useChat";
 import useTime from "../../../hooks/useTime";
 
-function ContactItem({ contact: { name: contactName, contactDetails } }) {
+function ContactItem({
+  contact: { name: contactName, contactDetails, chatRoomId },
+}) {
   const formattedTime = useTime(contactDetails.status.lastSeen);
+  const { setChatRoom } = useChat({ contactName, contactDetails, chatRoomId });
   return (
-    <div className="flex py-[1rem] px-[1.5rem] gap-[1rem]">
+    <div
+      onClick={setChatRoom}
+      className="flex py-[1rem] px-[1.5rem] gap-[1rem]"
+    >
       {/* Avatar */}
       <img
         src={contactDetails.avatar}

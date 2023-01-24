@@ -47,7 +47,7 @@ function Contacts() {
       <div className="">
         {!!contacts.length &&
           contacts.map((contact) => (
-            <ContactItem key={contact.contactDetails._id} contact={contact} />
+            <ContactItem key={contact._id} contact={contact} />
           ))}
         {!contacts.length && (
           <div className="flex flex-col py-[2rem] items-center uppercase">

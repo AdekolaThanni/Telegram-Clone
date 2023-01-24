@@ -18,6 +18,7 @@ function NewContactForm() {
   const dispatch = useDispatch();
   const { reqFn } = useFetch({ method: "POST", url: "/contacts" }, (data) => {
     dispatch(contactsActions.addContact(data.data.contact));
+    console.log(data.data.contact);
   });
   return (
     <Modal

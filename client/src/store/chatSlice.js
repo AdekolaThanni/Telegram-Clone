@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   mode: null,
   active: false,
+  currentChatRoom: { chatProfile: {}, messageHistory: {} },
+  chatHistory: {},
 };
 
 const chatSlice = createSlice({
@@ -20,6 +22,12 @@ const chatSlice = createSlice({
     },
     setChatUnactive: (state) => {
       state.active = false;
+    },
+    setChatRoom: (state, { payload }) => {
+      state.currentChatRoom = payload.chatRoom;
+    },
+    addToChatRoomHistory: (state, { payload }) => {
+      state.chatHistory[payload.chatRoomId] = payload.chatRoom;
     },
   },
 });

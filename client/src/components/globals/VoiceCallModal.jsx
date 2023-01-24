@@ -26,7 +26,7 @@ function VoiceCallModal() {
       >
         <div className="pt-[5rem] text-center w-full">
           <p className="text-[2.5rem] font-semibold">
-            {chatData?.profile?.title}
+            {chatData?.profile?.name}
           </p>
           {/* Call progress */}
           <span className="block mt-[1rem]">Ringing...</span>

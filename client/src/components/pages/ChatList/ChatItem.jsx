@@ -74,7 +74,7 @@ function ChatItem({ chatData, activeChat, onClick }) {
               activeChat && "!text-white"
             }`}
           >
-            {chatData.title}
+            {chatData.name}
           </span>
           <span className="flex items-center gap-[.5rem]">
             {!chatData.latestMessage.sender && (

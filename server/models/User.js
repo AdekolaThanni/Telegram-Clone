@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const contactSchema = new mongoose.Schema({
   contactDetails: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   name: String,
+  chatRoomId: mongoose.Schema.Types.ObjectId,
 });
 
 const Schema = new mongoose.Schema({

@@ -1,6 +1,8 @@
 const catchAsyncError = require("../utilities/catchAsyncError");
 const User = require("../models/User");
+const ChatRoom = require("../models/ChatRoom");
 const ReqError = require("../utilities/ReqError");
+const { createChatRoom } = require("./chatRoomController");
 
 exports.getAllContacts = catchAsyncError(async (req, res, next) => {
   // Id is gotten from cookies, so as to get user contacts
@@ -31,7 +33,23 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
   if (user._id === newContact.id)
     return next(new ReqError(400, "You can't add yourself as a contact"));
 
-  user.contacts.push({ name, contactDetails: newContact._id });
+  // Create a chat room for both users
+  const chatRoomDetails = {
+    roomType: "Private",
+    listeners: [newContact._id, user._id],
+    messageHistory: [],
+  };
+
+  const newChatRoom = await createChatRoom(chatRoomDetails);
+
+  if (!newChatRoom)
+    return next(new ReqError(404, "Contact could not be added"));
+
+  user.contacts.push({
+    name,
+    contactDetails: newContact._id,
+    chatRoomId: newChatRoom._id,
+  });
   await user.save({ validateBeforeSave: false });
 
   res.status(201).json({
@@ -46,6 +64,7 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
           bio: newContact.bio,
           status: newContact.status,
         },
+        chatRoomId: newChatRoom._id,
       },
     },
   });
