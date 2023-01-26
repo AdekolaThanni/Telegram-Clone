@@ -18,8 +18,13 @@ function NewContactForm() {
   const dispatch = useDispatch();
   const { reqFn } = useFetch({ method: "POST", url: "/contacts" }, (data) => {
     dispatch(contactsActions.addContact(data.data.contact));
-    console.log(data.data.contact);
   });
+
+  const addContact = async (values) => {
+    await reqFn(values);
+    dispatch(modalActions.closeModal({}));
+  };
+
   return (
     <Modal
       typeValue="newContactForm"
@@ -32,7 +37,7 @@ function NewContactForm() {
           name: "",
           username: "",
         }}
-        onSubmit={reqFn}
+        onSubmit={addContact}
       >
         {({ errors, touched, values }) => (
           <Form

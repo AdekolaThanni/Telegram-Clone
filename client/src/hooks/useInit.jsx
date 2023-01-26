@@ -5,11 +5,9 @@ import { contactsActions } from "../store/contactsSlice";
 import useFetch from "./useFetch";
 import { chatActions } from "../store/chatSlice";
 
-let userBackupId;
-
 const useInit = () => {
   // useSocketHook
-  const { socketEmit, socketListen } = useSocket();
+  const { socketEmit, socketListen, userId } = useSocket();
 
   // Set app theme
   useEffect(() => {
@@ -21,9 +19,6 @@ const useInit = () => {
 
   // Get logged in state
   const loggedIn = useSelector((state) => state.authReducer.loggedIn);
-
-  // Get loggedIn userId
-  const userId = useSelector((state) => state.userReducer.user._id);
 
   const dispatch = useDispatch();
 
@@ -45,7 +40,6 @@ const useInit = () => {
   // On getting user details
   useEffect(() => {
     if (userId) {
-      userBackupId = userId;
       // Announce logged in status
       socketEmit("user:online", userId);
 

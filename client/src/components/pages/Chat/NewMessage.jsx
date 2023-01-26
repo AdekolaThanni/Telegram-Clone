@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import IconWrapper from "../../globals/IconWrapper";
 import AttachFileModal from "./AttachFileModal";
@@ -11,13 +11,20 @@ import AttachFileOrRecordDuration from "./AttachFileOrRecordDuration";
 import EmojiModal from "./EmojiModal";
 import BubbleTail from "./BubbleTail";
 
-function NewMessage() {
+function NewMessage({ currentChatRoom }) {
   // Get current message mode
   const messageMode = useSelector((state) => state.chatReducer.mode);
 
   // Message Input
-  const { addEmojiToMessage, handleInput, messageEmpty, getCaretIndex } =
-    useMessageInput();
+  const {
+    addEmojiToMessage,
+    handleInput,
+    messageEmpty,
+    getCaretIndex,
+    emitTypingEvent,
+  } = useMessageInput({ currentChatRoom });
+
+  // Emoji modal visibility
   const [emojiVisible, setEmojiVisible] = useState(false);
 
   const isRecording = useMemo(() => messageMode === "recording", [messageMode]);
@@ -83,6 +90,7 @@ function NewMessage() {
               handleInput={handleInput}
               messageEmpty={messageEmpty}
               getCaretIndex={getCaretIndex}
+              emitTypingEvent={emitTypingEvent}
             />
 
             <AttachFileOrRecordDuration

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useTime from "../../../hooks/useTime";
 import { chatActions } from "../../../store/chatSlice";
@@ -64,11 +64,18 @@ function ChatHeader({ chatProfile }) {
           />
           <div className="flex flex-col">
             <h2 className="font-semibold">{chatProfile.name}</h2>
-            <span className="text-secondary text-[1.4rem] font-normal -translate-y-[.4rem]">
-              {chatProfile.status?.online
-                ? "online"
-                : `last seen at ${lastSeenTime}`}
-            </span>
+            {chatProfile.mode && (
+              <span className="text-cta-icon italic text-[1.4rem] font-normal -translate-y-[.4rem]">
+                {chatProfile.mode}...
+              </span>
+            )}
+            {!chatProfile.mode && (
+              <span className="text-secondary text-[1.4rem] font-normal -translate-y-[.4rem]">
+                {chatProfile.status?.online
+                  ? "online"
+                  : `last seen at ${lastSeenTime}`}
+              </span>
+            )}
           </div>
         </div>
       </div>

@@ -1,9 +1,13 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
+  //  Manages typing or recording state in order to make state changes for local user
   mode: null,
+  // Manages chat room being displayed or not
   active: false,
+  // saves chat room currently being displayed
   currentChatRoom: { chatProfile: {}, messageHistory: {} },
+  // Saves all chat rooms
   chatHistory: {},
 };
 
@@ -50,6 +54,14 @@ const chatSlice = createSlice({
           ...payload,
         },
       };
+    },
+    setChatProfileMode: (state, { payload }) => {
+      // Update mode in currentChatRoom
+      const currentChatRoom = current(state.currentChatRoom);
+
+      if (payload.id === currentChatRoom.chatProfile._id) {
+        state.currentChatRoom.chatProfile.mode = payload.mode;
+      }
     },
   },
 });

@@ -1,11 +1,16 @@
 const socketIO = require("socket.io");
 const { expressServer } = require("./server");
+
 const {
   onlineController,
   offlineController,
-  initController,
   disconnectingController,
 } = require("./socketControllers/connectionController");
+
+const {
+  typingController,
+  recordingcontroller,
+} = require("./socketControllers/userActionController");
 
 const io = socketIO(expressServer, {
   cors: {
@@ -14,6 +19,7 @@ const io = socketIO(expressServer, {
 });
 
 io.on("connection", async (socket) => {
+  // -------------Connection controls -------------- //
   // socket come online
   onlineController(io, socket);
 
@@ -22,4 +28,13 @@ io.on("connection", async (socket) => {
 
   // socket disconnecting
   disconnectingController(io, socket);
+  //--------------------------------------------------//
+
+  // -------------User Action controls -------------- //
+  // User typing
+  typingController(io, socket);
+
+  // User recording
+  recordingcontroller(io, socket);
+  //--------------------------------------------------//
 });

@@ -111,6 +111,7 @@ exports.deleteContact = catchAsyncError(async (req, res, next) => {
 
   let chatRoomId;
   const id = aimedContact._id.toString();
+
   user.contacts = user.contacts.filter((contact) => {
     if (contact.contactDetails.toString() === id) {
       chatRoomId = contact.chatRoomId;
@@ -119,6 +120,10 @@ exports.deleteContact = catchAsyncError(async (req, res, next) => {
 
     return true;
   });
+
+  user.chatRooms = user.chatRooms.filter(
+    (room) => room.toString() !== chatRoomId.toString()
+  );
 
   await user.save({ validateBeforeSave: false });
 

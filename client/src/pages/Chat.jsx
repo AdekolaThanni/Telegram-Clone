@@ -6,18 +6,36 @@ import MessageList from "../components/pages/Chat/MessageList";
 import NewMessage from "../components/pages/Chat/NewMessage";
 import useChat from "../hooks/useChat";
 import { userProfileActions } from "../store/userProfileSlice";
+import useSocket from "../hooks/socketHooks/useSocket";
 
 function Chat() {
   const {
     mode,
     chat: { chatProfile, messageHistory },
+    chatActions,
   } = useChat();
+
+  const { socketListen } = useSocket();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userProfileActions.setProfile(chatProfile));
   }, [chatProfile]);
+
+  useEffect(() => {
+    // Listen to typing events from other users
+    let timeInterval;
+
+    socketListen("user:typing", (userId) => {
+      clearInterval(timeInterval);
+      dispatch(chatActions.setChatProfileMode({ id: userId, mode: "typing" }));
+
+      timeInterval = setInterval(() => {
+        dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
+      }, 1000);
+    });
+  }, []);
 
   const chatActive = useSelector((state) => state.chatReducer.active);
   const currentChatRoom = useSelector(
@@ -40,7 +58,7 @@ function Chat() {
           <div className="flex-grow px-[1rem] sm:px-[.5rem] overflow-hidden">
             <div className="max-w-[75rem] h-full mx-auto flex flex-col justify-end pb-[2rem] relative overflow-hidden">
               <MessageList messageHistory={messageHistory} />
-              <NewMessage mode={mode} />
+              <NewMessage mode={mode} currentChatRoom={currentChatRoom} />
             </div>
           </div>
         </>

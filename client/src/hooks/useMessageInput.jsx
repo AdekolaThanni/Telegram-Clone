@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { chatActions } from "../store/chatSlice";
+import useSocket from "../hooks/socketHooks/useSocket";
 
-const useMessageInput = () => {
+const useMessageInput = ({ currentChatRoom }) => {
+  const { socketEmit } = useSocket();
   const dispatch = useDispatch();
   const [messageEmpty, setMessageEmpty] = useState(true);
   const [caretIndex, setCaretIndex] = useState(0);
@@ -92,11 +94,17 @@ const useMessageInput = () => {
     }
   };
 
+  // Emit typing event on every key stroke
+  const emitTypingEvent = () => {
+    socketEmit("user:typing", currentChatRoom._id);
+  };
+
   return {
     addEmojiToMessage,
     handleInput,
     messageEmpty,
     getCaretIndex,
+    emitTypingEvent,
   };
 };
 

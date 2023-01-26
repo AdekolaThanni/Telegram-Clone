@@ -4,11 +4,11 @@ import { chatActions } from "../store/chatSlice";
 
 const useChat = (contact) => {
   const mode = useSelector((state) => state.chatReducer.mode);
-
   const dispatch = useDispatch();
   const chatHistory = useSelector((state) => state.chatReducer.chatHistory);
   const chat = useSelector((state) => state.chatReducer.currentChatRoom);
 
+  // Fetch chat room request
   const { reqFn: fetchChatRoom } = useFetch(
     {
       method: "GET",
@@ -34,6 +34,7 @@ const useChat = (contact) => {
     }
   );
 
+  // Set chat room
   const setChatRoom = () => {
     // Check if chat has been fetched already
     const chatRoom = chatHistory[contact.chatRoomId];
@@ -45,7 +46,7 @@ const useChat = (contact) => {
     dispatch(chatActions.setChatActive());
   };
 
-  return { chat, setChatRoom, mode };
+  return { chat, setChatRoom, mode, chatActions };
 };
 
 export default useChat;

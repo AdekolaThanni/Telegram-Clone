@@ -1,7 +1,5 @@
 const User = require("../models/User");
 
-let backupUserId;
-
 exports.getSocketDetails = async (userId) => {
   // Get user model
   userModel = await User.findById(userId);
@@ -14,7 +12,7 @@ exports.getSocketDetails = async (userId) => {
 
 exports.onlineController = (io, socket) => {
   socket.on("user:online", async (userId) => {
-    backupUserId = userId;
+    socket.userId = userId;
     // Get user detaiils
     const { userModel, allRoomsUserIn } = await this.getSocketDetails(userId);
 
@@ -36,7 +34,8 @@ exports.onlineController = (io, socket) => {
 };
 
 exports.offlineController = (io, socket) => {
-  socket.on("user:offline", async (userId) => {
+  socket.on("user:offline", async () => {
+    const { userId } = socket;
     // Get user detaiils
     const { userModel, allRoomsUserIn } = await this.getSocketDetails(userId);
 
@@ -58,10 +57,10 @@ exports.offlineController = (io, socket) => {
 // socket disconnection
 exports.disconnectingController = (io, socket) => {
   socket.on("disconnecting", async () => {
-    if (!backupUserId) return;
+    if (!socket.userId) return;
     // Get user detaiils
     const { userModel, allRoomsUserIn } = await this.getSocketDetails(
-      backupUserId
+      socket.userId
     );
 
     const time = new Date(Date.now()).toISOString();
