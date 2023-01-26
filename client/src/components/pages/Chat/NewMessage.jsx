@@ -33,7 +33,7 @@ function NewMessage({ currentChatRoom }) {
 
   //   Recorder hook to record messages
   const { formattedTime, startRecording, endRecording, playRecording } =
-    useRecorder();
+    useRecorder({ currentChatRoom });
 
   return (
     <div className="flex flex-col shrink-0">

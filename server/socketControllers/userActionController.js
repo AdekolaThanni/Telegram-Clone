@@ -14,4 +14,10 @@ exports.recordingcontroller = (io, socket) => {
 
     socket.to(chatRoomId).emit("user:recording", socket.userId);
   });
+
+  socket.on("user:recordingStopped", (chatRoomId) => {
+    if (!socket.userId) return;
+
+    socket.to(chatRoomId).emit("user:recordingStopped", socket.userId);
+  });
 };

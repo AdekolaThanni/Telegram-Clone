@@ -26,7 +26,6 @@ function Chat() {
   useEffect(() => {
     // Listen to typing events from other users
     let timeInterval;
-
     socketListen("user:typing", (userId) => {
       clearInterval(timeInterval);
       dispatch(chatActions.setChatProfileMode({ id: userId, mode: "typing" }));
@@ -34,6 +33,18 @@ function Chat() {
       timeInterval = setInterval(() => {
         dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
       }, 1000);
+    });
+
+    // Listen to recording event from other users
+    socketListen("user:recording", (userId) => {
+      dispatch(
+        chatActions.setChatProfileMode({ id: userId, mode: "recording" })
+      );
+    });
+
+    // Listen to record stopping event from other users
+    socketListen("user:recordingStopped", (userId) => {
+      dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
     });
   }, []);
 

@@ -2,9 +2,11 @@ import { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { chatActions } from "../store/chatSlice";
 import { useReactMediaRecorder } from "react-media-recorder";
+import useSocket from "./socketHooks/useSocket";
 
-const useRecorder = () => {
+const useRecorder = ({ currentChatRoom }) => {
   const dispatch = useDispatch();
+  const { socketEmit } = useSocket();
 
   const {
     startRecording: startMediaRecord,
@@ -35,6 +37,7 @@ const useRecorder = () => {
 
   const startRecording = () => {
     startMediaRecord();
+    socketEmit("user:recording", currentChatRoom._id);
     setTimingInterval(
       setInterval(() => {
         setCounter((prevState) => prevState + 1);
@@ -45,6 +48,7 @@ const useRecorder = () => {
 
   const endRecording = () => {
     stopMediaRecord();
+    socketEmit("user:recordingStopped", currentChatRoom._id);
     setCounter(0);
     clearInterval(timingInterval);
     dispatch(chatActions.resetMode());
