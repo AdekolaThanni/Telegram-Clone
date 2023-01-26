@@ -1,4 +1,5 @@
 const ChatRoom = require("../models/ChatRoom");
+const User = require("../models/User");
 const catchAsyncError = require("../utilities/catchAsyncError");
 const ReqError = require("../utilities/ReqError");
 
@@ -30,4 +31,10 @@ exports.checkIfChatRoomExists = async (user, secondaryUser) => {
 
 exports.deleteChatRoom = async (chatRoomId) => {
   await ChatRoom.findByIdAndDelete(chatRoomId);
+};
+
+// Get all chat room user belongs to
+exports.getAllChatRoomUserIn = async (userId) => {
+  const user = await User.findById(userId);
+  return user.chatRooms;
 };

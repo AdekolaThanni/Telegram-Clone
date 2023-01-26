@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: null,
@@ -32,6 +32,24 @@ const chatSlice = createSlice({
     removeChatRoom: (state, { payload }) => {
       state.currentChatRoom = { chatProfile: {}, messageHistory: {} };
       delete state.chatHistory[payload.chatRoomId];
+    },
+    updateChatProfile: (state, { payload: { payload } }) => {
+      const currentChatRoom = current(state.currentChatRoom);
+      // If user is currently displayed in chatRoom, update online status
+      if (payload.id === currentChatRoom.chatProfile._id) {
+        state.currentChatRoom.chatProfile = {
+          ...currentChatRoom.chatProfile,
+          ...payload,
+        };
+      }
+      // Update user online status in chat history
+      state.chatHistory[currentChatRoom._id] = {
+        ...currentChatRoom,
+        chatProfile: {
+          ...currentChatRoom.chatProfile,
+          ...payload,
+        },
+      };
     },
   },
 });

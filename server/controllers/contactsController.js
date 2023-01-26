@@ -1,6 +1,5 @@
 const catchAsyncError = require("../utilities/catchAsyncError");
 const User = require("../models/User");
-const ChatRoom = require("../models/ChatRoom");
 const ReqError = require("../utilities/ReqError");
 const {
   createChatRoom,
@@ -37,19 +36,16 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
   if (user.username === newContact.username)
     return next(new ReqError(400, "You can't add yourself as a contact"));
 
-  // Check if contact exists already
-  if (
-    user.contacts.some(
-      (contact) =>
-        contact.contactDetails.toString() === newContact._id.toString()
-    )
-  ) {
-    return next(new ReqError(400, "Contact exists already"));
-  }
+  for (let contact of user.contacts) {
+    // Check if contact exists already
+    if (contact.contactDetails.toString() === newContact._id.toString()) {
+      return next(new ReqError(400, "Contact exists already"));
+    }
 
-  // Check if contact name exists and rename
-  if (user.contacts.some((contact) => contact.name === name)) {
-    return next(new ReqError(400, "Contact name exists already"));
+    // Check if contact name exists and rename
+    if (contact.name === name) {
+      return next(new ReqError(400, "Contact name exists already"));
+    }
   }
 
   // Check if chat room exists between users i.e check if newContact already has user as a contact
@@ -71,11 +67,18 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
     chatRoomId = newChatRoom._id;
   }
 
-  user.contacts.push({
+  const newContactData = {
     name,
     contactDetails: newContact._id,
     chatRoomId,
-  });
+  };
+
+  // Add to contacts
+  user.contacts.push(newContactData);
+
+  // Add chatRoomId to chatRooms user belongs to
+  user.chatRooms.push(chatRoomId);
+
   await user.save({ validateBeforeSave: false });
 
   res.status(201).json({

@@ -20,6 +20,9 @@ function Chat() {
   }, [chatProfile]);
 
   const chatActive = useSelector((state) => state.chatReducer.active);
+  const currentChatRoom = useSelector(
+    (state) => state.chatReducer.currentChatRoom
+  );
 
   return (
     <div
@@ -29,7 +32,7 @@ function Chat() {
           : "lg:basis-[100rem] sm:translate-x-[55rem]"
       }`}
     >
-      {chatActive && (
+      {currentChatRoom.chatProfile.username && (
         <>
           {/* Header */}
           <ChatHeader chatProfile={chatProfile} />

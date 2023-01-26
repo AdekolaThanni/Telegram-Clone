@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useFetch from "./useFetch";
+import { useSelector, useDispatch } from "react-redux";
+import { userActions } from "../store/userSlice";
 
 const useSettings = () => {
-  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userReducer.user);
   const { reqFn: getProfile } = useFetch(
     { method: "GET", url: "/profile" },
     (data) => {
-      setUser(data.data.user);
+      dispatch(userActions.setUser({ user: data.data.user }));
     }
   );
 
@@ -16,7 +19,7 @@ const useSettings = () => {
       url: "/profile",
     },
     (data) => {
-      setUser(data.data.user);
+      dispatch(userActions.setUser({ user: data.data.user }));
     }
   );
 

@@ -34,7 +34,7 @@ const Schema = new mongoose.Schema({
     type: String,
     enum: ["Private", "Group"],
   },
-  listeners: [mongoose.Schema.Types.ObjectId],
+  members: [mongoose.Schema.Types.ObjectId],
   messageHistory: [MessageSchema],
 });
 

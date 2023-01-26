@@ -13,6 +13,13 @@ const contactsSlice = createSlice({
         (contact) => contact.contactDetails._id !== payload.id
       );
     },
+    setContactOnlineStatus: (state, { payload }) => {
+      const contactIndex = state.findIndex(
+        (contact) => contact.contactDetails._id === payload.id
+      );
+
+      state[contactIndex].contactDetails.status = payload.status;
+    },
   },
 });
 

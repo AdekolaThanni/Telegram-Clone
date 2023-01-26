@@ -1,8 +1,8 @@
 function useTime(date) {
   if (!date) return "";
   const currentDate = Date.now();
-  const dateObj = new Date(+date);
-  const timeDifference = currentDate - date;
+  const dateObj = new Date(date);
+  const timeDifference = currentDate - Date.now(date);
   const yearBegin = new Date(`${dateObj.getFullYear()}`).getTime();
 
   //   If timeDifference is during the day

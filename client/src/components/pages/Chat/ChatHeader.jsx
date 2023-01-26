@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useTime from "../../../hooks/useTime";
+import { chatActions } from "../../../store/chatSlice";
 import { modalActions } from "../../../store/modalSlice";
 import { userProfileActions } from "../../../store/userProfileSlice";
 import Header from "../../globals/Header";
@@ -9,21 +11,22 @@ import ActionsModal from "./ActionsModal";
 function ChatHeader({ chatProfile }) {
   const dispatch = useDispatch();
   const chatActive = useSelector((state) => state.chatReducer.active);
+  const lastSeenTime = useTime(chatProfile?.status?.lastSeen);
 
   return (
     <Header className="flex items-center px-[2rem] bg-primary border-x border-border shrink-0 z-10">
-      <div
-        id="chatActiveToggler"
-        onClick={() => {
-          // if (chatActive) {
-          //   dispatch(chatActions.setChatUnactive());
-          // } else {
-          //   dispatch(chatActions.setChatActive());
-          // }
-        }}
-        className="flex items-center flex-grow"
-      >
-        <IconWrapper className="chatArrow lg:flex mr-[2rem] hidden">
+      <div className="flex items-center flex-grow">
+        <IconWrapper
+          id="chatActiveToggler"
+          onClick={() => {
+            if (chatActive) {
+              dispatch(chatActions.setChatUnactive());
+            } else {
+              dispatch(chatActions.setChatActive());
+            }
+          }}
+          className="chatArrow lg:flex mr-[2rem] hidden"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -61,8 +64,10 @@ function ChatHeader({ chatProfile }) {
           />
           <div className="flex flex-col">
             <h2 className="font-semibold">{chatProfile.name}</h2>
-            <span className="text-secondary text-[1.4rem]">
-              {chatProfile.status?.online && "online"}
+            <span className="text-secondary text-[1.4rem] font-normal -translate-y-[.4rem]">
+              {chatProfile.status?.online
+                ? "online"
+                : `last seen at ${lastSeenTime}`}
             </span>
           </div>
         </div>

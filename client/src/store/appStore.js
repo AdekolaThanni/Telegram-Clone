@@ -6,6 +6,8 @@ import userProfileReducer from "./userProfileSlice";
 import authReducer from "./authSlice";
 import notificationReducer from "./notificationSlice";
 import contactsReducer from "./contactsSlice";
+import userReducer from "./userSlice";
+import socketReducer from "./socketSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ const store = configureStore({
     authReducer,
     notificationReducer,
     contactsReducer,
+    userReducer,
+    socketReducer,
   },
 });
 

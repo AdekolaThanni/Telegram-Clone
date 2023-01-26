@@ -55,6 +55,8 @@ const Schema = new mongoose.Schema({
       message: "Passwords do not match",
     },
   },
+  // Chat rooms user belongs to
+  chatRooms: [mongoose.Schema.Types.ObjectId],
 });
 
 Schema.pre("save", async function (next) {

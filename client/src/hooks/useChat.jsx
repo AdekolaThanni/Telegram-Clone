@@ -22,7 +22,6 @@ const useChat = (contact) => {
         },
         ...data.data.chatRoom,
       };
-      console.log(chatRoom);
       // Set chat room as current
       dispatch(chatActions.setChatRoom({ chatRoom }));
       // Add chat room to history
