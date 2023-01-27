@@ -4,7 +4,7 @@ import Message from "./Message";
 
 function ReceivedMessage({ message }) {
   return (
-    <div className="flex items-end">
+    <div className="flex items-end max-w-[35rem] mr-[3rem]">
       <div style={{ transform: "rotateY(180deg)" }}>
         <BubbleTail
           className={message.messageType === "image" && "hidden"}
@@ -13,7 +13,8 @@ function ReceivedMessage({ message }) {
       </div>
       <Message
         messageData={message}
-        className="bg-primary rounded-bl-none mr-[3rem]"
+        className="bg-primary rounded-bl-none flex-grow"
+        messageReceived={true}
       />
     </div>
   );

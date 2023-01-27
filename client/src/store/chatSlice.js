@@ -6,7 +6,7 @@ const initialState = {
   // Manages chat room being displayed or not
   active: false,
   // saves chat room currently being displayed
-  currentChatRoom: { chatProfile: {}, messageHistory: {} },
+  currentChatRoom: { chatProfile: {}, messageHistory: [] },
   // Saves all chat rooms
   chatHistory: {},
 };
@@ -61,6 +61,42 @@ const chatSlice = createSlice({
 
       if (payload.id === currentChatRoom.chatProfile._id) {
         state.currentChatRoom.chatProfile.mode = payload.mode;
+      }
+    },
+    updateMessageHistory: (state, { payload: { chatRoomId, message } }) => {
+      // Get chatHistory
+      const chatHistory = current(state.chatHistory);
+      const currentChatRoom = current(state.currentChatRoom);
+      // Get chat room
+      const chatRoom = chatHistory[chatRoomId];
+
+      // Get last chatRoom day message
+      const lastDayMessage =
+        chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
+      // Get day message was sent
+      const day = new Date(message.timeSent).toLocaleString("en-US", {
+        month: "long",
+        day: "2-digit",
+      });
+      // Check if day is today
+      if (lastDayMessage?.day === day) {
+        // Add to object if day is today
+        state.chatHistory[chatRoomId].messageHistory[
+          chatRoom.messageHistory.length - 1
+        ].messages.push(message);
+      } else {
+        // Else create new object for day
+        const newDayObject = {
+          day,
+          messages: [message],
+        };
+        state.chatHistory[chatRoomId].messageHistory.push(newDayObject);
+      }
+
+      if (currentChatRoom._id === chatRoomId) {
+        state.currentChatRoom.messageHistory = current(
+          state.chatHistory[chatRoomId].messageHistory
+        );
       }
     },
   },

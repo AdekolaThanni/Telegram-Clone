@@ -4,7 +4,7 @@ import { chatActions } from "../store/chatSlice";
 import useSocket from "../hooks/socketHooks/useSocket";
 
 const useMessageInput = ({ currentChatRoom }) => {
-  const { socketEmit } = useSocket();
+  const { socketEmit, socketListen } = useSocket();
   const dispatch = useDispatch();
   const [messageEmpty, setMessageEmpty] = useState(true);
   const [caretIndex, setCaretIndex] = useState(0);
@@ -31,7 +31,7 @@ const useMessageInput = ({ currentChatRoom }) => {
     setMessageEmpty(false);
     const messageInput = document.querySelector("#messageInput");
     const innerHtml = messageInput.innerHTML;
-    const emojiString = `<img src="${getImageUrl()}" />`;
+    const emojiString = `<img class="w-[2.5rem] h-[2.5rem] inline-block" src="${getImageUrl()}" />`;
 
     if (!caretIndex) {
       messageInput.innerHTML = emojiString + messageInput.innerHTML;
@@ -103,6 +103,7 @@ const useMessageInput = ({ currentChatRoom }) => {
     addEmojiToMessage,
     handleInput,
     messageEmpty,
+    setMessageEmpty,
     getCaretIndex,
     emitTypingEvent,
   };

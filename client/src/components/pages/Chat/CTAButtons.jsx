@@ -1,8 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
+import useSendMessage from "../../../hooks/useSendMessage";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 
-function CTAButtons({ isTyping, isRecording, endRecording, startRecording }) {
+function CTAButtons({
+  isTyping,
+  isRecording,
+  endRecording,
+  startRecording,
+  setMessageEmpty,
+}) {
+  const { sendMessage } = useSendMessage(setMessageEmpty);
+
   return (
     <div className="shrink-0 relative">
       {/* End recording */}
@@ -33,7 +42,13 @@ function CTAButtons({ isTyping, isRecording, endRecording, startRecording }) {
 
       {/* Start recording  or send message*/}
       <CTAIconWrapper
-        onClick={startRecording}
+        onClick={() => {
+          if (!isTyping && !isRecording) startRecording();
+          else {
+            if (isRecording) endRecording();
+            sendMessage();
+          }
+        }}
         className={`relative ${isRecording && "animate-wave"}`}
       >
         {/* Microphone */}

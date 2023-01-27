@@ -22,6 +22,7 @@ function NewMessage({ currentChatRoom }) {
     messageEmpty,
     getCaretIndex,
     emitTypingEvent,
+    setMessageEmpty,
   } = useMessageInput({ currentChatRoom });
 
   // Emoji modal visibility
@@ -107,6 +108,7 @@ function NewMessage({ currentChatRoom }) {
           endRecording={endRecording}
           isTyping={isTyping}
           isRecording={isRecording}
+          setMessageEmpty={setMessageEmpty}
         />
       </div>
 

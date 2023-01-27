@@ -6,6 +6,9 @@ const {
   offlineController,
   disconnectingController,
 } = require("./socketControllers/connectionController");
+const {
+  messagingController,
+} = require("./socketControllers/messageController");
 
 const {
   typingController,
@@ -36,5 +39,11 @@ io.on("connection", async (socket) => {
 
   // User recording
   recordingcontroller(io, socket);
+  //--------------------------------------------------//
+
+  // -------------Message controls -------------- //
+  // User sends message
+  messagingController(io, socket);
+
   //--------------------------------------------------//
 });

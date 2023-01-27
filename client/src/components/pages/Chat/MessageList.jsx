@@ -1,15 +1,45 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useSocket from "../../../hooks/socketHooks/useSocket";
+import { chatActions } from "../../../store/chatSlice";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 import DayMessages from "./DayMessages";
 
+let initial = true;
+
 function MessageList({ messageHistory }) {
   const [scrolledUp, setScrolledUp] = useState(false);
+  const [chatUpdated, setChatUpdated] = useState(true);
+  const chatActive = useSelector((state) => state.chatReducer.active);
   const messageListRef = useRef();
+  const { socketListen } = useSocket();
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    messageListRef.current.scrollTo({
-      top: messageListRef.current.scrollHeight,
-      left: 0,
+    if (chatUpdated || chatActive) {
+      messageListRef.current.scrollTo({
+        top: messageListRef.current.scrollHeight,
+        left: 0,
+        behavior: initial ? "auto" : "smooth",
+      });
+
+      initial = false;
+    }
+    setChatUpdated(false);
+  }, [chatUpdated, chatActive]);
+
+  // When user leaves chat modal, deactivate scrolledUp icon appearance and set intial
+  useEffect(() => {
+    setScrolledUp(false);
+    initial = true;
+  }, [chatActive]);
+
+  useEffect(() => {
+    // Listen to socket events
+    socketListen("user:message", ({ chatRoomId, message }) => {
+      dispatch(chatActions.updateMessageHistory({ chatRoomId, message }));
+      setChatUpdated(true);
     });
   }, []);
 
@@ -27,10 +57,7 @@ function MessageList({ messageHistory }) {
     >
       {!!messageHistory.length &&
         messageHistory.map((messagesData) => (
-          <DayMessages
-            key={messagesData.dateMilliseconds}
-            messagesData={messagesData}
-          />
+          <DayMessages key={messagesData.day} messagesData={messagesData} />
         ))}
       {/* Scroll down */}
       {scrolledUp && (

@@ -12,13 +12,15 @@ const MessageSchema = new mongoose.Schema({
     required: true,
   },
   sender: mongoose.Schema.Types.ObjectId,
-  chatRoom: mongoose.Schema.Types.ObjectId,
-  readStatus: false,
-  received: false,
-  timeSent: {
-    type: Date,
-    default: Date.now(),
+  readStatus: {
+    type: Boolean,
+    default: false,
   },
+  received: {
+    type: Boolean,
+    default: false,
+  },
+  timeSent: Date,
   // If text message was sent
   message: String,
   // If image was sent
@@ -35,7 +37,7 @@ const Schema = new mongoose.Schema({
     enum: ["Private", "Group"],
   },
   members: [mongoose.Schema.Types.ObjectId],
-  messageHistory: [MessageSchema],
+  messageHistory: [{ day: String, messages: [MessageSchema] }],
 });
 
 module.exports = mongoose.model("ChatRoom", Schema);

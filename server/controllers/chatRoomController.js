@@ -38,3 +38,33 @@ exports.getAllChatRoomUserIn = async (userId) => {
   const user = await User.findById(userId);
   return user.chatRooms;
 };
+
+// Add message to chatroom
+exports.addMessageToChatRoom = async (chatRoomId, message) => {
+  const chatRoom = await ChatRoom.findById(chatRoomId);
+
+  // Get last chatRoom day message
+  const lastDayMessage =
+    chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
+  // Get day message was sent
+  const day = new Date(message.timeSent).toLocaleString("en-US", {
+    month: "long",
+    day: "2-digit",
+  });
+  // Check if day is today
+  if (lastDayMessage?.day === day) {
+    // Add to object if day is today
+    chatRoom.messageHistory[chatRoom.messageHistory.length - 1].messages.push(
+      message
+    );
+  } else {
+    // Else create new object for day
+    const newDayObject = {
+      day,
+      messages: [message],
+    };
+    chatRoom.messageHistory.push(newDayObject);
+  }
+
+  await chatRoom.save();
+};

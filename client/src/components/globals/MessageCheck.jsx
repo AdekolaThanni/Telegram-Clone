@@ -8,7 +8,7 @@ function MessageCheck({ readStatus, className }) {
       height="1em"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 24 24"
-      className="w-[1.7rem] h-[1.7rem]"
+      className="w-[1.4rem] h-[1.4rem]"
     >
       <path
         fill="none"
@@ -29,7 +29,7 @@ function MessageCheck({ readStatus, className }) {
       height="1em"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 32 32"
-      className="w-[1.7rem] h-[1.7rem]"
+      className="w-[1.4rem] h-[1.4rem]"
     >
       <path
         fill="none"

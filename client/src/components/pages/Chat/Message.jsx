@@ -3,7 +3,7 @@ import CallMessage from "./CallMessage";
 import MessageReadStatus from "./MessageReadStatus";
 import VoiceMessage from "./VoiceMessage";
 
-function Message({ messageData, className }) {
+function Message({ messageData, className, messageReceived }) {
   // Image messages
   if (messageData.messageType === "image") {
     return (
@@ -45,13 +45,16 @@ function Message({ messageData, className }) {
 
   return (
     <div
-      className={`${className} p-[1.5rem] rounded-3xl flex items-center max-w-[35rem] sm:text-[1.4rem]`}
+      className={`${className} p-[1.5rem] rounded-3xl sm:text-[1.4rem] overflow-hidden gap-[1rem] relative`}
     >
-      <div className="font-semibold">{messageData.message}</div>
+      <div
+        dangerouslySetInnerHTML={{ __html: messageData.message }}
+        className="font-semibold max-w-[25rem] mr-[3.5rem] break-words"
+      ></div>
       <MessageReadStatus
-        readStatus={!messageData.received ? messageData.readStatus : undefined}
-        time={messageData.time}
-        className={`self-end translate-y-[1rem] ${
+        readStatus={messageReceived ? undefined : messageData.readStatus}
+        time={messageData.timeSent}
+        className={`absolute right-[.8rem] bottom-[.5rem] ${
           messageData.received && "!text-secondary"
         }`}
       />
