@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { modalActions } from "../../store/modalSlice";
 import useFetch from "../../hooks/useFetch";
 import { contactsActions } from "../../store/contactsSlice";
+import useSocket from "../../hooks/socketHooks/useSocket";
 
 const formSchema = Yup.object().shape({
   name: Yup.string().required("Field is required"),
@@ -16,8 +17,10 @@ const formSchema = Yup.object().shape({
 
 function NewContactForm() {
   const dispatch = useDispatch();
+  const { socketEmit } = useSocket();
   const { reqFn } = useFetch({ method: "POST", url: "/contacts" }, (data) => {
     dispatch(contactsActions.addContact(data.data.contact));
+    socketEmit("user:joinRooms", { rooms: [data.data.contact.chatRoomId] });
   });
 
   const addContact = async (values) => {

@@ -48,10 +48,14 @@ exports.addMessageToChatRoom = async (chatRoomId, message) => {
     chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
 
   // Get day message was sent
-  const day = new Date(message.timeSent).toLocaleString("en-US", {
+  const dayString = new Date(message.timeSent).toLocaleString("en-US", {
     month: "long",
     day: "2-digit",
+    year: "numeric",
   });
+
+  // Convert day string to milliseconds
+  const day = new Date(dayString).getTime();
 
   // Add list of all members to message undelivered and unread members
   message.undeliveredMembers = chatRoom.members;

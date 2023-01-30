@@ -90,3 +90,9 @@ exports.disconnectingController = (io, socket) => {
       .emit("user:offline", { userId: userModel._id, time });
   });
 };
+
+exports.joinRoomController = (io, socket) => {
+  socket.on("user:joinRooms", ({ rooms }) => {
+    socket.join(rooms);
+  });
+};

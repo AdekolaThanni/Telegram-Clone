@@ -39,7 +39,7 @@ const Schema = new mongoose.Schema({
     enum: ["Private", "Group"],
   },
   members: [mongoose.Schema.Types.ObjectId],
-  messageHistory: [{ day: String, messages: [MessageSchema] }],
+  messageHistory: [{ day: Number, messages: [MessageSchema] }],
 });
 
 module.exports = mongoose.model("ChatRoom", Schema);

@@ -74,10 +74,13 @@ const chatSlice = createSlice({
       const lastDayMessage =
         chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
       // Get day message was sent
-      const day = new Date(message.timeSent).toLocaleString("en-US", {
+      const dayString = new Date(message.timeSent).toLocaleString("en-US", {
         month: "long",
         day: "2-digit",
+        year: "numeric",
       });
+
+      const day = new Date(dayString).getTime();
       // Check if day is today
       if (lastDayMessage?.day === day) {
         // Add to object if day is today

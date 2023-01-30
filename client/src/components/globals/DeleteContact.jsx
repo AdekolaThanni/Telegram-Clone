@@ -10,7 +10,7 @@ import { userProfileActions } from "../../store/userProfileSlice";
 function DeleteContact() {
   const dispatch = useDispatch();
   const chatRoomId = useSelector(
-    (state) => state.chatReducer.currentChatRoom.chatRoomId
+    (state) => state.chatReducer.currentChatRoom._id
   );
   const contactData = useSelector((state) => state.modalReducer.payload);
   const { reqFn: deleteContact } = useFetch({

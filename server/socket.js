@@ -5,6 +5,7 @@ const {
   onlineController,
   offlineController,
   disconnectingController,
+  joinRoomController,
 } = require("./socketControllers/connectionController");
 const {
   messagingController,
@@ -32,6 +33,9 @@ io.on("connection", async (socket) => {
 
   // socket disconnecting
   disconnectingController(io, socket);
+
+  // socket joins new room
+  joinRoomController(io, socket);
   //--------------------------------------------------//
 
   // -------------User Action controls -------------- //
