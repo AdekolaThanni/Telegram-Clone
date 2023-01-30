@@ -14,7 +14,9 @@ function Message({ messageData, className, messageReceived }) {
           alt=""
         />
         <MessageReadStatus
-          readStatus={messageData.received ? undefined : messageData.readStatus}
+          readStatus={
+            messageData.deliveredStatus ? undefined : messageData.readStatus
+          }
           time={messageData.time}
           className="absolute bottom-[1rem] right-[1rem] bg-secondary-light-text rounded-full !text-white"
         />
@@ -25,7 +27,7 @@ function Message({ messageData, className, messageReceived }) {
   if (messageData.messageType === "voice")
     return (
       <VoiceMessage
-        received={messageData.received}
+        deliveredStatus={messageData.deliveredStatus}
         voiceDetails={messageData.voiceDetails}
         readStatus={messageData.readStatus}
         time={messageData.time}
@@ -37,12 +39,13 @@ function Message({ messageData, className, messageReceived }) {
     return (
       <CallMessage
         callDetails={messageData.callDetails}
-        received={messageData.received}
+        deliveredStatus={messageData.deliveredStatus}
         readStatus={messageData.readStatus}
         time={messageData.time}
       />
     );
 
+  // if it's a text message
   return (
     <div
       className={`${className} p-[1.5rem] rounded-3xl sm:text-[1.4rem] overflow-hidden gap-[1rem] relative`}
@@ -52,10 +55,12 @@ function Message({ messageData, className, messageReceived }) {
         className="font-semibold max-w-[25rem] mr-[3.5rem] break-words"
       ></div>
       <MessageReadStatus
-        readStatus={messageReceived ? undefined : messageData.readStatus}
+        readStatus={messageData.readStatus}
+        deliveredStatus={messageData.deliveredStatus}
+        messageReceived={messageReceived}
         time={messageData.timeSent}
         className={`absolute right-[.8rem] bottom-[.5rem] ${
-          messageData.received && "!text-secondary"
+          messageData.deliveredStatus && "!text-secondary"
         }`}
       />
     </div>

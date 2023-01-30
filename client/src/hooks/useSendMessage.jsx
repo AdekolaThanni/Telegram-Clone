@@ -19,7 +19,7 @@ const useSendMessage = (setMessageEmpty) => {
       sender: userId,
       timeSent: new Date(Date.now()).toISOString(),
       readStatus: false,
-      received: false,
+      deliveredStatus: false,
     };
 
     // If message is raw text

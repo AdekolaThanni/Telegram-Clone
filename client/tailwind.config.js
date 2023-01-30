@@ -25,6 +25,7 @@ module.exports = {
         "secondary-text": "var(--text-secondary)",
         "secondary-light-text": "var(--text-secondary-light)",
         "avatar-check": "var(--avatar-check)",
+        "avatar-check-read": "var(--avatar-check-read)",
         scrollbar: "var(--scrollbar)",
         danger: "var(--danger)",
         "box-shadow": "var(--box-shadow)",

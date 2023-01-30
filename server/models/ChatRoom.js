@@ -16,10 +16,12 @@ const MessageSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  received: {
+  deliveredStatus: {
     type: Boolean,
     default: false,
   },
+  undeliveredMembers: [mongoose.Schema.Types.ObjectId],
+  unreadMembers: [mongoose.Schema.Types.ObjectId],
   timeSent: Date,
   // If text message was sent
   message: String,

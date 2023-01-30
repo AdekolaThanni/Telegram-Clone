@@ -31,6 +31,8 @@ const useChat = (contact) => {
           chatRoom,
         })
       );
+      // Set chat active
+      dispatch(chatActions.setChatActive());
     }
   );
 
@@ -40,10 +42,10 @@ const useChat = (contact) => {
     const chatRoom = chatHistory[contact.chatRoomId];
     if (chatRoom) {
       dispatch(chatActions.setChatRoom({ chatRoom }));
+      dispatch(chatActions.setChatActive());
     } else {
       fetchChatRoom();
     }
-    dispatch(chatActions.setChatActive());
   };
 
   return { chat, setChatRoom, mode, chatActions };

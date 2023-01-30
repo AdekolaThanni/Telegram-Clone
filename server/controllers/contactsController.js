@@ -55,7 +55,7 @@ exports.addNewContact = catchAsyncError(async (req, res, next) => {
     // Create a chat room for both users
     const chatRoomDetails = {
       roomType: "Private",
-      listeners: [newContact._id, user._id],
+      members: [newContact._id, user._id],
       messageHistory: [],
     };
 

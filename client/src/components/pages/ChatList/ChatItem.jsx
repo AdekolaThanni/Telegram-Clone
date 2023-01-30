@@ -80,9 +80,8 @@ function ChatItem({ chatData, activeChat, onClick }) {
             {!chatData.latestMessage.sender && (
               <MessageCheck
                 readStatus={chatData.latestMessage.readStatus}
-                className={`fill-transparent stroke-avatar-check ${
-                  activeChat && "!stroke-white"
-                }`}
+                deliveredStatus={chatData.latestMessage.deliveredStatus}
+                className={`${activeChat && "!stroke-white"}`}
               />
             )}
             <span className="text-[1.4rem]">{formattedDate}</span>

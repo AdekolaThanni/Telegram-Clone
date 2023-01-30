@@ -1,11 +1,11 @@
 import React from "react";
 import MessageReadStatus from "./MessageReadStatus";
 
-function CallMessage({ callDetails, received, readStatus, time }) {
+function CallMessage({ callDetails, deliveredStatus, readStatus, time }) {
   return (
     <div
       className={`flex rounded-3xl ${
-        received ? "rounded-bl-none" : "rounded-br-none bg-message"
+        deliveredStatus ? "rounded-bl-none" : "rounded-br-none bg-message"
       } p-[1.5rem] gap-[1rem]`}
     >
       <div className="flex items-center gap-[1rem]">
@@ -25,10 +25,10 @@ function CallMessage({ callDetails, received, readStatus, time }) {
         </svg>
         <div className="flex flex-col">
           <p className="font-semibold">
-            {received ? "Incoming call" : "Outgoing call"}
+            {deliveredStatus ? "Incoming call" : "Outgoing call"}
           </p>
           <div className="flex items-center gap-[.5rem]">
-            {received ? (
+            {deliveredStatus ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -74,7 +74,7 @@ function CallMessage({ callDetails, received, readStatus, time }) {
         </div>
       </div>
       <MessageReadStatus
-        readStatus={received ? undefined : readStatus}
+        readStatus={deliveredStatus ? undefined : readStatus}
         time={time}
         className="self-end translate-y-[1rem]"
       />

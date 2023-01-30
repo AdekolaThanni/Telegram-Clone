@@ -8,6 +8,7 @@ const {
 } = require("./socketControllers/connectionController");
 const {
   messagingController,
+  markMessageReadController,
 } = require("./socketControllers/messageController");
 
 const {
@@ -44,6 +45,9 @@ io.on("connection", async (socket) => {
   // -------------Message controls -------------- //
   // User sends message
   messagingController(io, socket);
+
+  // User reads message
+  markMessageReadController(io, socket);
 
   //--------------------------------------------------//
 });

@@ -1,11 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../store/modalSlice";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
 
 function ActionsModal({ chatProfile }) {
   const dispatch = useDispatch();
+  const roomType = useSelector(
+    (state) => state.chatReducer.currentChatRoom.roomType
+  );
   return (
     <Modal typeValue="actionsModal" className="origin-top-right !w-[18rem]">
       <ModalChild
@@ -89,7 +92,7 @@ function ActionsModal({ chatProfile }) {
             className="!fill-transparent !stroke-danger"
           />
         </svg>
-        {chatProfile.privateChat ? "Delete Chat" : "Leave Group"}
+        {roomType === "Private" ? "Delete Chat" : "Leave Group"}
       </ModalChild>
     </Modal>
   );

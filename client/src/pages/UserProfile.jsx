@@ -4,10 +4,13 @@ import Header from "../components/globals/Header";
 import IconWrapper from "../components/globals/IconWrapper";
 import { userProfileActions } from "../store/userProfileSlice";
 import { modalActions } from "../store/modalSlice";
+import useTime from "../hooks/useTime";
 
 function UserProfile() {
   const { visible, profile } = useSelector((state) => state.userProfileReducer);
   const dispatch = useDispatch();
+  const lastSeenTime = useTime(profile?.status?.lastSeen);
+
   return (
     <div
       className={`bg-primary duration-200 ease-in-out ${
@@ -77,7 +80,7 @@ function UserProfile() {
         <div className="absolute bottom-[2rem] left-[2rem]">
           <p className="text-[2rem] font-semibold text-white">{profile.name}</p>
           <p className="text-secondary-text">
-            {profile.status?.online && "Online"}
+            {profile.status?.online ? "Online" : `last seen at ${lastSeenTime}`}
           </p>
         </div>
       </div>

@@ -99,6 +99,32 @@ const chatSlice = createSlice({
         );
       }
     },
+    updateMessageStatus: (
+      state,
+      { payload: { chatRoomId, messageId, day, status } }
+    ) => {
+      const messageHistory = current(
+        state.chatHistory[chatRoomId].messageHistory
+      );
+      const dayMessagesIndex = messageHistory.findIndex(
+        (dayMessage) => dayMessage.day === day
+      );
+      const messageIndex = messageHistory[dayMessagesIndex].messages.findIndex(
+        (message) => message._id === messageId
+      );
+
+      // Update status
+      state.chatHistory[chatRoomId].messageHistory[dayMessagesIndex].messages[
+        messageIndex
+      ][status] = true;
+
+      // If room is the currentChatRoom
+      const currentChatRoom = current(state.currentChatRoom);
+      if (currentChatRoom._id === chatRoomId)
+        state.currentChatRoom.messageHistory[dayMessagesIndex].messages[
+          messageIndex
+        ][status] = true;
+    },
   },
 });
 

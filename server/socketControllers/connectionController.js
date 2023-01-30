@@ -1,3 +1,6 @@
+const {
+  checkMembersOffUndeliveredListInMessage,
+} = require("../controllers/chatRoomController");
 const User = require("../models/User");
 
 exports.getSocketDetails = async (userId) => {
@@ -24,6 +27,16 @@ exports.onlineController = (io, socket) => {
       online: true,
       lastSeen: undefined,
     };
+
+    for (let properties of userModel.undeliveredMessages) {
+      await checkMembersOffUndeliveredListInMessage({
+        membersId: [userId],
+        io,
+        ...properties,
+      });
+    }
+
+    userModel.undeliveredMessages = [];
 
     // Save user model
     await userModel.save({ validateBeforeSave: false });

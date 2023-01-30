@@ -3,7 +3,7 @@ import React, { useRef, useState, useMemo } from "react";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 import MessageReadStatus from "./MessageReadStatus";
 
-function VoiceMessage({ voiceDetails, received, readStatus, time }) {
+function VoiceMessage({ voiceDetails, deliveredStatus, readStatus, time }) {
   const audioRef = useRef();
   const seekBarRef = useRef();
 
@@ -72,7 +72,7 @@ function VoiceMessage({ voiceDetails, received, readStatus, time }) {
   return (
     <div
       className={`flex rounded-3xl ${
-        received ? "rounded-bl-none" : "rounded-br-none bg-message"
+        deliveredStatus ? "rounded-bl-none" : "rounded-br-none bg-message"
       } p-[1.5rem] gap-[1rem] w-[30rem] h-[7rem] relative`}
     >
       {/* Audio Player */}
@@ -205,7 +205,7 @@ function VoiceMessage({ voiceDetails, received, readStatus, time }) {
         </div>
       </div>
 
-      {!received && (
+      {!deliveredStatus && (
         <MessageReadStatus
           readStatus={false}
           time={time}

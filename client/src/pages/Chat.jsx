@@ -15,7 +15,11 @@ function Chat() {
     chatActions,
   } = useChat();
 
-  const { socketListen } = useSocket();
+  const unreadMessagesByUser = useSelector(
+    (state) => state.userReducer.user.unreadMessages
+  );
+
+  const { socketListen, socketEmit, userId } = useSocket();
 
   const dispatch = useDispatch();
 
@@ -27,10 +31,10 @@ function Chat() {
     // Listen to typing events from other users
     let timeInterval;
     socketListen("user:typing", (userId) => {
-      clearInterval(timeInterval);
+      clearTimeout(timeInterval);
       dispatch(chatActions.setChatProfileMode({ id: userId, mode: "typing" }));
 
-      timeInterval = setInterval(() => {
+      timeInterval = setTimeout(() => {
         dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
       }, 1000);
     });
@@ -49,9 +53,28 @@ function Chat() {
   }, []);
 
   const chatActive = useSelector((state) => state.chatReducer.active);
+
   const currentChatRoom = useSelector(
     (state) => state.chatReducer.currentChatRoom
   );
+
+  useEffect(() => {
+    // Mark messages unread in that chat room as read
+    const unreadMessagesInCurrentChatRoom = unreadMessagesByUser?.filter(
+      (messages) => messages.chatRoomId === currentChatRoom._id
+    );
+
+    if (
+      unreadMessagesInCurrentChatRoom &&
+      unreadMessagesInCurrentChatRoom.length
+    ) {
+      socketEmit("user:markMessagesAsRead", {
+        chatRoomId: currentChatRoom._id,
+        messages: unreadMessagesInCurrentChatRoom,
+        userId,
+      });
+    }
+  }, [currentChatRoom]);
 
   return (
     <div

@@ -20,6 +20,7 @@
     --text-secondary-light: hsla(207, 4%, 46%, 0.08);
 
     --avatar-check: rgb(10 198 48);
+    --avatar-check-read: var(--bg-cta-icon);
     --scrollbar: rgba(0, 0, 0, 0.2);
     --danger: rgb(223, 63, 64);
     --box-shadow: rgba(0, 0, 0, 0.149);
@@ -60,6 +61,7 @@ html.dark {
   --text-secondary: rgb(170, 170, 170);
   --text-secondary-light: rgba(171, 171, 171, 0.078);
   --avatar-check: var(--text-primary);
+  --avatar-check-read: rgb(44, 28, 120);
   --scrollbar: rgba(255, 255, 255, 0.2);
   --danger: rgb(255, 89, 90);
   --box-shadow: rgba(0, 0, 0, 0.4);

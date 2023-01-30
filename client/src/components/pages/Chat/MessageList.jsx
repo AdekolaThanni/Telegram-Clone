@@ -3,45 +3,128 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSocket from "../../../hooks/socketHooks/useSocket";
 import { chatActions } from "../../../store/chatSlice";
+import { userActions } from "../../../store/userSlice";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 import DayMessages from "./DayMessages";
 
-let initial = true;
-
 function MessageList({ messageHistory }) {
   const [scrolledUp, setScrolledUp] = useState(false);
-  const [chatUpdated, setChatUpdated] = useState(true);
+  const [chatUpdated, setChatUpdated] = useState(false);
+  const [chatRoomChanged, setChatRoomChanged] = useState(true);
   const chatActive = useSelector((state) => state.chatReducer.active);
+  const currentChatRoomId = useSelector(
+    (state) => state.chatReducer.currentChatRoom._id
+  );
   const messageListRef = useRef();
-  const { socketListen } = useSocket();
+  const { socketListen, userId, socketEmit, socket } = useSocket();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (chatUpdated || chatActive) {
-      messageListRef.current.scrollTo({
-        top: messageListRef.current.scrollHeight,
-        left: 0,
-        behavior: initial ? "auto" : "smooth",
-      });
-
-      initial = false;
-    }
-    setChatUpdated(false);
-  }, [chatUpdated, chatActive]);
 
   // When user leaves chat modal, deactivate scrolledUp icon appearance and set intial
   useEffect(() => {
     setScrolledUp(false);
-    initial = true;
-  }, [chatActive]);
+  }, [chatRoomChanged]);
 
+  // Listen to incoming messages and emit delivered on receiving
   useEffect(() => {
-    // Listen to socket events
-    socketListen("user:message", ({ chatRoomId, message }) => {
-      dispatch(chatActions.updateMessageHistory({ chatRoomId, message }));
-      setChatUpdated(true);
-    });
+    socketListen(
+      "user:message",
+      ({ chatRoomId, message }, acknowledgeReceiving) => {
+        // Acknowledge receiving message by sending userId back to server
+        acknowledgeReceiving(userId);
+        dispatch(chatActions.updateMessageHistory({ chatRoomId, message }));
+        if (chatActive) {
+          setChatUpdated(true);
+        }
+      }
+    );
   }, []);
+
+  // Listen to when a message can be read
+  useEffect(() => {
+    setChatRoomChanged(true);
+    socketListen("user:messageCanBeRead", ({ chatRoomId, day, message }) => {
+      // If user is the sender of the message
+      if (userId === message.sender) return;
+
+      // If message chatRoom is the currentChatRoom being displayed, emit message as being read
+      if (chatRoomId === currentChatRoomId) {
+        socketEmit("user:messageRead", {
+          messageId: message._id,
+          chatRoomId,
+          day,
+          userId,
+        });
+      } else {
+        dispatch(
+          userActions.setUnreadMessage({
+            chatRoomId,
+            day,
+            messageId: message._id,
+          })
+        );
+      }
+    });
+
+    return () => {
+      socket.off("user:messageCanBeRead");
+    };
+  }, [currentChatRoomId]);
+
+  // Listen to messages that has been delivered or read by all members
+  useEffect(() => {
+    socketListen(
+      "user:messageDelivered",
+      ({ chatRoomId, messageId, senderId, day }) => {
+        // If message wasn't sent by user, there's no need to update
+        if (userId !== senderId) return;
+
+        dispatch(
+          chatActions.updateMessageStatus({
+            chatRoomId,
+            messageId,
+            day,
+            status: "deliveredStatus",
+          })
+        );
+      }
+    );
+
+    socketListen(
+      "user:messageReadByAllMembers",
+      ({ chatRoomId, messageId, senderId, day }) => {
+        // If message wasn't sent by user, there's no need to update
+        if (userId !== senderId) return;
+
+        dispatch(
+          chatActions.updateMessageStatus({
+            chatRoomId,
+            messageId,
+            day,
+            status: "readStatus",
+          })
+        );
+      }
+    );
+  }, []);
+
+  // Manages message scrolling down to the bottom
+  useEffect(() => {
+    const behavior = chatRoomChanged ? "auto" : "smooth";
+    if (chatUpdated || chatRoomChanged) {
+      messageListRef.current.scrollTo({
+        top: messageListRef.current.scrollHeight,
+        left: 0,
+        behavior,
+      });
+    }
+    if (chatRoomChanged) {
+      setChatRoomChanged(false);
+    }
+
+    if (chatUpdated) {
+      setChatUpdated(false);
+    }
+  }, [chatUpdated, chatRoomChanged]);
 
   return (
     <div

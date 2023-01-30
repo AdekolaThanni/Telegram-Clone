@@ -11,13 +11,15 @@ function DayMessages({ messagesData }) {
         {messagesData.day}
       </p>
       <div className="flex flex-col items-start gap-[.5rem]">
-        {messagesData.messages.map((message) =>
-          message.sender !== userId ? (
-            <ReceivedMessage message={message} />
-          ) : (
-            <SentMessage message={message} />
-          )
-        )}
+        {messagesData.messages.map((message) => (
+          <React.Fragment key={message._id}>
+            {message.sender !== userId ? (
+              <ReceivedMessage message={message} />
+            ) : (
+              <SentMessage message={message} />
+            )}
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );

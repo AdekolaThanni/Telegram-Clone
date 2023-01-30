@@ -57,6 +57,10 @@ const Schema = new mongoose.Schema({
   },
   // Chat rooms user belongs to
   chatRooms: [mongoose.Schema.Types.ObjectId],
+  // Unread messages
+  unreadMessages: [{}],
+  // Undelivered messages
+  undeliveredMessages: [{}],
 });
 
 Schema.pre("save", async function (next) {

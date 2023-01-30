@@ -1,7 +1,13 @@
 import React from "react";
 import MessageCheck from "../../globals/MessageCheck";
 
-function MessageReadStatus({ readStatus, time, className }) {
+function MessageReadStatus({
+  readStatus,
+  deliveredStatus,
+  time,
+  className,
+  messageReceived,
+}) {
   return (
     <div
       className={`flex items-center py-[.2rem] text-[1.1rem] text-message-status ${className}`}
@@ -13,10 +19,11 @@ function MessageReadStatus({ readStatus, time, className }) {
           hour12: false,
         })}
       </span>
-      {readStatus !== undefined && (
+      {/* If message was received, don't show messageReadStatus */}
+      {!messageReceived && (
         <MessageCheck
           readStatus={readStatus}
-          className="!fill-transparent !stroke-avatar-check translate-y-[.5rem]"
+          deliveredStatus={deliveredStatus}
         />
       )}
     </div>

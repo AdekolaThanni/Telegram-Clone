@@ -7,6 +7,9 @@ const userSlice = createSlice({
     setUser: (state, { payload }) => {
       state.user = payload.user;
     },
+    setUnreadMessage: (state, { payload: unreadMessage }) => {
+      state.user.unreadMessages.push(unreadMessage);
+    },
   },
 });
 

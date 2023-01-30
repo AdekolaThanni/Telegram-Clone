@@ -7,7 +7,7 @@ import { chatActions } from "../store/chatSlice";
 
 const useInit = () => {
   // useSocketHook
-  const { socketEmit, socketListen, userId } = useSocket();
+  const { socketEmit, socketListen, userId, socket } = useSocket();
 
   // Set app theme
   useEffect(() => {
@@ -40,6 +40,10 @@ const useInit = () => {
   // On getting user details
   useEffect(() => {
     if (userId) {
+      // Connect socket if disconnected
+      if (socket.disconnected) {
+        socket.connect();
+      }
       // Announce logged in status
       socketEmit("user:online", userId);
 

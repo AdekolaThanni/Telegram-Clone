@@ -8,12 +8,13 @@ import { userActions } from "../../../store/userSlice";
 
 function LogoutModal() {
   const dispatch = useDispatch();
-  const { socketEmit } = useSocket();
+  const { socketEmit, socket } = useSocket();
   const userId = useSelector((state) => state.userReducer.user._id);
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
     socketEmit("user:offline", userId);
+    socket.disconnect();
     dispatch(userActions.setUser({ user: {} }));
   };
   return (

@@ -14,7 +14,7 @@ const useSocket = () => {
     socket.on(action, fn);
   };
 
-  return { socketEmit, socketListen, userId };
+  return { socketEmit, socketListen, userId, socket };
 };
 
 export default useSocket;
