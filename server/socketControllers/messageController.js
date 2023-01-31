@@ -14,7 +14,7 @@ exports.messagingController = (io, socket) => {
     const { messageObj, day } = await addMessageToChatRoom(chatRoomId, message);
 
     // Broadcast message to room
-    io.timeout(5000)
+    io.timeout(60000)
       .to(chatRoomId)
       .emit(
         "user:message",
@@ -26,7 +26,7 @@ exports.messagingController = (io, socket) => {
         },
         async (error, membersId) => {
           if (error) {
-            console.log("Not received");
+            console.log(error);
           } else {
             // Unique identifier of a message in chatRoom
             const uniqueMessageDetails = {

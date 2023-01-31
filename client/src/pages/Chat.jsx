@@ -7,6 +7,7 @@ import NewMessage from "../components/pages/Chat/NewMessage";
 import useChat from "../hooks/useChat";
 import { userProfileActions } from "../store/userProfileSlice";
 import useSocket from "../hooks/socketHooks/useSocket";
+import { chatListActions } from "../store/chatListSlice";
 
 function Chat() {
   const {
@@ -30,25 +31,30 @@ function Chat() {
   useEffect(() => {
     // Listen to typing events from other users
     let timeInterval;
-    socketListen("user:typing", (userId) => {
+    socketListen("user:typing", ({ userId, chatRoomId }) => {
       clearTimeout(timeInterval);
+
       dispatch(chatActions.setChatProfileMode({ id: userId, mode: "typing" }));
+      dispatch(chatListActions.setChatMode({ chatRoomId, mode: "typing" }));
 
       timeInterval = setTimeout(() => {
         dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
+        dispatch(chatListActions.setChatMode({ chatRoomId, mode: null }));
       }, 1000);
     });
 
     // Listen to recording event from other users
-    socketListen("user:recording", (userId) => {
+    socketListen("user:recording", ({ userId, chatRoomId }) => {
       dispatch(
         chatActions.setChatProfileMode({ id: userId, mode: "recording" })
       );
+      dispatch(chatListActions.setChatMode({ chatRoomId, mode: "recording" }));
     });
 
     // Listen to record stopping event from other users
-    socketListen("user:recordingStopped", (userId) => {
+    socketListen("user:recordingStopped", ({ userId, chatRoomId }) => {
       dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
+      dispatch(chatListActions.setChatMode({ chatRoomId, mode: null }));
     });
   }, []);
 

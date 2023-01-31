@@ -4,7 +4,7 @@ import { chatActions } from "../store/chatSlice";
 import useSocket from "../hooks/socketHooks/useSocket";
 
 const useMessageInput = ({ currentChatRoom }) => {
-  const { socketEmit, socketListen } = useSocket();
+  const { socketEmit } = useSocket();
   const dispatch = useDispatch();
   const [messageEmpty, setMessageEmpty] = useState(true);
   const [caretIndex, setCaretIndex] = useState(0);
@@ -27,7 +27,7 @@ const useMessageInput = ({ currentChatRoom }) => {
   }
 
   // Add emoji to message
-  const addEmojiToMessage = ({ emoji, getImageUrl }) => {
+  const addEmojiToMessage = ({ getImageUrl }) => {
     setMessageEmpty(false);
     const messageInput = document.querySelector("#messageInput");
     const innerHtml = messageInput.innerHTML;

@@ -16,6 +16,72 @@ exports.getChatRoom = catchAsyncError(async (req, res, next) => {
   });
 });
 
+exports.getChatRoomSummaryForUser = catchAsyncError(async (req, res, next) => {
+  // Get user
+  const user = await User.findById(req.cookies.userId);
+
+  const chatRoomSummary = await Promise.all(
+    user.chatRooms.map(async (chatRoomId) => {
+      const outputSummary = {};
+
+      // Get chatRoom object
+      const chatRoom = await ChatRoom.findById(chatRoomId).populate({
+        path: "members",
+        select: "id username avatar bio status",
+      });
+
+      if (!chatRoom) return next(new ReqError("Chat room can't be found"));
+
+      // Get chatRoom latest message
+      const lastDay =
+        chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
+      // If there's no message in chatRoom
+      if (!lastDay) return;
+      outputSummary.latestMessage =
+        lastDay.messages[lastDay.messages.length - 1];
+
+      // Get how many messages are unread by user in the chatRoom
+      outputSummary.unreadMessagesCount = user.unreadMessages.reduce(
+        (acc, curr) => {
+          if (chatRoomId.toString() === curr.chatRoomId.toString())
+            return (acc += 1);
+
+          return acc;
+        },
+        0
+      );
+
+      // Attach chatRoomId
+      outputSummary.chatRoomId = chatRoomId;
+      outputSummary.roomType = chatRoom.roomType;
+
+      // If roomType is private
+      if (chatRoom.roomType === "Private") {
+        const profile = chatRoom.members.find(
+          (member) => user._id.toString() !== member._id.toString()
+        );
+
+        outputSummary.profile = profile;
+        outputSummary.profile.name = user.contacts.find(
+          (contact) =>
+            contact.contactDetails.toString() === profile._id.toString()
+        )?.name;
+      }
+
+      outputSummary.mode = null;
+
+      return outputSummary;
+    })
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      chatRoomSummary,
+    },
+  });
+});
+
 exports.checkIfChatRoomExists = async (user, secondaryUser) => {
   let chatRoomId;
   // secondaryUser is the user not performing the action

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSocket from "../../../hooks/socketHooks/useSocket";
+import { chatListActions } from "../../../store/chatListSlice";
 import { chatActions } from "../../../store/chatSlice";
 import { userActions } from "../../../store/userSlice";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
@@ -32,6 +33,13 @@ function MessageList({ messageHistory }) {
         // Acknowledge receiving message by sending userId back to server
         acknowledgeReceiving(userId);
         dispatch(chatActions.updateMessageHistory({ chatRoomId, message }));
+        dispatch(
+          chatListActions.setLatestMessage({
+            chatRoomId,
+            latestMessage: message,
+          })
+        );
+
         if (chatActive) {
           setChatUpdated(true);
         }
@@ -62,6 +70,10 @@ function MessageList({ messageHistory }) {
             messageId: message._id,
           })
         );
+
+        dispatch(
+          chatListActions.IncreaseMessageCountInChatRoom({ chatRoomId })
+        );
       }
     });
 
@@ -75,6 +87,14 @@ function MessageList({ messageHistory }) {
     socketListen(
       "user:messageDelivered",
       ({ chatRoomId, messageId, senderId, day }) => {
+        dispatch(
+          chatListActions.updateMessageStatus({
+            messageId,
+            chatRoomId,
+            status: "deliveredStatus",
+          })
+        );
+
         // If message wasn't sent by user, there's no need to update
         if (userId !== senderId) return;
 
@@ -92,6 +112,13 @@ function MessageList({ messageHistory }) {
     socketListen(
       "user:messageReadByAllMembers",
       ({ chatRoomId, messageId, senderId, day }) => {
+        dispatch(
+          chatListActions.updateMessageStatus({
+            messageId,
+            chatRoomId,
+            status: "readStatus",
+          })
+        );
         // If message wasn't sent by user, there's no need to update
         if (userId !== senderId) return;
 

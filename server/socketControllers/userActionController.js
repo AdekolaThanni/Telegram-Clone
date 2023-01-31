@@ -3,7 +3,9 @@ exports.typingController = (io, socket) => {
   socket.on("user:typing", (chatRoomId) => {
     if (!socket.userId) return;
 
-    socket.to(chatRoomId).emit("user:typing", socket.userId);
+    socket
+      .to(chatRoomId)
+      .emit("user:typing", { userId: socket.userId, chatRoomId });
   });
 };
 
@@ -12,12 +14,16 @@ exports.recordingcontroller = (io, socket) => {
   socket.on("user:recording", (chatRoomId) => {
     if (!socket.userId) return;
 
-    socket.to(chatRoomId).emit("user:recording", socket.userId);
+    socket
+      .to(chatRoomId)
+      .emit("user:recording", { userId: socket.userId, chatRoomId });
   });
 
   socket.on("user:recordingStopped", (chatRoomId) => {
     if (!socket.userId) return;
 
-    socket.to(chatRoomId).emit("user:recordingStopped", socket.userId);
+    socket
+      .to(chatRoomId)
+      .emit("user:recordingStopped", { userId: socket.userId, chatRoomId });
   });
 };

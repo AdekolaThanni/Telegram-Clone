@@ -1,4 +1,8 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useFetch from "../hooks/useFetch";
+import { chatListActions } from "../store/chatListSlice";
 
 const dummyList = [
   {
@@ -57,17 +61,35 @@ const dummyList = [
 ];
 
 const useChatList = () => {
-  const [chatList] = useState(dummyList);
+  const chatList = useSelector((state) => state.chatListReducer);
+  const userId = useSelector((state) => state.userReducer.user._id);
   const [searchValue, setSearchValue] = useState("");
+
+  const dispatch = useDispatch();
+
+  const { reqFn: fetchChatRoomSummary, reqState: loadingChatList } = useFetch(
+    { method: "GET", url: "/chatRoom/summary" },
+    (data) =>
+      dispatch(
+        chatListActions.setChatList({ chatList: data.data.chatRoomSummary })
+      )
+  );
 
   const handleSearchValue = (event) => {
     setSearchValue(event.target.value);
   };
 
+  useEffect(() => {
+    if (userId) {
+      fetchChatRoomSummary();
+    }
+  }, [userId]);
+
   return {
     chatList,
     searchValue,
     handleSearchValue,
+    loadingChatList,
   };
 };
 

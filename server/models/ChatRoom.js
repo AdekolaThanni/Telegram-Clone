@@ -38,7 +38,7 @@ const Schema = new mongoose.Schema({
     type: String,
     enum: ["Private", "Group"],
   },
-  members: [mongoose.Schema.Types.ObjectId],
+  members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   messageHistory: [{ day: Number, messages: [MessageSchema] }],
 });
 

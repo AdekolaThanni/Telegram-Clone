@@ -8,6 +8,7 @@ import notificationReducer from "./notificationSlice";
 import contactsReducer from "./contactsSlice";
 import userReducer from "./userSlice";
 import socketReducer from "./socketSlice";
+import chatListReducer from "./chatListSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     contactsReducer,
     userReducer,
     socketReducer,
+    chatListReducer,
   },
 });
 

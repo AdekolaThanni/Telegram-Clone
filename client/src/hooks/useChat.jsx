@@ -2,7 +2,7 @@ import useFetch from "./useFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../store/chatSlice";
 
-const useChat = (contact) => {
+const useChat = (contact, from = "contact") => {
   const mode = useSelector((state) => state.chatReducer.mode);
   const dispatch = useDispatch();
   const chatHistory = useSelector((state) => state.chatReducer.chatHistory);
@@ -16,10 +16,13 @@ const useChat = (contact) => {
     },
     (data) => {
       const chatRoom = {
-        chatProfile: {
-          ...contact.contactDetails,
-          name: contact.contactName,
-        },
+        chatProfile:
+          from === "contact"
+            ? {
+                ...contact.contactDetails,
+                name: contact.contactName,
+              }
+            : { ...contact.profile },
         ...data.data.chatRoom,
       };
       // Set chat room as current
