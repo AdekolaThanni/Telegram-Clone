@@ -90,12 +90,19 @@ function Chat() {
           : "lg:basis-[100rem] sm:translate-x-[55rem]"
       }`}
     >
-      {currentChatRoom.chatProfile.username && (
+      {userId && (
         <>
           {/* Header */}
-          <ChatHeader chatProfile={chatProfile} />
+          <ChatHeader
+            className={`${!currentChatRoom.chatProfile.username && "hidden"}`}
+            chatProfile={chatProfile}
+          />
           {/* container */}
-          <div className="flex-grow px-[1rem] sm:px-[.5rem] overflow-hidden">
+          <div
+            className={`flex-grow px-[1rem] sm:px-[.5rem] overflow-hidden ${
+              !currentChatRoom.chatProfile.username && "hidden"
+            }`}
+          >
             <div className="max-w-[75rem] h-full mx-auto flex flex-col justify-end pb-[2rem] relative overflow-hidden">
               <MessageList messageHistory={messageHistory} />
               <NewMessage mode={mode} currentChatRoom={currentChatRoom} />

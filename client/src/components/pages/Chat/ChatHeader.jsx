@@ -8,13 +8,15 @@ import Header from "../../globals/Header";
 import IconWrapper from "../../globals/IconWrapper";
 import ActionsModal from "./ActionsModal";
 
-function ChatHeader({ chatProfile }) {
+function ChatHeader({ chatProfile, className }) {
   const dispatch = useDispatch();
   const chatActive = useSelector((state) => state.chatReducer.active);
   const lastSeenTime = useTime(chatProfile?.status?.lastSeen);
 
   return (
-    <Header className="flex items-center px-[2rem] bg-primary border-x border-border shrink-0 z-10">
+    <Header
+      className={`flex items-center px-[2rem] bg-primary border-x border-border shrink-0 z-10 ${className}`}
+    >
       <div className="flex items-center flex-grow">
         <IconWrapper
           id="chatActiveToggler"

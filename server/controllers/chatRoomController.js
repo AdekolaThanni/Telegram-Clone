@@ -20,7 +20,7 @@ exports.getChatRoomSummaryForUser = catchAsyncError(async (req, res, next) => {
   // Get user
   const user = await User.findById(req.cookies.userId);
 
-  const chatRoomSummary = await Promise.all(
+  let chatRoomSummary = await Promise.all(
     user.chatRooms.map(async (chatRoomId) => {
       const outputSummary = {};
 
@@ -73,6 +73,13 @@ exports.getChatRoomSummaryForUser = catchAsyncError(async (req, res, next) => {
       return outputSummary;
     })
   );
+
+  chatRoomSummary.sort((a, b) => {
+    const latestMessageInATime = new Date(a.latestMessage.timeSent).getTime();
+    const latestMessageInBTime = new Date(b.latestMessage.timeSent).getTime();
+
+    return latestMessageInBTime - latestMessageInATime;
+  });
 
   res.status(200).json({
     status: "success",

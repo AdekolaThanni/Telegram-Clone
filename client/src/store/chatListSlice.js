@@ -24,7 +24,14 @@ const chatList = createSlice({
       const chatRoomIndex = currentState.findIndex(
         (chat) => chat.chatRoomId === payload.chatRoomId
       );
-      state[chatRoomIndex].latestMessage = payload.latestMessage;
+      const chatRoom = {
+        ...currentState[chatRoomIndex],
+        latestMessage: payload.latestMessage,
+      };
+
+      return [chatRoom].concat(
+        currentState.filter((_, index) => index !== chatRoomIndex)
+      );
     },
     updateMessageStatus: (state, { payload }) => {
       const currentState = current(state);
@@ -32,7 +39,7 @@ const chatList = createSlice({
         (chat) => chat.chatRoomId === payload.chatRoomId
       );
 
-      if (currentState[chatRoomIndex].latestMessage._id !== payload.messageId)
+      if (currentState[chatRoomIndex]?.latestMessage._id !== payload.messageId)
         return;
 
       state[chatRoomIndex].latestMessage[payload.status] = true;

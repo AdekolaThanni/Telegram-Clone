@@ -70,6 +70,8 @@ const chatSlice = createSlice({
       // Get chat room
       const chatRoom = chatHistory[chatRoomId];
 
+      if (!chatRoom) return;
+
       // Get last chatRoom day message
       const lastDayMessage =
         chatRoom.messageHistory[chatRoom.messageHistory.length - 1];

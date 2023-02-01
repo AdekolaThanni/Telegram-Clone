@@ -40,9 +40,7 @@ function MessageList({ messageHistory }) {
           })
         );
 
-        if (chatActive) {
-          setChatUpdated(true);
-        }
+        setChatUpdated(true);
       }
     );
   }, []);

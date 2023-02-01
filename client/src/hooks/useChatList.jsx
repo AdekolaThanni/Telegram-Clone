@@ -64,6 +64,7 @@ const useChatList = () => {
   const chatList = useSelector((state) => state.chatListReducer);
   const userId = useSelector((state) => state.userReducer.user._id);
   const [searchValue, setSearchValue] = useState("");
+  const [searchedChats, setSearchedChats] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -80,13 +81,31 @@ const useChatList = () => {
   };
 
   useEffect(() => {
+    if (searchValue) {
+      setSearchedChats(
+        chatList.filter(
+          (chat) =>
+            chat.profile.name
+              .toLowerCase()
+              .startsWith(searchValue.toLowerCase()) ||
+            chat.profile.username
+              .toLowerCase()
+              .startsWith(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setSearchedChats(chatList);
+    }
+  }, [searchValue, chatList]);
+
+  useEffect(() => {
     if (userId) {
       fetchChatRoomSummary();
     }
   }, [userId]);
 
   return {
-    chatList,
+    chatList: searchedChats,
     searchValue,
     handleSearchValue,
     loadingChatList,

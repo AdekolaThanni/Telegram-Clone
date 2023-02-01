@@ -10,7 +10,7 @@ function CTAModal() {
   return (
     <Modal className="origin-bottom-right" typeValue="ctaModal">
       {/* Create Group chat */}
-      <ModalChild
+      {/* <ModalChild
         onClick={() => {
           dispatch(modalActions.closeModal());
           dispatch(
@@ -33,7 +33,7 @@ function CTAModal() {
           />
         </svg>
         New Group
-      </ModalChild>
+      </ModalChild> */}
       {/* Create Private Chat */}
       <ModalChild
         onClick={() => {
