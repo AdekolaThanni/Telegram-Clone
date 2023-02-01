@@ -37,9 +37,11 @@ function ChatList() {
             />
           </Header>
           <div className="basis-full p-[.5rem] overflow-y-scroll custom-scrollbar">
-            {chatList.map((chatItem) => (
-              <ChatItem key={chatItem.chatRoomId} chatData={chatItem} />
-            ))}
+            {chatList.map((chatItem) => {
+              if (!chatItem.latestMessage._id) return null;
+
+              return <ChatItem key={chatItem.chatRoomId} chatData={chatItem} />;
+            })}
             <ChatOptionsModal />
           </div>
 

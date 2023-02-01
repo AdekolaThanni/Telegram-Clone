@@ -1,6 +1,7 @@
 import useFetch from "./useFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../store/chatSlice";
+import { chatListActions } from "../store/chatListSlice";
 
 const useChat = (contact, from = "contact") => {
   const mode = useSelector((state) => state.chatReducer.mode);
@@ -49,6 +50,12 @@ const useChat = (contact, from = "contact") => {
     } else {
       fetchChatRoom();
     }
+
+    dispatch(
+      chatListActions.markMessagesInChatRoomAsRead({
+        chatRoomId: contact.chatRoomId,
+      })
+    );
   };
 
   return { chat, setChatRoom, mode, chatActions };

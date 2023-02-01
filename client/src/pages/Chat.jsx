@@ -89,6 +89,11 @@ function Chat() {
           ? "lg:basis-full sm:translate-x-0"
           : "lg:basis-[100rem] sm:translate-x-[55rem]"
       }`}
+      onClick={() => {
+        if (!chatActive) {
+          dispatch(chatActions.setChatActive());
+        }
+      }}
     >
       {userId && (
         <>

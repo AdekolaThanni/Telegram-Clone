@@ -32,24 +32,29 @@ exports.getChatRoomSummaryForUser = catchAsyncError(async (req, res, next) => {
 
       if (!chatRoom) return next(new ReqError("Chat room can't be found"));
 
-      // Get chatRoom latest message
-      const lastDay =
-        chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
-      // If there's no message in chatRoom
-      if (!lastDay) return;
-      outputSummary.latestMessage =
-        lastDay.messages[lastDay.messages.length - 1];
+      // If there are messages in the room message in chatRoom
+      if (chatRoom.messageHistory.length) {
+        // Get chatRoom latest message
+        const lastDay =
+          chatRoom.messageHistory[chatRoom.messageHistory.length - 1];
 
-      // Get how many messages are unread by user in the chatRoom
-      outputSummary.unreadMessagesCount = user.unreadMessages.reduce(
-        (acc, curr) => {
-          if (chatRoomId.toString() === curr.chatRoomId.toString())
-            return (acc += 1);
+        outputSummary.latestMessage =
+          lastDay.messages[lastDay.messages.length - 1];
 
-          return acc;
-        },
-        0
-      );
+        // Get how many messages are unread by user in the chatRoom
+        outputSummary.unreadMessagesCount = user.unreadMessages.reduce(
+          (acc, curr) => {
+            if (chatRoomId.toString() === curr.chatRoomId.toString())
+              return (acc += 1);
+
+            return acc;
+          },
+          0
+        );
+      } else {
+        outputSummary.latestMessage = {};
+        outputSummary.unreadMessagesCount = 0;
+      }
 
       // Attach chatRoomId
       outputSummary.chatRoomId = chatRoomId;

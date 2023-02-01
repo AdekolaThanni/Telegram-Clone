@@ -78,7 +78,9 @@ function UserProfile() {
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-[2rem] left-[2rem]">
-          <p className="text-[2rem] font-semibold text-white">{profile.name}</p>
+          <p className="text-[2rem] font-semibold text-white">
+            {profile.name || profile.username}
+          </p>
           <p className="text-secondary-text">
             {profile.status?.online ? "Online" : `last seen at ${lastSeenTime}`}
           </p>

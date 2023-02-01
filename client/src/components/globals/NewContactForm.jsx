@@ -9,6 +9,7 @@ import { modalActions } from "../../store/modalSlice";
 import useFetch from "../../hooks/useFetch";
 import { contactsActions } from "../../store/contactsSlice";
 import useSocket from "../../hooks/socketHooks/useSocket";
+import { chatListActions } from "../../store/chatListSlice";
 
 const formSchema = Yup.object().shape({
   name: Yup.string().required("Field is required"),
@@ -21,6 +22,22 @@ function NewContactForm() {
   const { reqFn } = useFetch({ method: "POST", url: "/contacts" }, (data) => {
     dispatch(contactsActions.addContact(data.data.contact));
     socketEmit("user:joinRooms", { rooms: [data.data.contact.chatRoomId] });
+    dispatch(
+      chatListActions.addToChatList({
+        newChat: {
+          chatRoomId: data.data.contact.chatRoomId,
+          roomType: "Private",
+          latestMessage: {},
+          unreadMessagesCount: 0,
+          pinned: false,
+          mode: null,
+          profile: {
+            name: data.data.contact.name,
+            ...data.data.contact.contactDetails,
+          },
+        },
+      })
+    );
   });
 
   const addContact = async (values) => {

@@ -114,6 +114,19 @@ const chatList = createSlice({
       // Concatenate both arrays and return as new state
       return pinnedChats.concat(unpinnedChats);
     },
+    addToChatList: (state, { payload }) => {
+      const currentState = current(state);
+
+      if (
+        currentState.some(
+          (chatRoom) => chatRoom.chatRoomId === payload.newChat.chatRoomId
+        )
+      )
+        return;
+      else {
+        state.push(payload.newChat);
+      }
+    },
   },
 });
 

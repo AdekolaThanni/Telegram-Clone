@@ -61,11 +61,13 @@ function ChatHeader({ chatProfile, className }) {
         >
           <img
             src={chatProfile.avatar}
-            alt={chatProfile.name}
+            alt={chatProfile.name || chatProfile.username}
             className="w-[4.2rem] h-[4.2rem] rounded-full"
           />
           <div className="flex flex-col">
-            <h2 className="font-semibold">{chatProfile.name}</h2>
+            <h2 className="font-semibold">
+              {chatProfile.name || chatProfile.username}
+            </h2>
             {chatProfile.mode && (
               <span className="text-cta-icon italic text-[1.4rem] font-normal -translate-y-[.4rem]">
                 {chatProfile.mode}...

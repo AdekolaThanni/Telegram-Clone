@@ -77,11 +77,6 @@ function ChatItem({ chatData }) {
     <div
       onClick={() => {
         setChatRoom();
-        dispatch(
-          chatListActions.markMessagesInChatRoomAsRead({
-            chatRoomId: chatData.chatRoomId,
-          })
-        );
       }}
       onContextMenu={showOptions}
       onMouseDown={timeoutToShowOptions}
@@ -104,7 +99,7 @@ function ChatItem({ chatData }) {
               activeChat && "!text-white"
             }`}
           >
-            {chatData.profile.name}
+            {chatData.profile.name || chatData.profile.username}
           </span>
 
           {/* Message check */}
