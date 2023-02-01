@@ -7,21 +7,29 @@ import useModalBestPosition from "../../../hooks/useModalBestPosition";
 import useChat from "../../../hooks/useChat";
 import { chatListActions } from "../../../store/chatListSlice";
 
-function ChatItem({ chatData, activeChat }) {
+function ChatItem({ chatData }) {
+  // Chat options visibility
   const chatOptionVisible = useSelector(
     (state) => state.modalReducer.payload.chatRoomId === chatData.chatRoomId
   );
 
+  const activeChat = useSelector(
+    (state) => state.chatReducer.currentChatRoom._id === chatData.chatRoomId
+  );
+
+  // Chat mode of user i.e Typing, recording
   const chatMode = useSelector((state) => {
     const chatIndex = state.chatListReducer.findIndex(
       (chat) => chat.chatRoomId === chatData.chatRoomId
     );
 
-    return state.chatListReducer[chatIndex].mode;
+    return state.chatListReducer[chatIndex]?.mode;
   });
 
+  // Currently logged in user id
   const userId = useSelector((state) => state.userReducer.user._id);
 
+  // Set chat room function
   const { setChatRoom } = useChat(chatData, "chatList");
 
   // Format latest message date
@@ -41,6 +49,7 @@ function ChatItem({ chatData, activeChat }) {
     overlayId: "side-bar",
   };
 
+  // show options handler
   const showOptions = (event) => {
     event.preventDefault();
     const positions = getBestModalPostion(event, elemData);
@@ -97,6 +106,8 @@ function ChatItem({ chatData, activeChat }) {
           >
             {chatData.profile.name}
           </span>
+
+          {/* Message check */}
           <span className="flex items-center gap-[.5rem]">
             {chatData.latestMessage.sender === userId && (
               <MessageCheck
@@ -108,16 +119,20 @@ function ChatItem({ chatData, activeChat }) {
             <span className="text-[1.4rem]">{formattedDate}</span>
           </span>
         </div>
+
         {/* Subtitle */}
         <div className="flex justify-between">
+          {/* Chat mode status */}
           {chatMode && (
             <span className="text-cta-icon italic font-normal">
               {chatMode}...
             </span>
           )}
 
+          {/* Default without chatMode active */}
           {!chatMode && (
             <>
+              {/* Latest text */}
               <span className="flex-grow truncate">
                 {!(chatData.roomType === "Private") &&
                   !!chatData.latestMessage.sender && (
@@ -135,6 +150,7 @@ function ChatItem({ chatData, activeChat }) {
                   }}
                 ></span>
               </span>
+
               {/* When user has a message pinned and also has an unread message, the unread message indicator takes precedence */}
               <span className="">
                 {chatData.unreadMessagesCount ? (

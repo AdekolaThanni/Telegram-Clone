@@ -57,6 +57,8 @@ const Schema = new mongoose.Schema({
   },
   // Chat rooms user belongs to
   chatRooms: [mongoose.Schema.Types.ObjectId],
+  // Pinned chat rooms by user
+  pinnedChatRooms: [],
   // Unread messages
   unreadMessages: [{}],
   // Undelivered messages

@@ -70,21 +70,70 @@ exports.getChatRoomSummaryForUser = catchAsyncError(async (req, res, next) => {
 
       outputSummary.mode = null;
 
+      // Check if chat is pinned
+      outputSummary.pinned = user.pinnedChatRooms.some(
+        (chatRoom) => chatRoom.toString() === chatRoomId.toString()
+      );
+
       return outputSummary;
     })
   );
 
-  chatRoomSummary.sort((a, b) => {
-    const latestMessageInATime = new Date(a.latestMessage.timeSent).getTime();
-    const latestMessageInBTime = new Date(b.latestMessage.timeSent).getTime();
+  // Get all pinned chats and sort based on newest message
+  const pinnedChats = chatRoomSummary
+    .filter((chatRoom) => chatRoom.pinned)
+    .sort((a, b) => {
+      const latestMessageInATime = new Date(a.latestMessage.timeSent).getTime();
+      const latestMessageInBTime = new Date(b.latestMessage.timeSent).getTime();
 
-    return latestMessageInBTime - latestMessageInATime;
-  });
+      return latestMessageInBTime - latestMessageInATime;
+    });
+
+  // Get all unpinned chats and sort based on newest message
+  const unpinnedChats = chatRoomSummary
+    .filter((chatRoom) => !chatRoom.pinned)
+    .sort((a, b) => {
+      const latestMessageInATime = new Date(a.latestMessage.timeSent).getTime();
+      const latestMessageInBTime = new Date(b.latestMessage.timeSent).getTime();
+
+      return latestMessageInBTime - latestMessageInATime;
+    });
+
+  // Concatenate both arrays
+  chatRoomSummary = [...pinnedChats, ...unpinnedChats];
 
   res.status(200).json({
     status: "success",
     data: {
       chatRoomSummary,
+    },
+  });
+});
+
+exports.pinChatRoom = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.cookies.userId);
+  user.pinnedChatRooms.push(req.params.chatRoomId);
+  await user.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      pinnedChatRooms: user.pinnedChatRooms,
+    },
+  });
+});
+
+exports.unpinChatRoom = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.cookies.userId);
+  user.pinnedChatRooms = user.pinnedChatRooms.filter(
+    (chatRoomId) => chatRoomId.toString() !== req.params.chatRoomId
+  );
+  await user.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      pinnedChatRooms: user.pinnedChatRooms,
     },
   });
 });

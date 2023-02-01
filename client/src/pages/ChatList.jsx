@@ -17,7 +17,6 @@ import { chatActions } from "../store/chatSlice";
 function ChatList() {
   const { chatList, handleSearchValue, searchValue, loadingChatList } =
     useChatList();
-  const [activeChat, setActiveChat] = useState(false);
   const ctaModalVisible = useSelector(
     (state) => state.modalReducer.type === "ctaModal"
   );
@@ -39,11 +38,7 @@ function ChatList() {
           </Header>
           <div className="basis-full p-[.5rem] overflow-y-scroll custom-scrollbar">
             {chatList.map((chatItem) => (
-              <ChatItem
-                key={chatItem.chatRoomId}
-                chatData={chatItem}
-                activeChat={activeChat === chatItem.id}
-              />
+              <ChatItem key={chatItem.chatRoomId} chatData={chatItem} />
             ))}
             <ChatOptionsModal />
           </div>

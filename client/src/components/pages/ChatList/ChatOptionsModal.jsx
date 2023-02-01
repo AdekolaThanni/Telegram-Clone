@@ -1,5 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useFetch from "../../../hooks/useFetch";
+import { chatListActions } from "../../../store/chatListSlice";
 import { modalActions } from "../../../store/modalSlice";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
@@ -8,6 +10,40 @@ function ChatOptionsModal() {
   const chatData = useSelector((state) => state.modalReducer.payload);
 
   const dispatch = useDispatch();
+
+  // pin chat request function
+  const { reqFn: pinChatRoom } = useFetch(
+    {
+      method: "POST",
+      url: `/chatRoom/${chatData.chatRoomId}`,
+    },
+    () => {
+      // Pin chat room
+      dispatch(
+        chatListActions.pinOrUnpinChat({
+          pinned: true,
+          chatRoomId: chatData.chatRoomId,
+        })
+      );
+    }
+  );
+
+  // unpin chat request function
+  const { reqFn: unpinChatRoom } = useFetch(
+    {
+      method: "PATCH",
+      url: `/chatRoom/${chatData.chatRoomId}`,
+    },
+    () => {
+      // unpin chat room
+      dispatch(
+        chatListActions.pinOrUnpinChat({
+          pinned: false,
+          chatRoomId: chatData.chatRoomId,
+        })
+      );
+    }
+  );
 
   const pin = (
     <svg
@@ -45,10 +81,21 @@ function ChatOptionsModal() {
       />
     </svg>
   );
+
   return (
     <Modal className={`z-10`} typeValue="chatOptions">
       {/* Pin or unpin chat */}
-      <ModalChild>
+      <ModalChild
+        onClick={() => {
+          if (!chatData.pinned) {
+            pinChatRoom();
+          } else {
+            unpinChatRoom();
+          }
+
+          dispatch(modalActions.closeModal());
+        }}
+      >
         {chatData.pinned ? unpin : pin}
         {chatData.pinned ? "Unpin" : "Pin"}
       </ModalChild>
@@ -59,10 +106,8 @@ function ChatOptionsModal() {
           setTimeout(() => {
             dispatch(
               modalActions.openModal({
-                type: chatData.privateChat
-                  ? "deleteChatModal"
-                  : "leaveGroupModal",
-                payload: { profile: chatData },
+                type: chatData.roomType ? "deleteChatModal" : "leaveGroupModal",
+                payload: { profile: chatData.profile },
                 positions: {},
               })
             );
@@ -87,7 +132,7 @@ function ChatOptionsModal() {
             className="!fill-transparent !stroke-danger"
           />
         </svg>
-        {chatData.privateChat ? "Delete Chat" : "Leave Group"}
+        {chatData.roomType ? "Delete Chat" : "Leave Group"}
       </ModalChild>
     </Modal>
   );
