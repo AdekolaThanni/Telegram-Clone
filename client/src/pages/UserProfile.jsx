@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "cloudinary-react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/globals/Header";
 import IconWrapper from "../components/globals/IconWrapper";
@@ -19,6 +20,7 @@ function UserProfile() {
           : "w-0 xl:w-[40rem] xl:translate-x-[50rem]"
       }  h-full shrink-0 xl:absolute xl:top-0 xl:right-0 xl:z-20 xl:shadow-lg xl:shadow-box-shadow `}
     >
+      {/* Header bar */}
       <Header className="flex items-center px-[1rem]">
         <IconWrapper
           onClick={() => dispatch(userProfileActions.hideProfile())}
@@ -41,40 +43,44 @@ function UserProfile() {
           </svg>
         </IconWrapper>
         <h2 className="text-[2rem] font-semibold ml-[2rem] mr-auto">Profile</h2>
-        <IconWrapper
-          onClick={() =>
-            dispatch(
-              modalActions.openModal({
-                type: "deleteContactModal",
-                payload: { profile },
-              })
-            )
-          }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1em"
-            height="1em"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 24 24"
+        {profile.name && (
+          <IconWrapper
+            onClick={() =>
+              dispatch(
+                modalActions.openModal({
+                  type: "deleteContactModal",
+                  payload: { profile },
+                })
+              )
+            }
           >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 7v0a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v0M9 7h6M9 7H6m9 0h3m2 0h-2M4 7h2m0 0v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"
-              className="!fill-transparent !stroke-danger"
-            />
-          </svg>
-        </IconWrapper>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 7v0a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v0M9 7h6M9 7H6m9 0h3m2 0h-2M4 7h2m0 0v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"
+                className="!fill-transparent !stroke-danger"
+              />
+            </svg>
+          </IconWrapper>
+        )}
       </Header>
+
       {/* Avatar */}
       <div className="h-[40rem] relative">
-        <img
-          src={profile.avatar}
-          alt=""
+        <Image
+          cloudName="dlanhtzbw"
+          publicId={profile.avatar}
+          alt={profile.name || profile.username}
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-[2rem] left-[2rem]">

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/AdekolaThanni/Telegram-Clone#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cloudinary": "^1.33.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

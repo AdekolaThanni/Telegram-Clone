@@ -6,6 +6,7 @@ import { userActions } from "../store/userSlice";
 const useSettings = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
+
   const { reqFn: getProfile } = useFetch(
     { method: "GET", url: "/profile" },
     (data) => {
@@ -13,7 +14,7 @@ const useSettings = () => {
     }
   );
 
-  const { reqFn: updateProfile } = useFetch(
+  const { reqFn: updateProfile, reqState: updateProfileState } = useFetch(
     {
       method: "PATCH",
       url: "/profile",
@@ -30,6 +31,7 @@ const useSettings = () => {
   return {
     user,
     updateProfile,
+    updateProfileState,
   };
 };
 

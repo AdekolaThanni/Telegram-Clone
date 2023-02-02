@@ -5,6 +5,7 @@ const userSlice = createSlice({
   name: "user",
   reducers: {
     setUser: (state, { payload }) => {
+      console.log(payload.user);
       state.user = payload.user;
     },
     setUnreadMessage: (state, { payload: unreadMessage }) => {

@@ -31,7 +31,7 @@ const Schema = new mongoose.Schema({
   avatar: {
     type: String,
     default:
-      "https://i0.wp.com/blogs.cardiff.ac.uk/mental-health/wp-content/uploads/sites/502/2017/04/no-profile.jpg",
+      "https://res.cloudinary.com/dlanhtzbw/image/upload/v1675343188/Telegram%20Clone/no-profile_aknbeq.jpg",
   },
   //   User contacts
   contacts: [contactSchema],

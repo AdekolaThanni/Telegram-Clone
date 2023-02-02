@@ -11,6 +11,8 @@ import { modalActions } from "../store/modalSlice";
 import * as Yup from "yup";
 import FormField from "../components/globals/FormField";
 import LogoutModal from "../components/pages/Settings/LogoutModal";
+import useUpload from "../hooks/useUpload";
+import Image from "../components/globals/Image";
 
 const formSchema = Yup.object().shape({
   name: Yup.string().required("Field is required"),
@@ -19,7 +21,12 @@ const formSchema = Yup.object().shape({
 
 function Settings() {
   const dispatch = useDispatch();
-  const { user, updateProfile } = useSettings();
+  const { user, updateProfile, updateProfileState } = useSettings();
+
+  const { handleFileUpload, fileUploadState } = useUpload((uploadData) => {
+    updateProfile({ avatar: uploadData.public_id });
+  });
+
   return (
     <ActivePage
       activePageName="settings"
@@ -76,11 +83,17 @@ function Settings() {
       {user.username && (
         <>
           {/* Avatar */}
-          <div className="relative">
-            <img
+          <div
+            className={`relative ${
+              (fileUploadState === "loading" ||
+                updateProfileState === "loading") &&
+              "opacity-30"
+            }`}
+          >
+            <Image
               src={user.avatar}
               alt={user.username}
-              className="w-full h-[30rem] object-cover"
+              className="w-full h-[35rem] object-cover"
             />
             <CTAIconWrapper
               onClick={(event) =>
@@ -88,7 +101,13 @@ function Settings() {
               }
               className="absolute bottom-[2rem] right-[2rem] cursor-pointer"
             >
-              <input type="file" name="avatar" id="avatar" hidden />
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                hidden
+                onChange={handleFileUpload}
+              />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
