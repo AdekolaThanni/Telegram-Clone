@@ -6,9 +6,7 @@ import ModalChild from "../../globals/ModalChild";
 
 function ActionsModal({ chatProfile }) {
   const dispatch = useDispatch();
-  const roomType = useSelector(
-    (state) => state.chatReducer.currentChatRoom.roomType
-  );
+  const chatRoom = useSelector((state) => state.chatReducer.currentChatRoom);
   return (
     <Modal typeValue="actionsModal" className="origin-top-right !w-[18rem]">
       <ModalChild
@@ -64,10 +62,8 @@ function ActionsModal({ chatProfile }) {
           setTimeout(() => {
             dispatch(
               modalActions.openModal({
-                type: chatProfile.privateChat
-                  ? "deleteChatModal"
-                  : "leaveGroupModal",
-                payload: { profile: chatProfile },
+                type: chatRoom.roomType ? "deleteChatModal" : "leaveGroupModal",
+                payload: { chatData: chatRoom },
                 positions: {},
               })
             );
@@ -92,7 +88,7 @@ function ActionsModal({ chatProfile }) {
             className="!fill-transparent !stroke-danger"
           />
         </svg>
-        {roomType === "Private" ? "Delete Chat" : "Leave Group"}
+        {chatRoom.roomType === "Private" ? "Delete Chat" : "Leave Group"}
       </ModalChild>
     </Modal>
   );

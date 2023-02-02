@@ -56,6 +56,15 @@ function Chat() {
       dispatch(chatActions.setChatProfileMode({ id: userId, mode: null }));
       dispatch(chatListActions.setChatMode({ chatRoomId, mode: null }));
     });
+
+    // Listen to clearance of a chat room
+    socketListen("user:chatRoomClear", ({ chatRoomId }) => {
+      dispatch(
+        chatActions.removeChatRoom({
+          chatRoomId,
+        })
+      );
+    });
   }, []);
 
   const chatActive = useSelector((state) => state.chatReducer.active);
@@ -90,7 +99,7 @@ function Chat() {
           : "lg:basis-[100rem] sm:translate-x-[55rem]"
       }`}
       onClick={() => {
-        if (!chatActive) {
+        if (!chatActive && currentChatRoom._id) {
           dispatch(chatActions.setChatActive());
         }
       }}

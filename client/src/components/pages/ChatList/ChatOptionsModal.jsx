@@ -107,7 +107,7 @@ function ChatOptionsModal() {
             dispatch(
               modalActions.openModal({
                 type: chatData.roomType ? "deleteChatModal" : "leaveGroupModal",
-                payload: { profile: chatData.profile },
+                payload: { chatData },
                 positions: {},
               })
             );

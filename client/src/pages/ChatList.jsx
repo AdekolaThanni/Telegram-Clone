@@ -13,6 +13,9 @@ import { modalActions } from "../store/modalSlice";
 import Header from "../components/globals/Header";
 import SearchBar from "../components/pages/ChatList/SearchBar";
 import { chatActions } from "../store/chatSlice";
+import { useEffect } from "react";
+import useSocket from "../hooks/socketHooks/useSocket";
+import { chatListActions } from "../store/chatListSlice";
 
 function ChatList() {
   const { chatList, handleSearchValue, searchValue, loadingChatList } =
@@ -22,6 +25,17 @@ function ChatList() {
   );
 
   const dispatch = useDispatch();
+  const { socketListen } = useSocket();
+
+  useEffect(() => {
+    socketListen("user:chatRoomClear", ({ chatRoomId }) => {
+      dispatch(
+        chatListActions.removeFromChatList({
+          chatRoomId,
+        })
+      );
+    });
+  }, []);
 
   return (
     <ActivePage activePageName="chatList" className="flex flex-col">

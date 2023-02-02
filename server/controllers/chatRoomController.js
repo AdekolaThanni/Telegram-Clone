@@ -160,6 +160,28 @@ exports.deleteChatRoom = async (chatRoomId) => {
   await ChatRoom.findByIdAndDelete(chatRoomId);
 };
 
+exports.clearChatRoom = async ({ chatRoomId }) => {
+  const chatRoom = await ChatRoom.findById(chatRoomId);
+
+  chatRoom.messageHistory = [];
+
+  for (memberId of chatRoom.members) {
+    const memberModel = await User.findById(memberId);
+
+    memberModel.unreadMessages = memberModel.unreadMessages.filter(
+      (data) => data.chatRoomId.toString() !== chatRoom._id.toString()
+    );
+
+    memberModel.undeliveredMessages = memberModel.undeliveredMessages.filter(
+      (data) => data.chatRoomId.toString() !== chatRoom._id.toString()
+    );
+
+    await memberModel.save();
+  }
+
+  await chatRoom.save();
+};
+
 // Get all chat room user belongs to
 exports.getAllChatRoomUserIn = async (userId) => {
   const user = await User.findById(userId);
@@ -218,6 +240,8 @@ exports.addMessageToChatRoom = async (chatRoomId, message) => {
 exports.getMessageFromChatRoom = async ({ chatRoomId, messageId, day }) => {
   // Get chat room
   const chatRoom = await ChatRoom.findById(chatRoomId);
+
+  if (!chatRoom.messageHistory.length) return {};
 
   // Get dayMessages
   const dayMessage = chatRoom.messageHistory.find(
@@ -323,6 +347,8 @@ exports.markMessageAsReadByUser = async ({
     chatRoomId,
     day,
   });
+
+  if (!message) return;
 
   const user = await User.findById(userId);
 

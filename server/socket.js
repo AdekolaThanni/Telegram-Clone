@@ -15,6 +15,7 @@ const {
 const {
   typingController,
   recordingcontroller,
+  clearChatRoomController,
 } = require("./socketControllers/userActionController");
 
 const io = socketIO(expressServer, {
@@ -44,6 +45,9 @@ io.on("connection", async (socket) => {
 
   // User recording
   recordingcontroller(io, socket);
+
+  // User clears chat room
+  clearChatRoomController(io, socket);
   //--------------------------------------------------//
 
   // -------------Message controls -------------- //

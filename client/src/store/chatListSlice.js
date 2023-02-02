@@ -127,6 +127,14 @@ const chatList = createSlice({
         state.push(payload.newChat);
       }
     },
+    removeFromChatList: (state, { payload }) => {
+      const currentState = current(state);
+      const chatRoomIndex = currentState.findIndex(
+        (chat) => chat.chatRoomId === payload.chatRoomId
+      );
+
+      state[chatRoomIndex].latestMessage = {};
+    },
   },
 });
 
