@@ -1,8 +1,17 @@
 import React from "react";
 import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
+import useUpload from "../../../hooks/useUpload";
+import useSendMessage from "../../../hooks/useSendMessage";
 
 function AttachFileModal() {
+  const { sendMessage } = useSendMessage();
+  const { handleFileUpload } = useUpload(
+    (uploadData) => {
+      sendMessage({ url: uploadData.public_id });
+    },
+    ["Image"]
+  );
   return (
     <Modal typeValue="attachFileModal">
       <ModalChild
@@ -10,7 +19,13 @@ function AttachFileModal() {
           event.currentTarget.querySelector("#attachFile").click()
         }
       >
-        <input type="file" name="attachFile" id="attachFile" hidden />
+        <input
+          type="file"
+          name="attachFile"
+          id="attachFile"
+          hidden
+          onChange={handleFileUpload}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
@@ -28,7 +43,7 @@ function AttachFileModal() {
             className="!fill-transparent"
           />
         </svg>
-        Photo or Video
+        Photo
       </ModalChild>
     </Modal>
   );

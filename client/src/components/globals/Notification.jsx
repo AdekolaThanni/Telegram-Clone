@@ -8,7 +8,7 @@ function Notification() {
   const dispatch = useDispatch();
 
   return (
-    <div className="absolute right-0 z-100 space-y-[.5rem]">
+    <div className="absolute right-0 z-[10000] space-y-[.5rem]">
       <AnimatePresence>
         {notifications.map(({ message, type, id }) => (
           <motion.div

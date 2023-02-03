@@ -1,11 +1,11 @@
 import React from "react";
-import { Image } from "cloudinary-react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/globals/Header";
 import IconWrapper from "../components/globals/IconWrapper";
 import { userProfileActions } from "../store/userProfileSlice";
 import { modalActions } from "../store/modalSlice";
 import useTime from "../hooks/useTime";
+import Image from "../components/globals/Image";
 
 function UserProfile() {
   const { visible, profile } = useSelector((state) => state.userProfileReducer);
@@ -78,8 +78,7 @@ function UserProfile() {
       {/* Avatar */}
       <div className="h-[40rem] relative">
         <Image
-          cloudName="dlanhtzbw"
-          publicId={profile.avatar}
+          src={profile.avatar}
           alt={profile.name || profile.username}
           className="w-full h-full object-cover"
         />

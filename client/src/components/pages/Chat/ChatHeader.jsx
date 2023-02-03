@@ -6,6 +6,7 @@ import { modalActions } from "../../../store/modalSlice";
 import { userProfileActions } from "../../../store/userProfileSlice";
 import Header from "../../globals/Header";
 import IconWrapper from "../../globals/IconWrapper";
+import Image from "../../globals/Image";
 import ActionsModal from "./ActionsModal";
 
 function ChatHeader({ chatProfile, className }) {
@@ -59,7 +60,7 @@ function ChatHeader({ chatProfile, className }) {
           }}
           className="flex-grow flex items-center  gap-[1.5rem] cursor-pointer"
         >
-          <img
+          <Image
             src={chatProfile.avatar}
             alt={chatProfile.name || chatProfile.username}
             className="w-[4.2rem] h-[4.2rem] rounded-full"

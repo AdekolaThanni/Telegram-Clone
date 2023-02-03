@@ -1,5 +1,9 @@
 import React from "react";
-import { Image as CloudImage, Placeholder } from "cloudinary-react";
+import {
+  Image as CloudImage,
+  Placeholder,
+  Transformation,
+} from "cloudinary-react";
 
 function Image({ src, alt, className }) {
   return (
@@ -7,7 +11,7 @@ function Image({ src, alt, className }) {
       cloudName="dlanhtzbw"
       publicId={src}
       alt={alt}
-      className={className}
+      className={`${className} object-center object-cover`}
     >
       <Placeholder type="blur" />
     </CloudImage>

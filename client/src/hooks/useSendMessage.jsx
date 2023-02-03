@@ -13,7 +13,7 @@ const useSendMessage = (setMessageEmpty) => {
   );
   const dispatch = useDispatch();
 
-  const sendMessage = () => {
+  const sendMessage = (messageData) => {
     // Construct message
     const message = {
       sender: userId,
@@ -26,6 +26,14 @@ const useSendMessage = (setMessageEmpty) => {
     if (messageMode === "typing") {
       message.messageType = "text";
       message.message = document.querySelector("#messageInput").innerHTML;
+      document.querySelector("#messageInput").innerHTML = "";
+      setMessageEmpty(true);
+    }
+
+    // If message is an image upload
+    if (messageMode === "imageUpload") {
+      message.imageUrl = messageData.url;
+      message.messageType = "image";
     }
 
     // Emit message event
@@ -33,9 +41,6 @@ const useSendMessage = (setMessageEmpty) => {
 
     // Set chatMode to null
     dispatch(chatActions.resetMode());
-
-    document.querySelector("#messageInput").innerHTML = "";
-    setMessageEmpty(true);
   };
 
   return { sendMessage };

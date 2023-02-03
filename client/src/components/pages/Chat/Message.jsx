@@ -2,22 +2,23 @@ import React from "react";
 import CallMessage from "./CallMessage";
 import MessageReadStatus from "./MessageReadStatus";
 import VoiceMessage from "./VoiceMessage";
+import Image from "../../globals/Image";
 
 function Message({ messageData, className, messageReceived }) {
   // Image messages
   if (messageData.messageType === "image") {
     return (
       <div className="w-[30rem] rounded-3xl overflow-hidden h-[34rem] relative">
-        <img
+        <Image
           className="w-full h-full object-cover"
           src={messageData.imageUrl}
           alt=""
         />
         <MessageReadStatus
-          readStatus={
-            messageData.deliveredStatus ? undefined : messageData.readStatus
-          }
-          time={messageData.time}
+          readStatus={messageData.readStatus}
+          deliveredStatus={messageData.deliveredStatus}
+          messageReceived={messageReceived}
+          time={messageData.timeSent}
           className="absolute bottom-[1rem] right-[1rem] bg-secondary-light-text rounded-full !text-white"
         />
       </div>

@@ -30,7 +30,7 @@ const useChatList = () => {
         chatList.filter(
           (chat) =>
             chat.profile.name
-              .toLowerCase()
+              ?.toLowerCase()
               .startsWith(searchValue.toLowerCase()) ||
             chat.profile.username
               .toLowerCase()

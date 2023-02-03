@@ -23,9 +23,12 @@ function Settings() {
   const dispatch = useDispatch();
   const { user, updateProfile, updateProfileState } = useSettings();
 
-  const { handleFileUpload, fileUploadState } = useUpload((uploadData) => {
-    updateProfile({ avatar: uploadData.public_id });
-  });
+  const { handleFileUpload, fileUploadState } = useUpload(
+    (uploadData) => {
+      updateProfile({ avatar: uploadData.public_id });
+    },
+    ["Image"]
+  );
 
   return (
     <ActivePage
