@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
+import { useEffect } from "react";
 import useSendMessage from "../../../hooks/useSendMessage";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 
@@ -7,6 +8,7 @@ function CTAButtons({
   isTyping,
   isRecording,
   endRecording,
+  mediaBlobUrl,
   startRecording,
   setMessageEmpty,
 }) {
@@ -45,7 +47,11 @@ function CTAButtons({
         onClick={() => {
           if (!isTyping && !isRecording) startRecording();
           else {
-            if (isRecording) endRecording();
+            if (isRecording) {
+              endRecording();
+              return;
+            }
+
             sendMessage();
           }
         }}

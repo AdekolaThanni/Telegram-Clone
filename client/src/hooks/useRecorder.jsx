@@ -1,19 +1,38 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { chatActions } from "../store/chatSlice";
 import { useReactMediaRecorder } from "react-media-recorder";
 import useSocket from "./socketHooks/useSocket";
+import useSendMessage from "./useSendMessage";
+import useUpload from "./useUpload";
 
 const useRecorder = ({ currentChatRoom }) => {
   const dispatch = useDispatch();
   const { socketEmit } = useSocket();
+  const { sendMessage } = useSendMessage();
+
+  const { handleFileUpload } = useUpload(
+    (uploadData) => {
+      sendMessage({ url: uploadData.public_id });
+    },
+    ["audio"]
+  );
 
   const {
     startRecording: startMediaRecord,
     stopRecording: stopMediaRecord,
     resumeRecording: playMediaRecord,
     mediaBlobUrl,
-  } = useReactMediaRecorder({ video: false, audio: true });
+  } = useReactMediaRecorder({
+    video: false,
+    audio: true,
+    blobPropertyBag: {
+      type: "audio/mp3",
+    },
+    onStop: (_, Blob) => {
+      handleFileUpload({ target: { files: [Blob] } });
+    },
+  });
 
   //   Time counter, updates every second
   const [counter, setCounter] = useState(0);
@@ -52,6 +71,10 @@ const useRecorder = ({ currentChatRoom }) => {
     setCounter(0);
     clearInterval(timingInterval);
     dispatch(chatActions.resetMode());
+  };
+
+  const sendRecording = () => {
+    endRecording();
   };
 
   const playRecording = () => {

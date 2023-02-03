@@ -30,6 +30,12 @@ const useSendMessage = (setMessageEmpty) => {
       setMessageEmpty(true);
     }
 
+    // If message is a recording
+    if (messageMode === "audioUpload") {
+      message.messageType = "voice";
+      message.voiceNoteUrl = messageData.url;
+    }
+
     // If message is an image upload
     if (messageMode === "imageUpload") {
       message.imageUrl = messageData.url;

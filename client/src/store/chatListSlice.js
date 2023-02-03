@@ -43,8 +43,6 @@ const chatList = createSlice({
         const newIndexOfChatRoom =
           remainingChatRooms.findLastIndex((chatRoom) => chatRoom.pinned) + 1;
 
-        console.log(newIndexOfChatRoom);
-
         return [
           ...remainingChatRooms.slice(0, newIndexOfChatRoom),
           chatRoom,

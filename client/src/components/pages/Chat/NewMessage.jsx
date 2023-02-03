@@ -33,8 +33,13 @@ function NewMessage({ currentChatRoom }) {
   const isTyping = useMemo(() => messageMode === "typing", [messageMode]);
 
   //   Recorder hook to record messages
-  const { formattedTime, startRecording, endRecording, playRecording } =
-    useRecorder({ currentChatRoom });
+  const {
+    formattedTime,
+    startRecording,
+    endRecording,
+    playRecording,
+    mediaBlobUrl,
+  } = useRecorder({ currentChatRoom });
 
   return (
     <div className="flex flex-col shrink-0">
@@ -108,6 +113,7 @@ function NewMessage({ currentChatRoom }) {
           endRecording={endRecording}
           isTyping={isTyping}
           isRecording={isRecording}
+          mediaBlobUrl={mediaBlobUrl}
           setMessageEmpty={setMessageEmpty}
         />
       </div>

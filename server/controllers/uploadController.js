@@ -5,9 +5,12 @@ const { cloudinary } = require("../utilities/Cloudinary.js");
 module.exports = catchAsyncError(async (req, res, next) => {
   const fileBase64 = req.body.data;
 
-  const uploadData = await cloudinary.uploader.upload(fileBase64, {
-    upload_preset: "telegram_preset",
-  });
+  const uploadData = await cloudinary.uploader
+    .upload(fileBase64, {
+      upload_preset: "telegram_preset",
+      resource_type: req.body.fileType,
+    })
+    .catch((error) => console.log(error));
 
   if (!uploadData) {
     return next(new ReqError(500, "Upload failed"));

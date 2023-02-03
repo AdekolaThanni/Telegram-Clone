@@ -29,9 +29,11 @@ function Message({ messageData, className, messageReceived }) {
     return (
       <VoiceMessage
         deliveredStatus={messageData.deliveredStatus}
+        messageReceived={messageReceived}
         voiceDetails={messageData.voiceDetails}
+        voiceNoteUrl={messageData.voiceNoteUrl}
         readStatus={messageData.readStatus}
-        time={messageData.time}
+        time={messageData.timeSent}
       />
     );
 

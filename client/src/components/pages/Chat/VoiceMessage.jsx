@@ -1,9 +1,17 @@
+import { Audio } from "cloudinary-react";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useRef, useState, useMemo } from "react";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 import MessageReadStatus from "./MessageReadStatus";
 
-function VoiceMessage({ voiceDetails, deliveredStatus, readStatus, time }) {
+function VoiceMessage({
+  voiceDetails,
+  messageReceived,
+  deliveredStatus,
+  readStatus,
+  time,
+  voiceNoteUrl,
+}) {
   const audioRef = useRef();
   const seekBarRef = useRef();
 
@@ -11,6 +19,7 @@ function VoiceMessage({ voiceDetails, deliveredStatus, readStatus, time }) {
   const [seeking, setSeeking] = useState(false);
   const [currentDuration, setCurrentDuration] = useState();
   const [totalDuration, setTotalDuration] = useState();
+  const [audioAvailable, setAudioAvailable] = useState();
 
   const formatDuration = (seconds) => {
     const minutes = "" + (seconds / 60).toFixed(0);
@@ -44,8 +53,24 @@ function VoiceMessage({ voiceDetails, deliveredStatus, readStatus, time }) {
     setPlaying(false);
   };
 
-  const handleCanPlay = (event) => {
+  const handleDurationChange = (event) => {
     setTotalDuration(event.target.duration.toFixed(0));
+    setAudioAvailable(true);
+  };
+
+  const handleLoadedMetaData = (event) => {
+    const audioPlayer = event.target;
+
+    if (audioPlayer.duration === Infinity) {
+      audioPlayer.currentTime = 1e101;
+      audioPlayer.ontimeupdate = () => {
+        audioPlayer.ontimeupdate = () => {
+          return;
+        };
+        audioPlayer.currentTime = 0;
+        return;
+      };
+    }
   };
 
   const handleTimeUpdate = (event) => {
@@ -67,26 +92,33 @@ function VoiceMessage({ voiceDetails, deliveredStatus, readStatus, time }) {
     event.target.pause();
     event.target.currentTime = 0;
     setPlaying(false);
+    setCurrentDuration();
   };
 
   return (
     <div
-      className={`flex rounded-3xl ${
-        deliveredStatus ? "rounded-bl-none" : "rounded-br-none bg-message"
+      className={`flex rounded-3xl  ${
+        messageReceived
+          ? "rounded-bl-none bg-primary"
+          : "rounded-br-none bg-message"
       } p-[1.5rem] gap-[1rem] w-[30rem] h-[7rem] relative`}
     >
       {/* Audio Player */}
       <div className="flex items-center w-full">
-        <audio
-          ref={audioRef}
-          src="http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a"
+        <Audio
+          sourceTypes={["wav", "mp3"]}
+          fallback="Cannot play audio"
+          cloudName="dlanhtzbw"
+          publicId={voiceNoteUrl}
           className="hidden"
           id="audioRef"
           onTimeUpdate={handleTimeUpdate}
-          onCanPlay={handleCanPlay}
+          onDurationChange={handleDurationChange}
+          onLoadedMetadata={handleLoadedMetaData}
           onEnded={handleEnding}
           controlsList="nodownload"
-        ></audio>
+          innerRef={audioRef}
+        />
         {/* Play and pause Icon */}
         <CTAIconWrapper
           onClick={() => (playing ? pauseVoiceMessage() : playVoiceMessage())}
@@ -198,16 +230,19 @@ function VoiceMessage({ voiceDetails, deliveredStatus, readStatus, time }) {
           ></span>
 
           {/* Duration */}
-          <span className="absolute top-[.5rem] cursor-default">
-            {currentDuration && `${currentDurationString} / `}
-            {totalDurationString}
-          </span>
+          {audioAvailable && (
+            <span className="absolute top-[.5rem] cursor-default">
+              {currentDuration && `${currentDurationString} / `}
+              {totalDurationString}
+            </span>
+          )}
         </div>
       </div>
 
-      {!deliveredStatus && (
+      {!messageReceived && (
         <MessageReadStatus
-          readStatus={false}
+          readStatus={readStatus}
+          deliveredStatus={deliveredStatus}
           time={time}
           className="absolute right-[2rem] bottom-[.5rem]"
         />

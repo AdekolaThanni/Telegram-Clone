@@ -6,6 +6,7 @@ import useFetch from "./useFetch";
 
 const useUpload = (fn, formatsAllowed) => {
   const [base64Format, setBase64Format] = useState();
+  const [fileType, setFileType] = useState();
   const dispatch = useDispatch();
 
   //   Convert file to base64
@@ -60,8 +61,9 @@ const useUpload = (fn, formatsAllowed) => {
       return;
     }
 
-    const fileType = file.type.split("/")[0].toLowerCase();
-    dispatch(chatActions.setMode({ mode: `${fileType}Upload` }));
+    const fileTypeStr = file.type.split("/")[0].toLowerCase();
+    setFileType(fileTypeStr);
+    dispatch(chatActions.setMode({ mode: `${fileTypeStr}Upload` }));
 
     // Convert file
     fileToBase64(file);
@@ -78,13 +80,17 @@ const useUpload = (fn, formatsAllowed) => {
 
   useEffect(() => {
     if (base64Format) {
-      uploadToCloud({ data: base64Format });
+      uploadToCloud({
+        data: base64Format,
+        fileType: fileType === "audio" ? "video" : fileType,
+      });
     }
   }, [base64Format]);
 
   return {
     handleFileUpload,
     fileUploadState,
+    uploadToCloud,
   };
 };
 
