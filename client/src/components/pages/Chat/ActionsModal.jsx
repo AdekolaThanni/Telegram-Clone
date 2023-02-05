@@ -17,7 +17,10 @@ function ActionsModal({ chatProfile }) {
             dispatch(
               modalActions.openModal({
                 type: "voiceCallModal",
-                payload: { profile: chatProfile },
+                payload: {
+                  partnerProfile: chatProfile,
+                  callDetail: { caller: true },
+                },
                 positions: {},
               })
             );

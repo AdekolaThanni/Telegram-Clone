@@ -42,8 +42,18 @@ const useSendMessage = (setMessageEmpty) => {
       message.messageType = "image";
     }
 
+    // If message is a call
+    if (!messageMode && messageData.callType) {
+      message.callDetails = messageData;
+      message.messageType = "call";
+      message.sender = messageData.sender;
+    }
+
     // Emit message event
-    socketEmit("user:message", { chatRoomId, message });
+    socketEmit("user:message", {
+      chatRoomId: messageData.callType ? messageData.chatRoomId : chatRoomId,
+      message,
+    });
 
     // Set chatMode to null
     dispatch(chatActions.resetMode());

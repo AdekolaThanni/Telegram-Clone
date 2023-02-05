@@ -239,14 +239,13 @@ function VoiceMessage({
         </div>
       </div>
 
-      {!messageReceived && (
-        <MessageReadStatus
-          readStatus={readStatus}
-          deliveredStatus={deliveredStatus}
-          time={time}
-          className="absolute right-[2rem] bottom-[.5rem]"
-        />
-      )}
+      <MessageReadStatus
+        messageReceived={messageReceived}
+        readStatus={readStatus}
+        deliveredStatus={deliveredStatus}
+        time={time}
+        className="absolute right-[2rem] bottom-[.5rem]"
+      />
     </div>
   );
 }

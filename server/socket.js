@@ -1,5 +1,11 @@
 const socketIO = require("socket.io");
 const { expressServer } = require("./server");
+const {
+  callRequestController,
+  callAcceptedController,
+  endCallController,
+  callDeniedController,
+} = require("./socketControllers/callController");
 
 const {
   onlineController,
@@ -57,5 +63,19 @@ io.on("connection", async (socket) => {
   // User reads message
   markMessageReadController(io, socket);
 
+  //--------------------------------------------------//
+
+  // ----------------- Call controls --------------- //
+  // User makes call request
+  callRequestController(io, socket);
+
+  // User accepts call
+  callAcceptedController(io, socket);
+
+  // User ends call
+  endCallController(io, socket);
+
+  // User denies call
+  callDeniedController(io, socket);
   //--------------------------------------------------//
 });

@@ -1,11 +1,19 @@
 import React from "react";
 import MessageReadStatus from "./MessageReadStatus";
 
-function CallMessage({ callDetails, deliveredStatus, readStatus, time }) {
+function CallMessage({
+  callDetails,
+  deliveredStatus,
+  readStatus,
+  time,
+  messageReceived,
+}) {
   return (
     <div
       className={`flex rounded-3xl ${
-        deliveredStatus ? "rounded-bl-none" : "rounded-br-none bg-message"
+        messageReceived
+          ? "rounded-bl-none bg-primary"
+          : "rounded-br-none bg-message"
       } p-[1.5rem] gap-[1rem]`}
     >
       <div className="flex items-center gap-[1rem]">
@@ -25,10 +33,10 @@ function CallMessage({ callDetails, deliveredStatus, readStatus, time }) {
         </svg>
         <div className="flex flex-col">
           <p className="font-semibold">
-            {deliveredStatus ? "Incoming call" : "Outgoing call"}
+            {messageReceived ? "Incoming call" : "Outgoing call"}
           </p>
           <div className="flex items-center gap-[.5rem]">
-            {deliveredStatus ? (
+            {messageReceived ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -44,7 +52,9 @@ function CallMessage({ callDetails, deliveredStatus, readStatus, time }) {
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M6 18L18 6M6 8v10h10"
-                  className="fill-transparent stroke-avatar-check"
+                  className={`fill-transparent stroke-avatar-check ${
+                    callDetails.callRejectReason && "!stroke-danger"
+                  }`}
                 />
               </svg>
             ) : (
@@ -63,18 +73,24 @@ function CallMessage({ callDetails, deliveredStatus, readStatus, time }) {
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M18 6L6 18M8 6h10v10"
-                  className="fill-transparent stroke-avatar-check"
+                  className={`fill-transparent stroke-avatar-check ${
+                    callDetails.callRejectReason && "!stroke-danger"
+                  }`}
                 />
               </svg>
             )}
-            <p className="text-[1.4rem]">
-              {callDetails.callPicked ? callDetails.callDuration : "Missed"}
+            <p className={`text-[1.4rem]`}>
+              {callDetails.callDuration
+                ? callDetails.callDuration
+                : callDetails.callRejectReason}
             </p>
           </div>
         </div>
       </div>
       <MessageReadStatus
-        readStatus={deliveredStatus ? undefined : readStatus}
+        readStatus={readStatus}
+        deliveredStatus={deliveredStatus}
+        messageReceived={messageReceived}
         time={time}
         className="self-end translate-y-[1rem]"
       />

@@ -42,9 +42,10 @@ function Message({ messageData, className, messageReceived }) {
     return (
       <CallMessage
         callDetails={messageData.callDetails}
+        messageReceived={messageReceived}
         deliveredStatus={messageData.deliveredStatus}
         readStatus={messageData.readStatus}
-        time={messageData.time}
+        time={messageData.timeSent}
       />
     );
 

@@ -1,6 +1,7 @@
 import React from "react";
 import useChat from "../../../hooks/useChat";
 import useTime from "../../../hooks/useTime";
+import Image from "../../globals/Image";
 
 function ContactItem({
   contact: { name: contactName, contactDetails, chatRoomId },
@@ -13,7 +14,7 @@ function ContactItem({
       className="flex py-[1rem] px-[1.5rem] gap-[1rem]"
     >
       {/* Avatar */}
-      <img
+      <Image
         src={contactDetails.avatar}
         alt={contactName}
         className="w-[5rem] h-[5rem] rounded-full"

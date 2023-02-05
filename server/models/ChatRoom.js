@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const callDetailSchema = new mongoose.Schema({
   callType: String,
   callDuration: String,
-  callPicked: Boolean,
+  callRejectReason: { type: String, enum: ["Missed", "Busy"] },
 });
 
 const MessageSchema = new mongoose.Schema({

@@ -19,7 +19,7 @@
     --text-secondary: rgb(112, 117, 121);
     --text-secondary-light: hsla(207, 4%, 46%, 0.08);
 
-    --avatar-check: rgb(10 198 48);
+    --avatar-check: rgb(10, 198, 48);
     --avatar-check-read: var(--bg-cta-icon);
     --scrollbar: rgba(0, 0, 0, 0.2);
     --danger: rgb(223, 63, 64);

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { contactsActions } from "../store/contactsSlice";
 import useFetch from "./useFetch";
 import { chatActions } from "../store/chatSlice";
+import { modalActions } from "../store/modalSlice";
 
 const useInit = () => {
   // useSocketHook
@@ -19,6 +20,8 @@ const useInit = () => {
 
   // Get logged in state
   const loggedIn = useSelector((state) => state.authReducer.loggedIn);
+
+  const chatList = useSelector((state) => state.chatListReducer);
 
   const dispatch = useDispatch();
 
@@ -76,6 +79,37 @@ const useInit = () => {
       });
     }
   }, [userId]);
+
+  useEffect(() => {
+    // Listen to call request
+    socketListen(
+      "user:callRequest",
+      ({ chatRoomId, signalData, userId }, acknowledgeCall) => {
+        dispatch(
+          modalActions.openModal({
+            type: "voiceCallModal",
+            payload: {
+              partnerProfile: chatList.find(
+                (chat) => chat.chatRoomId === chatRoomId
+              ).profile,
+              callDetail: {
+                caller: false,
+                chatRoomId,
+                callerSignal: signalData,
+                callerId: userId,
+              },
+            },
+            positions: {},
+          })
+        );
+        acknowledgeCall();
+      }
+    );
+
+    return () => {
+      socket.off("user:callRequest");
+    };
+  }, [chatList]);
 
   return {
     loggedIn,

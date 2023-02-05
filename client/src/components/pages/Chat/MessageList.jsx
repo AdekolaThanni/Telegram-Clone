@@ -12,7 +12,6 @@ function MessageList({ messageHistory }) {
   const [scrolledUp, setScrolledUp] = useState(false);
   const [chatUpdated, setChatUpdated] = useState(false);
   const [chatRoomChanged, setChatRoomChanged] = useState(true);
-  const chatActive = useSelector((state) => state.chatReducer.active);
   const currentChatRoomId = useSelector(
     (state) => state.chatReducer.currentChatRoom._id
   );

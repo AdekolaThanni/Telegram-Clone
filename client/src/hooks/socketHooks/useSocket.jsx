@@ -6,8 +6,8 @@ const socket = io("http://localhost:4000");
 const useSocket = () => {
   const userId = useSelector((state) => state.userReducer.user._id);
 
-  const socketEmit = (action, payload) => {
-    socket.emit(action, payload);
+  const socketEmit = (action, payload, fn) => {
+    socket.emit(action, payload, fn);
   };
 
   const socketListen = (action, fn) => {

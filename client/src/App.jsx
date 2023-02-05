@@ -8,10 +8,12 @@ import Chat from "./pages/Chat";
 import UserProfile from "./pages/UserProfile";
 import useInit from "./hooks/useInit";
 import Notification from "./components/globals/Notification";
+import { useSelector } from "react-redux";
 
 function App() {
   // Initialize application
   const { loggedIn } = useInit();
+  const modalType = useSelector((state) => state.modalReducer.type);
 
   return (
     <div className="w-screen h-screen flex overflow-hidden bg-primary relative">
@@ -32,9 +34,10 @@ function App() {
 
       {/* Modals */}
       <DeleteChat />
-      <VoiceCallModal />
       <DeleteContact />
       <NewContactForm />
+
+      {modalType === "voiceCallModal" && <VoiceCallModal />}
     </div>
   );
 }
