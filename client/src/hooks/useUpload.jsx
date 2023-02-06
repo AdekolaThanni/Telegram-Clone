@@ -7,6 +7,7 @@ import useFetch from "./useFetch";
 const useUpload = (fn, formatsAllowed) => {
   const [base64Format, setBase64Format] = useState();
   const [fileType, setFileType] = useState();
+  const [extraFileData, setExtraFileData] = useState();
   const dispatch = useDispatch();
 
   //   Convert file to base64
@@ -24,6 +25,8 @@ const useUpload = (fn, formatsAllowed) => {
   const handleFileUpload = (event) => {
     // Get file
     const file = event.target.files[0];
+
+    setExtraFileData(event.target.extraFileData);
 
     // Restrict to only files less than 50mb
     const limit = 51200000;
@@ -73,7 +76,7 @@ const useUpload = (fn, formatsAllowed) => {
   const { reqFn: uploadToCloud, reqState: fileUploadState } = useFetch(
     { method: "POST", url: "/upload" },
     (data) => {
-      fn(data.data.uploadData);
+      fn({ ...data.data.uploadData, extraFileData });
       setBase64Format("");
     }
   );

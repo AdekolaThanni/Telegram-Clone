@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import IconWrapper from "../../globals/IconWrapper";
 import AttachFileModal from "./AttachFileModal";
@@ -38,7 +38,8 @@ function NewMessage({ currentChatRoom }) {
     startRecording,
     endRecording,
     playRecording,
-    mediaBlobUrl,
+    clearRecording,
+    pauseRecording,
   } = useRecorder({ currentChatRoom });
 
   return (
@@ -113,7 +114,8 @@ function NewMessage({ currentChatRoom }) {
           endRecording={endRecording}
           isTyping={isTyping}
           isRecording={isRecording}
-          mediaBlobUrl={mediaBlobUrl}
+          clearRecording={clearRecording}
+          pauseRecording={pauseRecording}
           setMessageEmpty={setMessageEmpty}
         />
       </div>
@@ -131,7 +133,7 @@ function NewMessage({ currentChatRoom }) {
       {/* Ask confirmation to stop recording if user types into keyboard while recording */}
       <StopRecordModal
         playRecording={playRecording}
-        stopRecording={endRecording}
+        clearRecording={clearRecording}
       />
     </div>
   );

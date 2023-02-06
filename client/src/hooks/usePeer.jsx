@@ -24,9 +24,8 @@ const usePeer = ({ mediaOptions, callDetail }) => {
   //   Duration counter for call
   const {
     formattedTime: duration,
-    setTimingInterval,
-    setCounter,
-    timingInterval,
+    startCounter,
+    stopCounter,
   } = useCounter({ showCentiseconds: false });
   //   Get socket instances
   const { socketEmit, socketListen, socket, userId } = useSocket();
@@ -83,11 +82,7 @@ const usePeer = ({ mediaOptions, callDetail }) => {
         setCallAccepted(true);
 
         // Start duration
-        setTimingInterval(
-          setInterval(() => {
-            setCounter((prevState) => prevState + 1);
-          }, 10)
-        );
+        startCounter();
       });
 
       peer.on("stream", (stream) => {
@@ -124,11 +119,7 @@ const usePeer = ({ mediaOptions, callDetail }) => {
         });
 
         // Start duration
-        setTimingInterval(
-          setInterval(() => {
-            setCounter((prevState) => prevState + 1);
-          }, 10)
-        );
+        startCounter();
       });
 
       peer.signal(callDetail.callerSignal);
@@ -187,6 +178,9 @@ const usePeer = ({ mediaOptions, callDetail }) => {
       sender: callDetail.caller ? userId : callDetail.callerId,
       chatRoomId: callDetail.caller ? currentChatRoomId : callDetail.chatRoomId,
     });
+
+    // End duration
+    stopCounter();
   };
 
   //   End call
@@ -204,7 +198,7 @@ const usePeer = ({ mediaOptions, callDetail }) => {
     });
 
     // End duration
-    clearInterval(timingInterval);
+    stopCounter();
   };
 
   return {

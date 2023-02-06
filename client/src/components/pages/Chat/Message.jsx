@@ -30,7 +30,7 @@ function Message({ messageData, className, messageReceived }) {
       <VoiceMessage
         deliveredStatus={messageData.deliveredStatus}
         messageReceived={messageReceived}
-        voiceDetails={messageData.voiceDetails}
+        voiceDuration={messageData.voiceNoteDuration}
         voiceNoteUrl={messageData.voiceNoteUrl}
         readStatus={messageData.readStatus}
         time={messageData.timeSent}

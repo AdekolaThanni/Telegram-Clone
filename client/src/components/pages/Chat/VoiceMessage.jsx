@@ -5,7 +5,7 @@ import CTAIconWrapper from "../../globals/CTAIconWrapper";
 import MessageReadStatus from "./MessageReadStatus";
 
 function VoiceMessage({
-  voiceDetails,
+  voiceDuration,
   messageReceived,
   deliveredStatus,
   readStatus,
@@ -33,17 +33,13 @@ function VoiceMessage({
     [currentDuration]
   );
 
-  const totalDurationString = useMemo(
-    () => formatDuration(totalDuration),
-    [totalDuration]
-  );
-
   const percentageCovered = useMemo(
-    () => ((currentDuration / totalDuration) * 100).toFixed(0),
+    () => ((currentDuration / audioRef.current?.duration) * 100).toFixed(0),
     [currentDuration, totalDuration]
   );
 
   const playVoiceMessage = () => {
+    if (!audioAvailable) return;
     audioRef.current.play();
     setPlaying(true);
   };
@@ -53,24 +49,9 @@ function VoiceMessage({
     setPlaying(false);
   };
 
-  const handleDurationChange = (event) => {
-    setTotalDuration(event.target.duration.toFixed(0));
+  const handleCanPlayThrough = () => {
+    setTotalDuration(voiceDuration);
     setAudioAvailable(true);
-  };
-
-  const handleLoadedMetaData = (event) => {
-    const audioPlayer = event.target;
-
-    if (audioPlayer.duration === Infinity) {
-      audioPlayer.currentTime = 1e101;
-      audioPlayer.ontimeupdate = () => {
-        audioPlayer.ontimeupdate = () => {
-          return;
-        };
-        audioPlayer.currentTime = 0;
-        return;
-      };
-    }
   };
 
   const handleTimeUpdate = (event) => {
@@ -113,8 +94,7 @@ function VoiceMessage({
           className="hidden"
           id="audioRef"
           onTimeUpdate={handleTimeUpdate}
-          onDurationChange={handleDurationChange}
-          onLoadedMetadata={handleLoadedMetaData}
+          onCanPlayThrough={handleCanPlayThrough}
           onEnded={handleEnding}
           controlsList="nodownload"
           innerRef={audioRef}
@@ -233,7 +213,7 @@ function VoiceMessage({
           {audioAvailable && (
             <span className="absolute top-[.5rem] cursor-default">
               {currentDuration && `${currentDurationString} / `}
-              {totalDurationString}
+              {totalDuration}
             </span>
           )}
         </div>

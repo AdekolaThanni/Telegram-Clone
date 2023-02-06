@@ -5,71 +5,96 @@ import useSocket from "./socketHooks/useSocket";
 import useSendMessage from "./useSendMessage";
 import useUpload from "./useUpload";
 import useCounter from "./useCounter";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const useRecorder = ({ currentChatRoom }) => {
   const dispatch = useDispatch();
   const { socketEmit } = useSocket();
   const { sendMessage } = useSendMessage();
+  const [blob, setBlob] = useState();
+  const [recordSend, setRecordSend] = useState();
 
   const { handleFileUpload } = useUpload(
     (uploadData) => {
-      sendMessage({ url: uploadData.public_id });
+      sendMessage({ url: uploadData.public_id, ...uploadData.extraFileData });
     },
     ["audio"]
   );
+
+  const { formattedTime, playCounter, startCounter, stopCounter } = useCounter({
+    showCentiseconds: true,
+  });
+
+  useEffect(() => {
+    if (recordSend) {
+      handleFileUpload({
+        target: {
+          files: [blob],
+          extraFileData: { duration: formattedTime.split(",")[0] },
+        },
+      });
+      setRecordSend(false);
+    }
+
+    stopCounter();
+  }, [blob]);
 
   const {
     startRecording: startMediaRecord,
     stopRecording: stopMediaRecord,
     resumeRecording: playMediaRecord,
-    mediaBlobUrl,
+    pauseRecording: pauseMediaRecord,
+    clearBlobUrl,
   } = useReactMediaRecorder({
     video: false,
     audio: true,
+    askPermissionOnMount: true,
     blobPropertyBag: {
       type: "audio/mp3",
     },
     onStop: (_, Blob) => {
-      handleFileUpload({ target: { files: [Blob] } });
+      setBlob(Blob);
     },
   });
-
-  const { formattedTime, setTimingInterval, setCounter, timingInterval } =
-    useCounter({ showCentiseconds: true });
 
   const startRecording = () => {
     startMediaRecord();
     socketEmit("user:recording", currentChatRoom._id);
-    setTimingInterval(
-      setInterval(() => {
-        setCounter((prevState) => prevState + 1);
-      }, 10)
-    );
+    startCounter();
     dispatch(chatActions.setMode({ mode: "recording" }));
   };
 
   const endRecording = () => {
-    stopMediaRecord();
-    socketEmit("user:recordingStopped", currentChatRoom._id);
-    setCounter(0);
-    clearInterval(timingInterval);
-    dispatch(chatActions.resetMode());
+    setRecordSend(true);
+    clearRecording();
   };
 
-  const sendRecording = () => {
-    endRecording();
+  const clearRecording = () => {
+    stopMediaRecord();
+    socketEmit("user:recordingStopped", currentChatRoom._id);
+    dispatch(chatActions.resetMode());
   };
 
   const playRecording = () => {
     playMediaRecord();
+    playCounter(true);
+    socketEmit("user:recording", currentChatRoom._id);
+  };
+
+  const pauseRecording = () => {
+    pauseMediaRecord();
+    socketEmit("user:recording", currentChatRoom._id);
+    playCounter(false);
   };
 
   return {
     formattedTime,
     startRecording,
+    clearRecording,
     endRecording,
     playRecording,
-    mediaBlobUrl,
+    pauseRecording,
   };
 };
 

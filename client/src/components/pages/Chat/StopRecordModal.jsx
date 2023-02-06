@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { modalActions } from "../../../store/modalSlice";
 import Modal from "../../globals/Modal";
 
-function StopRecordModal({ playRecording, stopRecording }) {
+function StopRecordModal({ playRecording, clearRecording }) {
   const dispatch = useDispatch();
 
   return (
@@ -25,7 +25,7 @@ function StopRecordModal({ playRecording, stopRecording }) {
           Continue
         </button>
         <button
-          onClick={stopRecording}
+          onClick={clearRecording}
           className="text-cta-icon rounded-md font-semibold uppercase p-[1rem] hover:bg-secondary-light-text"
         >
           Discard

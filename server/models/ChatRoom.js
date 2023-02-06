@@ -31,6 +31,7 @@ const MessageSchema = new mongoose.Schema({
   callDetails: callDetailSchema,
   // If voice note was sent
   voiceNoteUrl: String,
+  voiceNoteDuration: String,
 });
 
 const Schema = new mongoose.Schema({

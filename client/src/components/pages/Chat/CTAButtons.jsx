@@ -1,26 +1,33 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import useSendMessage from "../../../hooks/useSendMessage";
+import { modalActions } from "../../../store/modalSlice";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
 
 function CTAButtons({
   isTyping,
   isRecording,
   endRecording,
-  mediaBlobUrl,
   startRecording,
   setMessageEmpty,
+  pauseRecording,
 }) {
   const { sendMessage } = useSendMessage(setMessageEmpty);
+  const dispatch = useDispatch();
 
   return (
     <div className="shrink-0 relative">
-      {/* End recording */}
+      {/* Pause recording */}
       {isRecording && (
         <CTAIconWrapper
           className="absolute bg-danger top-0 -left-[7rem] z-10"
-          onClick={endRecording}
+          onClick={() => {
+            dispatch(
+              modalActions.openModal({ type: "stopRecordModal", positions: {} })
+            );
+            pauseRecording();
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

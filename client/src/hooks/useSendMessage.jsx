@@ -34,6 +34,7 @@ const useSendMessage = (setMessageEmpty) => {
     if (messageMode === "audioUpload") {
       message.messageType = "voice";
       message.voiceNoteUrl = messageData.url;
+      message.voiceNoteDuration = messageData.duration;
     }
 
     // If message is an image upload
