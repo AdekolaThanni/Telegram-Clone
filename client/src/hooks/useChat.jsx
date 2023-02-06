@@ -35,22 +35,22 @@ const useChat = (contact, from = "contact") => {
           chatRoom,
         })
       );
-      // Set chat active
-      dispatch(chatActions.setChatActive());
     }
   );
 
   // Set chat room
-  const setChatRoom = () => {
+  const setChatRoom = async (
+    { disableSettingChatRoomActive } = { disableSettingChatRoomActive: false }
+  ) => {
     // Check if chat has been fetched already
     const chatRoom = chatHistory[contact.chatRoomId];
     if (chatRoom) {
       dispatch(chatActions.setChatRoom({ chatRoom }));
-      dispatch(chatActions.setChatActive());
     } else {
-      fetchChatRoom();
+      await fetchChatRoom();
     }
 
+    !disableSettingChatRoomActive && dispatch(chatActions.setChatActive());
     dispatch(
       chatListActions.markMessagesInChatRoomAsRead({
         chatRoomId: contact.chatRoomId,

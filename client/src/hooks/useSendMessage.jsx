@@ -43,7 +43,7 @@ const useSendMessage = (setMessageEmpty) => {
     }
 
     // If message is a call
-    if (!messageMode && messageData.callType) {
+    if (!messageMode && messageData?.callType) {
       message.callDetails = messageData;
       message.messageType = "call";
       message.sender = messageData.sender;
@@ -51,7 +51,7 @@ const useSendMessage = (setMessageEmpty) => {
 
     // Emit message event
     socketEmit("user:message", {
-      chatRoomId: messageData.callType ? messageData.chatRoomId : chatRoomId,
+      chatRoomId: messageData?.callType ? messageData.chatRoomId : chatRoomId,
       message,
     });
 

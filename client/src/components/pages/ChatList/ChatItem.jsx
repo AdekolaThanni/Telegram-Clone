@@ -7,6 +7,9 @@ import useModalBestPosition from "../../../hooks/useModalBestPosition";
 import useChat from "../../../hooks/useChat";
 import { chatListActions } from "../../../store/chatListSlice";
 import Image from "../../globals/Image";
+import { useEffect } from "react";
+import { chatActions } from "../../../store/chatSlice";
+import { useState } from "react";
 
 function ChatItem({ chatData }) {
   // Chat options visibility
@@ -14,9 +17,14 @@ function ChatItem({ chatData }) {
     (state) => state.modalReducer.payload.chatRoomId === chatData.chatRoomId
   );
 
+  // To know if chatItem was clicked to make chat room visible
+  const [chatItemClicked, setChatItemClicked] = useState();
+
   const activeChat = useSelector(
     (state) => state.chatReducer.currentChatRoom._id === chatData.chatRoomId
   );
+
+  const chatRoomShown = useSelector((state) => state.chatReducer.active);
 
   // Chat mode of user i.e Typing, recording
   const chatMode = useSelector((state) => {
@@ -74,15 +82,28 @@ function ChatItem({ chatData }) {
     });
   };
 
+  useEffect(() => {
+    if (activeChat && !chatItemClicked && chatRoomShown) {
+      setChatRoom({ disableSettingChatRoomActive: true });
+    }
+
+    if (chatItemClicked) {
+      setChatItemClicked(false);
+    }
+  }, [chatRoomShown]);
+
   return (
     <div
       onClick={() => {
         setChatRoom();
+        setChatItemClicked(true);
       }}
       onContextMenu={showOptions}
       onMouseDown={timeoutToShowOptions}
       className={`p-[1rem] rounded-[1.5rem] not-selectable flex gap-[1rem] text-secondary-text group  cursor-default ${
-        activeChat ? "bg-cta-icon !text-white" : "hover:bg-secondary-light-text"
+        activeChat
+          ? "bg-cta-icon !text-white sm:bg-transparent"
+          : "hover:bg-secondary-light-text"
       } ${chatOptionVisible && "bg-secondary-light-text"}`}
     >
       {/* Avatar */}

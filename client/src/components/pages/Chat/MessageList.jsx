@@ -15,6 +15,7 @@ function MessageList({ messageHistory }) {
   const currentChatRoomId = useSelector(
     (state) => state.chatReducer.currentChatRoom._id
   );
+  const chatActive = useSelector((state) => state.chatReducer.active);
   const messageListRef = useRef();
   const { socketListen, userId, socketEmit, socket } = useSocket();
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function MessageList({ messageHistory }) {
       if (userId === message.sender) return;
 
       // If message chatRoom is the currentChatRoom being displayed, emit message as being read
-      if (chatRoomId === currentChatRoomId) {
+      if (chatRoomId === currentChatRoomId && chatActive) {
         socketEmit("user:messageRead", {
           messageId: message._id,
           chatRoomId,
@@ -77,7 +78,7 @@ function MessageList({ messageHistory }) {
     return () => {
       socket.off("user:messageCanBeRead");
     };
-  }, [currentChatRoomId]);
+  }, [currentChatRoomId, chatActive]);
 
   // Listen to messages that has been delivered or read by all members
   useEffect(() => {
@@ -116,6 +117,7 @@ function MessageList({ messageHistory }) {
             status: "readStatus",
           })
         );
+
         // If message wasn't sent by user, there's no need to update
         if (userId !== senderId) return;
 
