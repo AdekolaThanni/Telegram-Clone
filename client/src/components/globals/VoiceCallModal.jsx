@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CTAIconWrapper from "./CTAIconWrapper";
 import Modal from "./Modal";
 import Image from "../globals/Image";
@@ -21,8 +21,6 @@ function VoiceCallModal() {
     endCall,
     denyCall,
     duration,
-    callSenderRingtoneRef,
-    callReceiverRingtoneRef,
   } = usePeer({
     mediaOptions: { video: false, audio: true },
     callDetail,
@@ -114,7 +112,6 @@ function VoiceCallModal() {
       {/* Ringtones */}
       {callDetail.caller && !callAccepted && (
         <audio
-          ref={callSenderRingtoneRef}
           src={callSenderTone}
           autoPlay
           playsInline
@@ -125,7 +122,6 @@ function VoiceCallModal() {
       )}
       {!callDetail.caller && !callAccepted && (
         <audio
-          ref={callReceiverRingtoneRef}
           src={callReceiverTone}
           autoPlay
           playsInline

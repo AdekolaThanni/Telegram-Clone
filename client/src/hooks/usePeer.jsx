@@ -11,8 +11,6 @@ import useCounter from "./useCounter";
 const usePeer = ({ mediaOptions, callDetail }) => {
   const userMediaRef = useRef();
   const partnerMediaRef = useRef();
-  const callSenderRingtoneRef = useRef();
-  const callReceiverRingtoneRef = useRef();
 
   //   Get id of chat room both user belongs to
   const currentChatRoomId = useSelector(
@@ -61,6 +59,7 @@ const usePeer = ({ mediaOptions, callDetail }) => {
           "user:callRequest",
           {
             signalData,
+            callType: mediaOptions.video ? "video" : "voice",
             chatRoomId: currentChatRoomId,
             userId,
           },
@@ -77,10 +76,6 @@ const usePeer = ({ mediaOptions, callDetail }) => {
             }, 60000);
           }
         );
-
-        // Enable ringtone for caller
-        // callSenderRingtoneRef.srcObject =
-        //   "../assets/Sender Call Request Tone.mp3";
       });
 
       socketListen("user:callAccepted", ({ signalData }) => {
@@ -222,8 +217,6 @@ const usePeer = ({ mediaOptions, callDetail }) => {
     endCall,
     denyCall,
     duration,
-    callSenderRingtoneRef,
-    callReceiverRingtoneRef,
   };
 };
 

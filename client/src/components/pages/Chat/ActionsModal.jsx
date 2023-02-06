@@ -42,7 +42,24 @@ function ActionsModal({ chatProfile }) {
         </svg>
         Call
       </ModalChild>
-      <ModalChild>
+      <ModalChild
+        onClick={() => {
+          dispatch(modalActions.closeModal());
+
+          setTimeout(() => {
+            dispatch(
+              modalActions.openModal({
+                type: "videoCallModal",
+                payload: {
+                  partnerProfile: chatProfile,
+                  callDetail: { caller: true },
+                },
+                positions: {},
+              })
+            );
+          }, 210);
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"

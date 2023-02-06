@@ -3,6 +3,7 @@ import DeleteContact from "./components/globals/DeleteContact";
 import NewContactForm from "./components/globals/NewContactForm";
 import Sidebar from "./components/globals/Sidebar";
 import VoiceCallModal from "./components/globals/VoiceCallModal";
+import VideoCallModal from "./components/globals/VideoCallModal";
 import Authentication from "./pages/Authentication";
 import Chat from "./pages/Chat";
 import UserProfile from "./pages/UserProfile";
@@ -38,6 +39,7 @@ function App() {
       <NewContactForm />
 
       {modalType === "voiceCallModal" && <VoiceCallModal />}
+      {modalType === "videoCallModal" && <VideoCallModal />}
     </div>
   );
 }

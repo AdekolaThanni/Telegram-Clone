@@ -6,7 +6,10 @@ function Overlay({ children, canOverlayClose }) {
   const dispatch = useDispatch();
   const closeModal = () => {
     if (!canOverlayClose) return;
-    dispatch(modalActions.closeModal());
+
+    setTimeout(() => {
+      dispatch(modalActions.closeModal());
+    }, 100);
   };
 
   return (

@@ -84,10 +84,10 @@ const useInit = () => {
     // Listen to call request
     socketListen(
       "user:callRequest",
-      ({ chatRoomId, signalData, userId }, acknowledgeCall) => {
+      ({ chatRoomId, signalData, userId, callType }, acknowledgeCall) => {
         dispatch(
           modalActions.openModal({
-            type: "voiceCallModal",
+            type: `${callType}CallModal`,
             payload: {
               partnerProfile: chatList.find(
                 (chat) => chat.chatRoomId === chatRoomId

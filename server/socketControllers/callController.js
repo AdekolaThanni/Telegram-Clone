@@ -1,7 +1,7 @@
 exports.callRequestController = (io, socket) => {
   socket.on(
     "user:callRequest",
-    async ({ chatRoomId, signalData, userId }, acknowledgementFn) => {
+    async ({ chatRoomId, signalData, userId, callType }, acknowledgementFn) => {
       // If call receiver is not in room
       const socketsInChatRoom = io.in(chatRoomId).allSockets();
       if (socketsInChatRoom.size === 1) {
@@ -14,13 +14,17 @@ exports.callRequestController = (io, socket) => {
       socket
         .to(chatRoomId)
         .timeout(5000)
-        .emit("user:callRequest", { chatRoomId, signalData, userId }, (err) => {
-          if (err) {
-            console.log("How?");
-          } else {
-            acknowledgementFn(true);
+        .emit(
+          "user:callRequest",
+          { chatRoomId, signalData, userId, callType },
+          (err) => {
+            if (err) {
+              console.log("How?");
+            } else {
+              acknowledgementFn(true);
+            }
           }
-        });
+        );
     }
   );
 };
