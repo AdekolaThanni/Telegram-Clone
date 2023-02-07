@@ -9,6 +9,9 @@ module.exports = catchAsyncError(async (req, res, next) => {
     .upload(fileBase64, {
       upload_preset: "telegram_preset",
       resource_type: req.body.fileType,
+      width: 400,
+      height: 400,
+      crop: "limit",
     })
     .catch((error) => console.log(error));
 

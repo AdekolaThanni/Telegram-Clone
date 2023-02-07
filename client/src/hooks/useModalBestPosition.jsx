@@ -4,7 +4,6 @@ const useModalBestPosition =
     const overlayData = document
       .getElementById(overlayId)
       .getBoundingClientRect();
-    console.log(overlayData);
     let left;
     let top;
 

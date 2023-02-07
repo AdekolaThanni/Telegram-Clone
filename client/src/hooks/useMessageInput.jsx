@@ -34,9 +34,6 @@ const useMessageInput = ({ currentChatRoom }) => {
     const innerHtml = messageInput.innerHTML;
     const emojiString = `<img class="w-[2.5rem] h-[2.5rem] inline-block" src="${getImageUrl()}" />`;
 
-    console.log(innerHtml);
-    console.log(caretIndex);
-
     if (!caretIndex) {
       messageInput.innerHTML = emojiString + messageInput.innerHTML;
       return;
@@ -90,7 +87,6 @@ const useMessageInput = ({ currentChatRoom }) => {
     dispatch(chatActions.setMode({ mode: "typing" }));
     getCaretIndex(event);
 
-    console.log(event.currentTarget.innerHTML);
     // If message is initially empty change to filled
     if (messageEmpty) {
       setMessageEmpty(false);
