@@ -56,8 +56,8 @@ const useSendMessage = (setMessageEmpty) => {
       message,
     });
 
-    // Set chatMode to null
-    dispatch(chatActions.resetMode());
+    // Set chatMode to sending
+    dispatch(chatActions.setMode({ mode: "sending" }));
   };
 
   return { sendMessage };

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useSendMessage from "../../../hooks/useSendMessage";
 import { modalActions } from "../../../store/modalSlice";
 import CTAIconWrapper from "../../globals/CTAIconWrapper";
@@ -15,6 +15,12 @@ function CTAButtons({
 }) {
   const { sendMessage } = useSendMessage(setMessageEmpty);
   const dispatch = useDispatch();
+
+  const isSending = useSelector(
+    (state) =>
+      state.chatReducer.mode === "sending" ||
+      state.chatReducer.mode?.endsWith("Upload")
+  );
 
   return (
     <div className="shrink-0 relative">
@@ -64,9 +70,72 @@ function CTAButtons({
         }}
         className={`relative ${isRecording && "animate-wave"}`}
       >
+        {/* Sending message Icon */}
+        <AnimatePresence>
+          {isSending && (
+            <motion.svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                cx="4"
+                cy="12"
+                r="3"
+                fill="currentColor"
+                className="fill-white stroke-transparent"
+              >
+                <animate
+                  id="svgSpinners3DotsBounce0"
+                  attributeName="cy"
+                  begin="0;svgSpinners3DotsBounce1.end+0.25s"
+                  calcMode="spline"
+                  dur="0.6s"
+                  keySplines=".33,.66,.66,1;.33,0,.66,.33"
+                  values="12;6;12"
+                />
+              </circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+                fill="currentColor"
+                className="fill-white stroke-transparent"
+              >
+                <animate
+                  attributeName="cy"
+                  begin="svgSpinners3DotsBounce0.begin+0.1s"
+                  calcMode="spline"
+                  dur="0.6s"
+                  keySplines=".33,.66,.66,1;.33,0,.66,.33"
+                  values="12;6;12"
+                />
+              </circle>
+              <circle
+                cx="20"
+                cy="12"
+                r="3"
+                fill="currentColor"
+                className="fill-white stroke-transparent"
+              >
+                <animate
+                  id="svgSpinners3DotsBounce1"
+                  attributeName="cy"
+                  begin="svgSpinners3DotsBounce0.begin+0.2s"
+                  calcMode="spline"
+                  dur="0.6s"
+                  keySplines=".33,.66,.66,1;.33,0,.66,.33"
+                  values="12;6;12"
+                />
+              </circle>
+            </motion.svg>
+          )}
+        </AnimatePresence>
+
         {/* Microphone */}
         <AnimatePresence>
-          {!isTyping && !isRecording && (
+          {!isTyping && !isRecording && !isSending && (
             <motion.svg
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { chatActions } from "../store/chatSlice";
 import { useReactMediaRecorder } from "react-media-recorder";
@@ -5,8 +6,6 @@ import useSocket from "./socketHooks/useSocket";
 import useSendMessage from "./useSendMessage";
 import useUpload from "./useUpload";
 import useCounter from "./useCounter";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const useRecorder = ({ currentChatRoom }) => {
   const dispatch = useDispatch();
@@ -35,6 +34,8 @@ const useRecorder = ({ currentChatRoom }) => {
         },
       });
       setRecordSend(false);
+    } else {
+      dispatch(chatActions.resetMode());
     }
 
     stopCounter();
@@ -45,7 +46,6 @@ const useRecorder = ({ currentChatRoom }) => {
     stopRecording: stopMediaRecord,
     resumeRecording: playMediaRecord,
     pauseRecording: pauseMediaRecord,
-    clearBlobUrl,
   } = useReactMediaRecorder({
     video: false,
     audio: true,
@@ -55,6 +55,7 @@ const useRecorder = ({ currentChatRoom }) => {
     },
     onStop: (_, Blob) => {
       setBlob(Blob);
+      dispatch(chatActions.setMode({ mode: "sending" }));
     },
   });
 
@@ -73,7 +74,6 @@ const useRecorder = ({ currentChatRoom }) => {
   const clearRecording = () => {
     stopMediaRecord();
     socketEmit("user:recordingStopped", currentChatRoom._id);
-    dispatch(chatActions.resetMode());
   };
 
   const playRecording = () => {

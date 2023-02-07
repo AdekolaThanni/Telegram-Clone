@@ -42,6 +42,7 @@ const useCounter = ({ showCentiseconds }) => {
 
   // Stop counter
   const stopCounter = () => {
+    clearInterval(timingInterval);
     setCounter(0);
     setTimingInterval(null);
     setPlayed();

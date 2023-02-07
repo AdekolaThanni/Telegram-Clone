@@ -78,6 +78,9 @@ const useUpload = (fn, formatsAllowed) => {
     (data) => {
       fn({ ...data.data.uploadData, extraFileData });
       setBase64Format("");
+    },
+    () => {
+      dispatch(chatActions.resetMode());
     }
   );
 

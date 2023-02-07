@@ -39,6 +39,8 @@ function MessageList({ messageHistory }) {
             latestMessage: message,
           })
         );
+        // Set message mode to initial
+        dispatch(chatActions.resetMode());
 
         setChatUpdated(true);
       }
