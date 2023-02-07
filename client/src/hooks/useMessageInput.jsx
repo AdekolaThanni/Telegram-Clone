@@ -28,10 +28,14 @@ const useMessageInput = ({ currentChatRoom }) => {
 
   // Add emoji to message
   const addEmojiToMessage = ({ getImageUrl }) => {
+    dispatch(chatActions.setMode({ mode: "typing" }));
     setMessageEmpty(false);
     const messageInput = document.querySelector("#messageInput");
     const innerHtml = messageInput.innerHTML;
     const emojiString = `<img class="w-[2.5rem] h-[2.5rem] inline-block" src="${getImageUrl()}" />`;
+
+    console.log(innerHtml);
+    console.log(caretIndex);
 
     if (!caretIndex) {
       messageInput.innerHTML = emojiString + messageInput.innerHTML;
@@ -44,10 +48,11 @@ const useMessageInput = ({ currentChatRoom }) => {
     let innerHtmlIndex = 0;
 
     let countingNormalText = true;
+
     for (let char of innerHtml) {
       const htmlRest = innerHtml.slice(innerHtmlIndex);
       // If an image tag is next
-      if (htmlRest.startsWith("<img src=")) {
+      if (htmlRest.startsWith("<img")) {
         countingNormalText = false;
       }
 
@@ -84,6 +89,8 @@ const useMessageInput = ({ currentChatRoom }) => {
   const handleInput = (event) => {
     dispatch(chatActions.setMode({ mode: "typing" }));
     getCaretIndex(event);
+
+    console.log(event.currentTarget.innerHTML);
     // If message is initially empty change to filled
     if (messageEmpty) {
       setMessageEmpty(false);

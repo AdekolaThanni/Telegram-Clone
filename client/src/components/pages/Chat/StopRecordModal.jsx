@@ -26,7 +26,7 @@ function StopRecordModal({ playRecording, clearRecording }) {
         </button>
         <button
           onClick={clearRecording}
-          className="text-cta-icon rounded-md font-semibold uppercase p-[1rem] hover:bg-secondary-light-text"
+          className="text-danger rounded-md font-semibold uppercase p-[1rem] hover:bg-secondary-light-text"
         >
           Discard
         </button>
