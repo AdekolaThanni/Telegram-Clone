@@ -104,7 +104,12 @@ function ChatItem({ chatData }) {
         activeChat
           ? "bg-cta-icon !text-white sm:bg-transparent"
           : "hover:bg-secondary-light-text"
-      } ${chatOptionVisible && "bg-secondary-light-text"}`}
+      } ${
+        chatOptionVisible &&
+        `${
+          activeChat ? "sm:bg-secondary-light-text" : "bg-secondary-light-text"
+        }`
+      }`}
     >
       {/* Avatar */}
       <Image
@@ -141,8 +146,12 @@ function ChatItem({ chatData }) {
         <div className="flex justify-between">
           {/* Chat mode status */}
           {chatMode && (
-            <span className="text-cta-icon italic font-normal">
-              {chatMode}...
+            <span
+              className={`text-cta-icon italic font-normal ${
+                activeChat && "!text-white sm:!text-cta-icon"
+              }`}
+            >
+              {chatMode} {chatMode === "recording" && "audio"}...
             </span>
           )}
 

@@ -1,14 +1,11 @@
 import React from "react";
-import {
-  Image as CloudImage,
-  Placeholder,
-  Transformation,
-} from "cloudinary-react";
+import { Image as CloudImage, Placeholder } from "cloudinary-react";
+import process from "process";
 
 function Image({ src, alt, className }) {
   return (
     <CloudImage
-      cloudName="dlanhtzbw"
+      cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
       publicId={src}
       alt={alt}
       className={`${className} object-center object-cover`}

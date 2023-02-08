@@ -89,7 +89,7 @@ function VoiceMessage({
         <Audio
           sourceTypes={["wav", "mp3"]}
           fallback="Cannot play audio"
-          cloudName="dlanhtzbw"
+          cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
           publicId={voiceNoteUrl}
           className="hidden"
           id="audioRef"

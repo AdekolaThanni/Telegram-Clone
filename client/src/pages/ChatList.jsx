@@ -12,10 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../store/modalSlice";
 import Header from "../components/globals/Header";
 import SearchBar from "../components/pages/ChatList/SearchBar";
-import { chatActions } from "../store/chatSlice";
 import { useEffect } from "react";
 import useSocket from "../hooks/socketHooks/useSocket";
 import { chatListActions } from "../store/chatListSlice";
+import { sidebarActions } from "../store/sidebarSlice";
 
 function ChatList() {
   const { chatList, handleSearchValue, searchValue, loadingChatList } =
@@ -56,6 +56,23 @@ function ChatList() {
 
               return <ChatItem key={chatItem.chatRoomId} chatData={chatItem} />;
             })}
+            {!chatList.length && (
+              <div className="flex flex-col py-[2rem] items-center uppercase">
+                <button
+                  onClick={() =>
+                    dispatch(
+                      sidebarActions.changeActivePage({
+                        newActivePage: "contacts",
+                      })
+                    )
+                  }
+                  className={`bg-cta-icon mt-[5rem] p-[1rem] rounded-xl uppercase text-white font-semibold opacity-80 flex items-center justify-center`}
+                  type="submit"
+                >
+                  Start Chat Now
+                </button>
+              </div>
+            )}
             <ChatOptionsModal />
           </div>
 

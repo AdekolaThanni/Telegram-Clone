@@ -72,7 +72,8 @@ function ChatHeader({ chatProfile, className }) {
             </h2>
             {chatProfile.mode && (
               <span className="text-cta-icon italic text-[1.4rem] font-normal -translate-y-[.4rem]">
-                {chatProfile.mode}...
+                {chatProfile.mode} {chatProfile.mode === "recording" && "audio"}
+                ...
               </span>
             )}
             {!chatProfile.mode && (
