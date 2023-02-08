@@ -11,6 +11,12 @@ const useSendMessage = (setMessageEmpty) => {
   const chatRoomId = useSelector(
     (state) => state.chatReducer.currentChatRoom._id
   );
+  // Get chat profile of other user to check if it's the bot
+  const chatWithBot = useSelector(
+    (state) =>
+      state.chatReducer.currentChatRoom.chatProfile.username ===
+      process.env.REACT_APP_BOT_USERNAME
+  );
   const dispatch = useDispatch();
 
   const sendMessage = (messageData) => {
@@ -18,8 +24,8 @@ const useSendMessage = (setMessageEmpty) => {
     const message = {
       sender: userId,
       timeSent: new Date(Date.now()).toISOString(),
-      readStatus: false,
-      deliveredStatus: false,
+      readStatus: chatWithBot ? true : false,
+      deliveredStatus: chatWithBot ? true : false,
     };
 
     // If message is raw text
@@ -43,6 +49,13 @@ const useSendMessage = (setMessageEmpty) => {
       message.messageType = "image";
     }
 
+    // If message is being sent by bot
+    if (messageData?.botId) {
+      message.sender = messageData.botId;
+      message.messageType = "text";
+      message.message = messageData.botMessage;
+    }
+
     // If message is a call
     if (!messageMode && messageData?.callType) {
       message.callDetails = messageData;
@@ -52,7 +65,10 @@ const useSendMessage = (setMessageEmpty) => {
 
     // Emit message event
     socketEmit("user:message", {
-      chatRoomId: messageData?.callType ? messageData.chatRoomId : chatRoomId,
+      chatRoomId:
+        messageData?.callType || messageData?.botId
+          ? messageData.chatRoomId
+          : chatRoomId,
       message,
     });
 

@@ -2,12 +2,12 @@ const { clearChatRoom } = require("../controllers/chatRoomController");
 
 // When user is typing a message
 exports.typingController = (io, socket) => {
-  socket.on("user:typing", (chatRoomId) => {
+  socket.on("user:typing", (chatRoomId, userId) => {
     if (!socket.userId) return;
 
     socket
       .to(chatRoomId)
-      .emit("user:typing", { userId: socket.userId, chatRoomId });
+      .emit("user:typing", { userId: userId || socket.userId, chatRoomId });
   });
 };
 

@@ -5,6 +5,8 @@ import { contactsActions } from "../store/contactsSlice";
 import useFetch from "./useFetch";
 import { chatActions } from "../store/chatSlice";
 import { modalActions } from "../store/modalSlice";
+import useChatBot from "./useChatBot";
+import { authActions } from "../store/authSlice";
 
 const useInit = () => {
   // useSocketHook
@@ -18,8 +20,21 @@ const useInit = () => {
       .setAttribute("class", initialMode ? "dark" : "null");
   }, []);
 
+  const { respondAsChatBot } = useChatBot();
+
+  // Send default messages from bot
+  const sendDefaultMessagesFromBot = (chatRoomId) => {
+    respondAsChatBot({
+      chatRoomId,
+      message:
+        "Hi there, I'm Eddie <br /> <br /> A Chat bot to keep you busy while you are still new to the app (built by Adekola Thanni). <br /> <br /> You can test out some of the features of the app while talking with me but I'll strongly recommend you adding a friend to your contact list. <br /> You can hop on a call and video call with them, something more fun than talking to a robot <img class='w-[2.5rem] h-[2.5rem] inline-block' src='https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f643.png'>",
+    });
+  };
+
   // Get logged in state
   const loggedIn = useSelector((state) => state.authReducer.loggedIn);
+
+  const isNew = useSelector((state) => state.authReducer.isNew);
 
   const chatList = useSelector((state) => state.chatListReducer);
 
@@ -105,6 +120,12 @@ const useInit = () => {
         acknowledgeCall();
       }
     );
+
+    if (chatList.length && isNew.isNew) {
+      sendDefaultMessagesFromBot(isNew.payload.chatRoomId);
+
+      dispatch(authActions.setUserIsNew({}));
+    }
 
     return () => {
       socket.off("user:callRequest");

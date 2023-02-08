@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loggedIn: JSON.parse(localStorage.getItem("loggedIn")) || false,
+  isNew: {},
 };
 
 const authSlice = createSlice({
@@ -15,6 +16,9 @@ const authSlice = createSlice({
     logout: (state) => {
       state.loggedIn = false;
       localStorage.removeItem("loggedIn", JSON.stringify(false));
+    },
+    setUserIsNew: (state, { payload }) => {
+      state.isNew = payload;
     },
   },
 });

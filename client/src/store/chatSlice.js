@@ -134,6 +134,7 @@ const chatSlice = createSlice({
           messageIndex
         ][status] = true;
     },
+    resetChat: (state) => initialState,
   },
 });
 

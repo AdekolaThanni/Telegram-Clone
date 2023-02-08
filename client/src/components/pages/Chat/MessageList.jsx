@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSocket from "../../../hooks/socketHooks/useSocket";
+import useChatBot from "../../../hooks/useChatBot";
 import { chatListActions } from "../../../store/chatListSlice";
 import { chatActions } from "../../../store/chatSlice";
 import { userActions } from "../../../store/userSlice";
@@ -15,10 +16,17 @@ function MessageList({ messageHistory }) {
   const currentChatRoomId = useSelector(
     (state) => state.chatReducer.currentChatRoom._id
   );
+  const chatWithBot = useSelector(
+    (state) =>
+      state.chatReducer?.currentChatRoom.chatProfile.username ===
+      process.env.REACT_APP_BOT_USERNAME
+  );
   const chatActive = useSelector((state) => state.chatReducer.active);
+
   const messageListRef = useRef();
   const { socketListen, userId, socketEmit, socket } = useSocket();
   const dispatch = useDispatch();
+  const { getResponseFromChatBot } = useChatBot();
 
   // When user leaves chat modal, deactivate scrolledUp icon appearance and set intial
   useEffect(() => {
@@ -51,6 +59,11 @@ function MessageList({ messageHistory }) {
   useEffect(() => {
     setChatRoomChanged(true);
     socketListen("user:messageCanBeRead", ({ chatRoomId, day, message }) => {
+      // If message was sent to chat room that belongs with chat bot, get response from chat bot
+      if (chatWithBot && message.sender === userId) {
+        getResponseFromChatBot({ chatRoomId, userMessage: message.message });
+      }
+
       // If user is the sender of the message
       if (userId === message.sender) return;
 

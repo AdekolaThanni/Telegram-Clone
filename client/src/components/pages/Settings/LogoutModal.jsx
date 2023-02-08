@@ -5,6 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/authSlice";
 import useSocket from "../../../hooks/socketHooks/useSocket";
 import { userActions } from "../../../store/userSlice";
+import { chatActions } from "../../../store/chatSlice";
+import { chatListActions } from "../../../store/chatListSlice";
+import { userProfileActions } from "../../../store/userProfileSlice";
+import { sidebarActions } from "../../../store/sidebarSlice";
+import { contactsActions } from "../../../store/contactsSlice";
 
 function LogoutModal() {
   const dispatch = useDispatch();
@@ -12,10 +17,19 @@ function LogoutModal() {
   const userId = useSelector((state) => state.userReducer.user._id);
 
   const logoutHandler = () => {
-    dispatch(authActions.logout());
     socketEmit("user:offline", userId);
     socket.disconnect();
+
+    // Reset states
+    dispatch(authActions.logout());
     dispatch(userActions.setUser({ user: {} }));
+    dispatch(chatActions.resetChat());
+    dispatch(chatActions.setChatUnactive());
+    dispatch(chatListActions.setChatList({ chatList: [] }));
+    dispatch(userProfileActions.hideProfile());
+    dispatch(userProfileActions.setProfile({}));
+    dispatch(sidebarActions.changeActivePage({ newActivePage: "chatList" }));
+    dispatch(contactsActions.setContacts([]));
   };
   return (
     userId && (

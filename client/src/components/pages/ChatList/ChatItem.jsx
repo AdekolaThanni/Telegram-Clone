@@ -100,7 +100,7 @@ function ChatItem({ chatData }) {
       }}
       onContextMenu={showOptions}
       onMouseDown={timeoutToShowOptions}
-      className={`p-[1rem] rounded-[1.5rem] not-selectable flex gap-[1rem] text-secondary-text group  cursor-default ${
+      className={`p-[1rem] rounded-[1.5rem] not-selectable flex gap-[1rem] text-secondary-text group h-[75px] cursor-default ${
         activeChat
           ? "bg-cta-icon !text-white sm:bg-transparent"
           : "hover:bg-secondary-light-text"
@@ -151,7 +151,7 @@ function ChatItem({ chatData }) {
             <>
               {/* Latest text */}
               <span
-                className={`flex-grow truncate text-primary-text ${
+                className={`flex-grow truncate text-primary-text overflow-y-hidden text-overflow-wrap ${
                   activeChat && "!text-white sm:!text-primary-text"
                 }`}
               >
@@ -205,7 +205,10 @@ function ChatItem({ chatData }) {
                       <path
                         fill="currentColor"
                         d="M23 14v3a7 7 0 0 1-14 0v-3H7v3a9 9 0 0 0 8 8.94V28h-4v2h10v-2h-4v-2.06A9 9 0 0 0 25 17v-3Z"
-                        className="fill-white stroke-transparent"
+                        className={`stroke-secondary-text !fill-transparent ${
+                          activeChat &&
+                          "!stroke-white sm:!stroke-secondary-text"
+                        }`}
                       />
                       <path
                         fill="currentColor"
