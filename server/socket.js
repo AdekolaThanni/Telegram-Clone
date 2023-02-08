@@ -1,4 +1,8 @@
 const socketIO = require("socket.io");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "./.env" });
+
 const { expressServer } = require("./server");
 const {
   callRequestController,
@@ -26,7 +30,7 @@ const {
 
 const io = socketIO(expressServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: [process.env.CLIENT_URL],
   },
 });
 

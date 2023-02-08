@@ -1,5 +1,4 @@
 {
-  "proxy": "https://telegram-at-server.onrender.com",
   "name": "client",
   "version": "0.1.0",
   "private": true,
