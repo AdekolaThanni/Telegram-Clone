@@ -14,7 +14,7 @@ exports.messagingController = (io, socket) => {
     const { messageObj, day } = await addMessageToChatRoom(chatRoomId, message);
 
     // Broadcast message to room
-    io.timeout(60000)
+    io.timeout(180000)
       .to(chatRoomId)
       .emit(
         "user:message",

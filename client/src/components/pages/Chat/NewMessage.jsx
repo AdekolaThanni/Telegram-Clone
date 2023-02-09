@@ -44,7 +44,7 @@ function NewMessage({ currentChatRoom }) {
 
   return (
     <div className="flex flex-col shrink-0">
-      <div className="flex items-end gap-[1.5rem] sm:gap-[.5rem]">
+      <div className="flex items-end gap-[1.5rem] sm:gap-0">
         {/* Message form bubble */}
         <div
           className={` overflow-x-hidden flex-grow duration-75 flex items-end ${
