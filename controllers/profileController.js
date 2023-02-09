@@ -1,5 +1,5 @@
 const catchAsyncError = require("../utilities/catchAsyncError");
-const ReqError = require("../utilities/reqError");
+const ReqError = require("../utilities/ReqError");
 const User = require("../models/User");
 
 exports.getSelfProfile = catchAsyncError(async (req, res, next) => {

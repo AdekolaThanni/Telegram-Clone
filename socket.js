@@ -28,11 +28,7 @@ const {
   clearChatRoomController,
 } = require("./socketControllers/userActionController");
 
-const io = socketIO(expressServer, {
-  cors: {
-    origin: [process.env.CLIENT_URL],
-  },
-});
+const io = socketIO(expressServer);
 
 io.on("connection", async (socket) => {
   // -------------Connection controls -------------- //
