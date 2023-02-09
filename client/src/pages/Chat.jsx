@@ -6,7 +6,7 @@ import MessageList from "../components/pages/Chat/MessageList";
 import NewMessage from "../components/pages/Chat/NewMessage";
 import useChat from "../hooks/useChat";
 import { userProfileActions } from "../store/userProfileSlice";
-import useSocket from "../hooks/socketHooks/useSocket";
+import useSocket from "../hooks/useSocket";
 import { chatListActions } from "../store/chatListSlice";
 
 function Chat() {

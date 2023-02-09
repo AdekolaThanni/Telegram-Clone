@@ -36,7 +36,7 @@ function VoiceCallModal() {
       <Image
         src={partnerProfile?.avatar}
         alt={partnerProfile?.username}
-        className="w-[40rem] h-[50rem] sm:w-screen sm:h-screen"
+        className="w-[40rem] h-[50rem] sm:w-full sm:h-full"
       />
       <div
         className={`flex flex-col items-center absolute top-0 right-0 w-full h-full`}

@@ -4,7 +4,7 @@ import { modalActions } from "../../store/modalSlice";
 import Modal from "./Modal";
 import useFetch from "../../hooks/useFetch";
 import { chatActions } from "../../store/chatSlice";
-import useSocket from "../../hooks/socketHooks/useSocket";
+import useSocket from "../../hooks/useSocket";
 
 function DeleteChat() {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import Modal from "../../globals/Modal";
 import ModalChild from "../../globals/ModalChild";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/authSlice";
-import useSocket from "../../../hooks/socketHooks/useSocket";
+import useSocket from "../../../hooks/useSocket";
 import { userActions } from "../../../store/userSlice";
 import { chatActions } from "../../../store/chatSlice";
 import { chatListActions } from "../../../store/chatListSlice";

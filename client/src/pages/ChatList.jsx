@@ -13,7 +13,7 @@ import { modalActions } from "../store/modalSlice";
 import Header from "../components/globals/Header";
 import SearchBar from "../components/pages/ChatList/SearchBar";
 import { useEffect } from "react";
-import useSocket from "../hooks/socketHooks/useSocket";
+import useSocket from "../hooks/useSocket";
 import { chatListActions } from "../store/chatListSlice";
 import { sidebarActions } from "../store/sidebarSlice";
 

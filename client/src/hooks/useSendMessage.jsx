@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../store/chatSlice";
-import useSocket from "./socketHooks/useSocket";
+import useSocket from "./useSocket";
 
 const useSendMessage = (setMessageEmpty) => {
   // Get messageMode

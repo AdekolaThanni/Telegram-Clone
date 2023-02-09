@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
-import useSocket from "./socketHooks/useSocket";
+import useSocket from "./useSocket";
 import Peer from "simple-peer";
 import useSendMessage from "./useSendMessage";
 import { useDispatch, useSelector } from "react-redux";

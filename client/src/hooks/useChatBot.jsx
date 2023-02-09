@@ -1,4 +1,4 @@
-import useSocket from "./socketHooks/useSocket";
+import useSocket from "./useSocket";
 import useSendMessage from "./useSendMessage";
 
 const useChatBot = () => {

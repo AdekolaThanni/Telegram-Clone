@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { chatActions } from "../store/chatSlice";
 import { useReactMediaRecorder } from "react-media-recorder";
-import useSocket from "./socketHooks/useSocket";
+import useSocket from "./useSocket";
 import useSendMessage from "./useSendMessage";
 import useUpload from "./useUpload";
 import useCounter from "./useCounter";

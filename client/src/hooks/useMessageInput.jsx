@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { chatActions } from "../store/chatSlice";
-import useSocket from "../hooks/socketHooks/useSocket";
+import useSocket from "../hooks/useSocket";
 
 const useMessageInput = ({ currentChatRoom }) => {
   const { socketEmit } = useSocket();

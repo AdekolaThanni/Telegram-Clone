@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useSocket from "../../../hooks/socketHooks/useSocket";
+import useSocket from "../../../hooks/useSocket";
 import useChatBot from "../../../hooks/useChatBot";
 import { chatListActions } from "../../../store/chatListSlice";
 import { chatActions } from "../../../store/chatSlice";

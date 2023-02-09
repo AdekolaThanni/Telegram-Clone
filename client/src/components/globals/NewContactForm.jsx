@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { modalActions } from "../../store/modalSlice";
 import useFetch from "../../hooks/useFetch";
 import { contactsActions } from "../../store/contactsSlice";
-import useSocket from "../../hooks/socketHooks/useSocket";
+import useSocket from "../../hooks/useSocket";
 import { chatListActions } from "../../store/chatListSlice";
 
 const formSchema = Yup.object().shape({

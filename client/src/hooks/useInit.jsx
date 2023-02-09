@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useSocket from "./socketHooks/useSocket";
+import useSocket from "./useSocket";
 import { useSelector, useDispatch } from "react-redux";
 import { contactsActions } from "../store/contactsSlice";
 import useFetch from "./useFetch";
