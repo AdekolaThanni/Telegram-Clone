@@ -1,9 +1,6 @@
 const socketIO = require("socket.io");
-const dotenv = require("dotenv");
-
-dotenv.config({ path: "./.env" });
-
 const { expressServer } = require("./server");
+
 const {
   callRequestController,
   callAcceptedController,

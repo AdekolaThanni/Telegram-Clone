@@ -82,6 +82,10 @@ html.dark {
     @apply block h-[6rem] w-[20rem] absolute bg-primary opacity-40;
   }
 
+  .custom-scrollbar {
+    scrollbar-color: red !important;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     @apply w-[.6rem];
   }

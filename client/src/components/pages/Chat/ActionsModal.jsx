@@ -11,20 +11,17 @@ function ActionsModal({ chatProfile }) {
     <Modal typeValue="actionsModal" className="origin-top-right !w-[18rem]">
       <ModalChild
         onClick={() => {
-          dispatch(modalActions.closeModal());
-
-          setTimeout(() => {
-            dispatch(
-              modalActions.openModal({
-                type: "voiceCallModal",
-                payload: {
-                  partnerProfile: chatProfile,
-                  callDetail: { caller: true },
-                },
-                positions: {},
-              })
-            );
-          }, 210);
+          dispatch(
+            modalActions.openModal({
+              type: "voiceCallModal",
+              modalChange: true,
+              payload: {
+                partnerProfile: chatProfile,
+                callDetail: { caller: true },
+              },
+              positions: {},
+            })
+          );
         }}
       >
         <svg
@@ -44,20 +41,16 @@ function ActionsModal({ chatProfile }) {
       </ModalChild>
       <ModalChild
         onClick={() => {
-          dispatch(modalActions.closeModal());
-
-          setTimeout(() => {
-            dispatch(
-              modalActions.openModal({
-                type: "videoCallModal",
-                payload: {
-                  partnerProfile: chatProfile,
-                  callDetail: { caller: true },
-                },
-                positions: {},
-              })
-            );
-          }, 210);
+          dispatch(
+            modalActions.openModal({
+              type: "videoCallModal",
+              payload: {
+                partnerProfile: chatProfile,
+                callDetail: { caller: true },
+              },
+              positions: {},
+            })
+          );
         }}
       >
         <svg
@@ -77,17 +70,13 @@ function ActionsModal({ chatProfile }) {
       </ModalChild>
       <ModalChild
         onClick={() => {
-          dispatch(modalActions.closeModal());
-
-          setTimeout(() => {
-            dispatch(
-              modalActions.openModal({
-                type: chatRoom.roomType ? "deleteChatModal" : "leaveGroupModal",
-                payload: { chatData: chatRoom },
-                positions: {},
-              })
-            );
-          }, 210);
+          dispatch(
+            modalActions.openModal({
+              type: chatRoom.roomType ? "deleteChatModal" : "leaveGroupModal",
+              payload: { chatData: chatRoom },
+              positions: {},
+            })
+          );
         }}
         className="text-danger"
       >

@@ -11,7 +11,8 @@ const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    closeModal: (state) => {
+    closeModal: (state, { payload }) => {
+      console.log(payload);
       state.type = null;
       state.positions = {};
       state.payload = {};

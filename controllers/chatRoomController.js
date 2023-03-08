@@ -270,6 +270,8 @@ exports.checkMembersOffUndeliveredListInMessage = async ({
     chatRoomId,
   });
 
+  if (!message) return;
+
   message.undeliveredMembers = message.undeliveredMembers.filter(
     (memberId) => !membersId.includes(memberId.toString())
   );

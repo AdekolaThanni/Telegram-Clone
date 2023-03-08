@@ -66,7 +66,15 @@ function VoiceMessage({
     const difference = clickPositionX - seekBarPositionX;
     const percentage = (difference / seekBarWidth) * 100;
 
-    audioRef.current.currentTime = (percentage / 100) * totalDuration;
+    audioRef.current.currentTime =
+      (percentage / 100) *
+      totalDuration.split(":").reduce((curr, digit, index) => {
+        if (index) {
+          return curr + Number(digit);
+        }
+
+        return curr + 60 * digit;
+      }, 0);
   };
 
   const handleEnding = (event) => {

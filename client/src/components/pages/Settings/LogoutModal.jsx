@@ -31,6 +31,7 @@ function LogoutModal() {
     dispatch(sidebarActions.changeActivePage({ newActivePage: "chatList" }));
     dispatch(contactsActions.setContacts([]));
   };
+
   return (
     userId && (
       <Modal typeValue="logoutModal" className="origin-top-right">

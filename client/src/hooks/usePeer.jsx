@@ -52,7 +52,6 @@ const usePeer = ({ mediaOptions, callDetail }) => {
         trickle: false,
         stream: userStream,
       });
-
       peer.on("signal", (signalData) => {
         socketEmit(
           "user:callRequest",
@@ -65,7 +64,6 @@ const usePeer = ({ mediaOptions, callDetail }) => {
           (callAcknowledged) => {
             // Caller acknowledges call request
             setCallStatus(callAcknowledged ? "ringing" : "calling");
-
             // While call receiver hasn't picked call
             setTimeout(() => {
               if (!callAccepted) {
@@ -76,19 +74,15 @@ const usePeer = ({ mediaOptions, callDetail }) => {
           }
         );
       });
-
       socketListen("user:callAccepted", ({ signalData }) => {
         peer.signal(signalData);
         setCallAccepted(true);
-
         // Start duration
         startCounter();
       });
-
       peer.on("stream", (stream) => {
         partnerMediaRef.current.srcObject = stream;
       });
-
       peer.on("close", () => {
         socket.off("user:callAccepted");
         dispatch(modalActions.closeModal());
@@ -96,7 +90,6 @@ const usePeer = ({ mediaOptions, callDetail }) => {
           track.stop();
         });
       });
-
       socketListen("user:endCall", () => {
         peer.destroy();
       });
