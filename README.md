@@ -17,7 +17,7 @@ fun to engage with.
 
 ### Visual overview
 
-![](./assets/screenshots/Overview.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359570/Portfolio/Telegram%20Clone/Overview_nwgipw.png)
 
 ### **Features**
 
@@ -27,9 +27,9 @@ Light or dark theme option was integrated into the app in order
 to allow users flexibility of choice when it comes to
 application appearance, this was a feature developed with **Tailwind CSS**
 
-![](./assets//screenshots/Overview%20Medium.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359530/Portfolio/Telegram%20Clone/Overview_Medium_oscnti.png)
 
-![](./assets//screenshots/Dark%20Overview%20Medium.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359507/Portfolio/Telegram%20Clone/Dark_Overview_Medium_mzl8lj.png)
 
 #### **Chat Pinning**
 
@@ -37,7 +37,7 @@ Chat pinning feature was enabled so as to allow users to keep
 their favourite chat at the top of the chat list for easy reach,
 this was achievable by using a **sorting algorithm**
 
-![](./assets/screenshots/Chat%20options.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359486/Portfolio/Telegram%20Clone/Chat_options_llouki.png)
 
 #### **Chat Search**
 
@@ -45,7 +45,7 @@ Chat searching feature is integrated to allow users to search
 for a past chat with a contact that may have gone down the chat
 list, this was a feature developed through a **sorting algorithm**
 
-![](./assets/screenshots/Search%20Feature.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359495/Portfolio/Telegram%20Clone/Search_Feature_bsxzhb.png)
 
 #### **New Private Chat**
 
@@ -53,7 +53,7 @@ This is a shortcut link created to enable user to start a new
 chat with someone on their contact list, this was developed
 using **Redux dispatch actions**
 
-![](./assets/screenshots/New%20private%20chat.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359495/Portfolio/Telegram%20Clone/New_private_chat_bnox1x.png)
 
 #### **Delete Chat**
 
@@ -61,7 +61,7 @@ Delete chat feature was integrated so users can get rid of past
 chats they migh not be comfortable with or feel is now obsolete,
 this was developed through the **server API and Redux dispatch actions**
 
-![](./assets/screenshots/Discard%20chat%20modal.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359493/Portfolio/Telegram%20Clone/Discard_chat_modal_jiraou.png)
 
 #### **User settings**
 
@@ -69,7 +69,7 @@ User setting is enabled to allow user to change their profile
 settings e.g Uploading a new profile picture, changing username
 or uploading new bio status, this was achieved by using **Cloudinary** to store picture uploads, **server API** to make changes to user profile details
 
-![](./assets/screenshots/Settings.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359497/Portfolio/Telegram%20Clone/Settings_hgu9rs.png)
 
 #### **Contact List**
 
@@ -77,7 +77,7 @@ Contact list feature is integrated so users can go through all
 the contacts they have and and event start a chat with them from
 there by a click, feature was achieved through **Redux dispatch actions**
 
-![](./assets/screenshots/Contacts.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359486/Portfolio/Telegram%20Clone/Contacts_kxpsph.png)
 
 #### **Contact Search**
 
@@ -85,7 +85,7 @@ Contact search feature is enabled to allow users to search for
 specific contact they would like to start a chat with, feature
 was enabled through **sorting algorithms**
 
-![](./assets/screenshots/Contact%20Search%20feature.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359485/Portfolio/Telegram%20Clone/Contact_Search_feature_hj1cj1.png)
 
 #### **Add Contact**
 
@@ -93,14 +93,14 @@ Add Contact feature was enabled so users can create a new
 contact for someone they just met or have known, feature was
 achieved through **server API and Redux dispatch actions**
 
-![](./assets/screenshots/Add%20contact%20modal.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359494/Portfolio/Telegram%20Clone/Add_contact_modal_cnmkhs.png)
 
 #### **Delete Contact**
 
 We all have that menace on our contact list we would like to get
 rid of, this feature was made just because of that through **server API and Redux dispatch actions**
 
-![](./assets/screenshots/Delete%20contact%20modal.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359494/Portfolio/Telegram%20Clone/Delete_contact_modal_n0cqpq.png)
 
 #### **Contact Profile**
 
@@ -109,7 +109,7 @@ check through contact profile to zoom in on their profile
 picture and also see other details about them, this was mainly
 achievable using **React dynamic rendering and Redux dispatch actions**
 
-![](./assets/screenshots/User%20profile.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359516/Portfolio/Telegram%20Clone/User_profile_ywfyjn.png)
 
 #### **Contact Online Status**
 
@@ -117,21 +117,21 @@ Contact online status is a feature enabled so user can see if
 the contact is currently online and if offline when they logged
 out of their app, feature was developed using **Socket.io** to dispatch online or online status in real-time and **MongoDB** to store user online or offline status
 
-![](./assets/screenshots/user%20last%20seen.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359500/Portfolio/Telegram%20Clone/user_last_seen_otq1wn.png)
 
 #### **Emojis**
 
 Emoji feature was enabled to allow users to add fun interactions
 during conversations, feature was enabled using the **React emoji picker library**
 
-![](./assets/screenshots/Emoji%20modal.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359492/Portfolio/Telegram%20Clone/Emoji_modal_mzbjtf.png)
 
 #### **Voice recording**
 
 This feature allows users to record audio and send them to
 people, this feature was accomplished using **React media recorder library** to record audio from users and **Cloudinary** to store uploaded audio
 
-![](./assets/screenshots/Voice%20message%20record.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359515/Portfolio/Telegram%20Clone/Voice_message_record_vkzoqn.png)
 
 #### **Delete Voice Recording**
 
@@ -139,21 +139,21 @@ This feature was enabled so as to allow users to delete voice
 recordings they may not be comfotable with, this feature was
 possible with **React media recorder library**
 
-![](./assets/screenshots/Discard%20voice%20message%20modal.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359493/Portfolio/Telegram%20Clone/Discard_voice_message_modal_qbdfvx.png)
 
 #### **Send Photo**
 
 This feature enables users to share photos while chatting, this
 was made possible by using **Cloudinary** to store uploaded photos and **Socket.io** to share photo in real time
 
-![](./assets/screenshots/Upload%20photo%20modal.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359504/Portfolio/Telegram%20Clone/Upload_photo_modal_jvcfzd.png)
 
 #### **Calls**
 
 This feature enables users to make voice or video calls, this
 was achieved by using **Socket.io** to send call request to users in real-time and **WebRTC** to enable real-time media communication
 
-![](./assets/screenshots/Voice%20call%20feature.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359523/Portfolio/Telegram%20Clone/Voice_call_feature_c5uqgf.png)
 
 #### **Call Records**
 
@@ -161,7 +161,7 @@ This feature is integrated to allow users to see records of
 calls they've been on and see their details, this was enabled
 using **React** to display record and **MongoDB** to store record
 
-![](./assets/screenshots/Call%20record.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359490/Portfolio/Telegram%20Clone/Call_record_ixlvop.png)
 
 #### **Chatbot**
 
@@ -169,7 +169,7 @@ This feature was integrated so that users can have fun on the
 app with the Telegram Chatbot while some of their contacts might
 be offline, this was achieved using a **Chatbot RESTful API** to send message and get responses from chatbot
 
-![](./assets/screenshots/Telegram%20Bot%20Feature.png)
+![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359499/Portfolio/Telegram%20Clone/Telegram_Bot_Feature_pldzlr.png)
 
 ### **Built with**
 
