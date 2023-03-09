@@ -15,6 +15,10 @@ the server. Users have been given a lot of features and option to
 make communication between them and their counterparts seamless and
 fun to engage with.
 
+Images, Voice recordings, Text messages filled with emoji options
+can be shared. Real time communication with voice calls or audio
+calls can also be made to keep things more intresting.
+
 ### Visual overview
 
 ![](https://res.cloudinary.com/dlanhtzbw/image/upload/v1678359570/Portfolio/Telegram%20Clone/Overview_nwgipw.png)
